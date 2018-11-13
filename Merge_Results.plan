@@ -1,0 +1,500 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<purity-config version="10.6.2.ga-2017-03-03">
+	<references/>
+	<component-mappings>
+		<propertyMappings/>
+	</component-mappings>
+
+<!-- (Agency_Agent_2018-11-06) --><step id="Agency_Agent_2018-11-06" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/in/Agency_Agent_2018-11-06.xlsx" startCell="A2" skipEmptyRows="false" sheetName="Sheet1">
+			<columns>
+				<columnDef name="SalesforceId" type="STRING"/>
+				<columnDef name="EIN" type="STRING"/>
+				<columnDef name="NPN__c" type="STRING"/>
+				<columnDef name="AccountName" type="STRING"/>
+				<columnDef name="First_Name__c" type="STRING"/>
+				<columnDef name="Middle_Name__c" type="STRING"/>
+				<columnDef name="Last_Name__c" type="STRING"/>
+				<columnDef name="AccountRecordType" type="STRING"/>
+				<columnDef name="BP_ID__c" type="STRING"/>
+				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
+				<columnDef name="AMS_ID__c" type="STRING"/>
+				<columnDef name="AMS_Broker_BoB" type="INTEGER"/>
+				<columnDef name="IBAS_ID__c" type="STRING"/>
+				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
+				<columnDef name="Closed_Won" type="STRING"/>
+				<columnDef name="Weighted_Lives" type="INTEGER"/>
+				<columnDef name="CRQS_Quotes" type="INTEGER"/>
+				<columnDef name="Health_Connect_Quotes" type="STRING"/>
+				<columnDef name="HealthConnect_Quote_Count" type="INTEGER"/>
+				<columnDef name="PlatformIntegrationID__c" type="STRING"/>
+				<columnDef name="Source_System__c" type="STRING"/>
+				<columnDef name="Status__c" type="STRING"/>
+				<columnDef name="BillingStreet" type="STRING"/>
+				<columnDef name="BillingCity" type="STRING"/>
+				<columnDef name="BillingState" type="STRING"/>
+				<columnDef name="BillingPostalCode" type="STRING"/>
+				<columnDef name="BillingCountry" type="STRING"/>
+				<columnDef name="Email__c" type="STRING"/>
+				<columnDef name="Phone" type="STRING"/>
+				<columnDef name="Mobile__c" type="STRING"/>
+				<columnDef name="Home_phone__c" type="STRING"/>
+				<columnDef name="Fax" type="STRING"/>
+				<columnDef name="AccountOwnerName" type="STRING"/>
+				<columnDef name="ParentAccountId" type="STRING"/>
+				<columnDef name="ParentAccountName" type="STRING"/>
+				<columnDef name="ParentAccountType" type="STRING"/>
+				<columnDef name="Region_Benefit__c" type="STRING"/>
+				<columnDef name="Market_Benefit__c" type="STRING"/>
+				<columnDef name="Office_Benefit__c" type="STRING"/>
+				<columnDef name="BSE" type="STRING"/>
+				<columnDef name="BSE_Email" type="STRING"/>
+				<columnDef name="BSR" type="STRING"/>
+				<columnDef name="BSR_Email" type="STRING"/>
+				<columnDef name="MarketDirector" type="STRING"/>
+				<columnDef name="Market_Director_Email" type="STRING"/>
+				<columnDef name="Broker_Class__c" type="STRING"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints bounds="96,24,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Agency_Agent_2018-11-06" endpoint="out"/>
+		<target step="Join" endpoint="in_left"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Excel File Writer) --><step id="Excel File Writer" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/Merged.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="384,336,48,48" layout="vertical"/>
+	</step>
+
+
+
+<!-- (Join) --><step id="Join" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
+		<properties leftKey="SalesforceId" matchStrategy="MERGE" rightKey="SalesforceId" joinType="LEFT">
+			<columnDefinitions>
+				<columnDefinition expression="in_left.EIN" name="EIN"/>
+				<columnDefinition expression="in_left.AccountName" name="AccountName"/>
+				<columnDefinition expression="in_left.NPN__c" name="NPN__c"/>
+				<columnDefinition expression="in_left.First_Name__c" name="First_Name__c"/>
+				<columnDefinition expression="in_left.Middle_Name__c" name="Middle_Name__c"/>
+				<columnDefinition expression="in_left.Last_Name__c" name="Last_Name__c"/>
+				<columnDefinition expression="in_left.AccountRecordType" name="AccountRecordType"/>
+				<columnDefinition expression="in_left.Email__c" name="Email__c"/>
+				<columnDefinition expression="in_left.Phone" name="Phone"/>
+				<columnDefinition expression="in_left.BP_ID__c" name="BP_ID__c"/>
+				<columnDefinition expression="in_left.BP_Broker_BoB" name="BP_Broker_BoB"/>
+				<columnDefinition expression="in_left.AMS_ID__c" name="AMS_ID__c"/>
+				<columnDefinition expression="in_left.AMS_Broker_BoB" name="AMS_Broker_BoB"/>
+				<columnDefinition expression="in_left.IBAS_ID__c" name="IBAS_ID__c"/>
+				<columnDefinition expression="in_left.IBAS_Broker_BoB" name="IBAS_Broker_BoB"/>
+				<columnDefinition expression="in_left.Closed_Won" name="Closed_Won"/>
+				<columnDefinition expression="in_left.Weighted_Lives" name="Weighted_Lives"/>
+				<columnDefinition expression="in_left.CRQS_Quotes" name="CRQS_Quotes"/>
+				<columnDefinition expression="in_left.Health_Connect_Quotes" name="Health_Connect_Quotes"/>
+				<columnDefinition expression="in_left.HealthConnect_Quote_Count" name="HealthConnect_Quote_Count"/>
+				<columnDefinition expression="in_left.PlatformIntegrationID__c" name="PlatformIntegrationID__c"/>
+				<columnDefinition expression="in_left.Source_System__c" name="Source_System__c"/>
+				<columnDefinition expression="in_left.SalesforceId" name="SalesforceId"/>
+				<columnDefinition expression="in_left.Status__c" name="Status__c"/>
+				<columnDefinition expression="in_left.BillingStreet" name="BillingStreet"/>
+				<columnDefinition expression="in_left.BillingCity" name="BillingCity"/>
+				<columnDefinition expression="in_left.BillingState" name="BillingState"/>
+				<columnDefinition expression="in_left.BillingPostalCode" name="BillingPostalCode"/>
+				<columnDefinition expression="in_left.BillingCountry" name="BillingCountry"/>
+				<columnDefinition expression="in_left.Mobile__c" name="Mobile__c"/>
+				<columnDefinition expression="in_left.Home_phone__c" name="Home_phone__c"/>
+				<columnDefinition expression="in_left.Fax" name="Fax"/>
+				<columnDefinition expression="in_left.AccountOwnerName" name="AccountOwnerName"/>
+				<columnDefinition expression="in_left.ParentAccountId" name="ParentAccountId"/>
+				<columnDefinition expression="in_left.ParentAccountName" name="ParentAccountName"/>
+				<columnDefinition expression="in_left.ParentAccountType" name="ParentAccountType"/>
+				<columnDefinition expression="in_left.Region_Benefit__c" name="Region_Benefit__c"/>
+				<columnDefinition expression="in_left.Market_Benefit__c" name="Market_Benefit__c"/>
+				<columnDefinition expression="in_left.Office_Benefit__c" name="Office_Benefit__c"/>
+				<columnDefinition expression="in_left.BSE" name="BSE"/>
+				<columnDefinition expression="in_left.BSE_Email" name="BSE_Email"/>
+				<columnDefinition expression="in_left.BSR" name="BSR"/>
+				<columnDefinition expression="in_left.BSR_Email" name="BSR_Email"/>
+				<columnDefinition expression="in_left.MarketDirector" name="MarketDirector"/>
+				<columnDefinition expression="in_left.Market_Director_Email" name="Market_Director_Email"/>
+				<columnDefinition expression="in_left.Broker_Class__c" name="Broker_Class__c"/>
+				<columnDefinition expression="in_right.dup_agent_rule_used" name="dup_agent_rule_used"/>
+				<columnDefinition expression="in_right.dup_agent_can_id" name="dup_agent_can_id"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints bounds="240,96,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Join" endpoint="out"/>
+		<target step="Join 2" endpoint="in_left"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Join 2) --><step id="Join 2" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
+		<properties leftKey="SalesforceId" matchStrategy="MERGE" rightKey="SalesforceId" joinType="LEFT">
+			<columnDefinitions>
+				<columnDefinition expression="in_left.SalesforceId" name="SalesforceId"/>
+				<columnDefinition expression="in_left.EIN" name="EIN"/>
+				<columnDefinition expression="in_left.AccountName" name="AccountName"/>
+				<columnDefinition expression="in_left.NPN__c" name="NPN__c"/>
+				<columnDefinition expression="in_left.First_Name__c" name="First_Name__c"/>
+				<columnDefinition expression="in_left.Middle_Name__c" name="Middle_Name__c"/>
+				<columnDefinition expression="in_left.Email__c" name="Email__c"/>
+				<columnDefinition expression="in_left.Phone" name="Phone"/>
+				<columnDefinition expression="in_left.Last_Name__c" name="Last_Name__c"/>
+				<columnDefinition expression="in_left.AccountRecordType" name="AccountRecordType"/>
+				<columnDefinition expression="in_left.Mobile__c" name="Mobile__c"/>
+				<columnDefinition expression="in_left.Fax" name="Fax"/>
+				<columnDefinition expression="in_left.BP_ID__c" name="BP_ID__c"/>
+				<columnDefinition expression="in_left.BP_Broker_BoB" name="BP_Broker_BoB"/>
+				<columnDefinition expression="in_left.AMS_ID__c" name="AMS_ID__c"/>
+				<columnDefinition expression="in_left.AMS_Broker_BoB" name="AMS_Broker_BoB"/>
+				<columnDefinition expression="in_left.IBAS_ID__c" name="IBAS_ID__c"/>
+				<columnDefinition expression="in_left.IBAS_Broker_BoB" name="IBAS_Broker_BoB"/>
+				<columnDefinition expression="in_left.Closed_Won" name="Closed_Won"/>
+				<columnDefinition expression="in_left.Weighted_Lives" name="Weighted_Lives"/>
+				<columnDefinition expression="in_left.CRQS_Quotes" name="CRQS_Quotes"/>
+				<columnDefinition expression="in_left.Health_Connect_Quotes" name="Health_Connect_Quotes"/>
+				<columnDefinition expression="in_left.HealthConnect_Quote_Count" name="HealthConnect_Quote_Count"/>
+				<columnDefinition expression="in_left.PlatformIntegrationID__c" name="PlatformIntegrationID__c"/>
+				<columnDefinition expression="in_left.Source_System__c" name="Source_System__c"/>
+				<columnDefinition expression="in_left.Status__c" name="Status__c"/>
+				<columnDefinition expression="in_left.BillingStreet" name="BillingStreet"/>
+				<columnDefinition expression="in_left.BillingCity" name="BillingCity"/>
+				<columnDefinition expression="in_left.BillingState" name="BillingState"/>
+				<columnDefinition expression="in_left.BillingPostalCode" name="BillingPostalCode"/>
+				<columnDefinition expression="in_left.BillingCountry" name="BillingCountry"/>
+				<columnDefinition expression="in_left.Home_phone__c" name="Home_phone__c"/>
+				<columnDefinition expression="in_left.AccountOwnerName" name="AccountOwnerName"/>
+				<columnDefinition expression="in_left.ParentAccountId" name="ParentAccountId"/>
+				<columnDefinition expression="in_right.ParentAccountId_email" name="ParentAccountId_email"/>
+				<columnDefinition expression="in_right.ParentAccountId_phone" name="ParentAccountId_phone"/>
+				<columnDefinition expression="in_right.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
+				<columnDefinition expression="in_left.ParentAccountName" name="ParentAccountName"/>
+				<columnDefinition expression="in_left.ParentAccountType" name="ParentAccountType"/>
+				<columnDefinition expression="in_left.Region_Benefit__c" name="Region_Benefit__c"/>
+				<columnDefinition expression="in_left.Market_Benefit__c" name="Market_Benefit__c"/>
+				<columnDefinition expression="in_left.Office_Benefit__c" name="Office_Benefit__c"/>
+				<columnDefinition expression="in_left.BSE" name="BSE"/>
+				<columnDefinition expression="in_left.BSE_Email" name="BSE_Email"/>
+				<columnDefinition expression="in_left.BSR" name="BSR"/>
+				<columnDefinition expression="in_left.BSR_Email" name="BSR_Email"/>
+				<columnDefinition expression="in_left.MarketDirector" name="MarketDirector"/>
+				<columnDefinition expression="in_left.Market_Director_Email" name="Market_Director_Email"/>
+				<columnDefinition expression="in_left.Broker_Class__c" name="Broker_Class__c"/>
+				<columnDefinition expression="in_left.dup_agent_rule_used" name="dup_agent_rule_used"/>
+				<columnDefinition expression="in_left.dup_agent_can_id" name="dup_agent_can_id"/>
+				<columnDefinition expression="in_right.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints bounds="288,168,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Join 2" endpoint="out"/>
+		<target step="Main_Filter_Bob_Quotes_Sales" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Join 3) --><step id="Join 3" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
+		<properties leftKey="SalesforceId" matchStrategy="MERGE" rightKey="SalesforceId" joinType="LEFT">
+			<columnDefinitions>
+				<columnDefinition expression="in_left.SalesforceId" name="SalesforceId"/>
+				<columnDefinition expression="in_left.EIN" name="EIN"/>
+				<columnDefinition expression="in_left.AccountName" name="AccountName"/>
+				<columnDefinition expression="in_left.NPN__c" name="NPN__c"/>
+				<columnDefinition expression="in_left.First_Name__c" name="First_Name__c"/>
+				<columnDefinition expression="in_left.Middle_Name__c" name="Middle_Name__c"/>
+				<columnDefinition expression="in_left.Email__c" name="Email__c"/>
+				<columnDefinition expression="in_left.Phone" name="Phone"/>
+				<columnDefinition expression="in_left.Last_Name__c" name="Last_Name__c"/>
+				<columnDefinition expression="in_left.AccountRecordType" name="AccountRecordType"/>
+				<columnDefinition expression="in_left.Mobile__c" name="Mobile__c"/>
+				<columnDefinition expression="in_left.Fax" name="Fax"/>
+				<columnDefinition expression="in_left.BP_ID__c" name="BP_ID__c"/>
+				<columnDefinition expression="in_left.BP_Broker_BoB" name="BP_Broker_BoB"/>
+				<columnDefinition expression="in_left.AMS_ID__c" name="AMS_ID__c"/>
+				<columnDefinition expression="in_left.AMS_Broker_BoB" name="AMS_Broker_BoB"/>
+				<columnDefinition expression="in_left.IBAS_ID__c" name="IBAS_ID__c"/>
+				<columnDefinition expression="in_left.IBAS_Broker_BoB" name="IBAS_Broker_BoB"/>
+				<columnDefinition expression="in_left.Closed_Won" name="Closed_Won"/>
+				<columnDefinition expression="in_left.Weighted_Lives" name="Weighted_Lives"/>
+				<columnDefinition expression="in_left.CRQS_Quotes" name="CRQS_Quotes"/>
+				<columnDefinition expression="in_left.Health_Connect_Quotes" name="Health_Connect_Quotes"/>
+				<columnDefinition expression="in_left.HealthConnect_Quote_Count" name="HealthConnect_Quote_Count"/>
+				<columnDefinition expression="in_left.PlatformIntegrationID__c" name="PlatformIntegrationID__c"/>
+				<columnDefinition expression="in_left.Source_System__c" name="Source_System__c"/>
+				<columnDefinition expression="in_left.Status__c" name="Status__c"/>
+				<columnDefinition expression="in_left.BillingStreet" name="BillingStreet"/>
+				<columnDefinition expression="in_left.BillingCity" name="BillingCity"/>
+				<columnDefinition expression="in_left.BillingState" name="BillingState"/>
+				<columnDefinition expression="in_left.BillingPostalCode" name="BillingPostalCode"/>
+				<columnDefinition expression="in_left.BillingCountry" name="BillingCountry"/>
+				<columnDefinition expression="in_left.Home_phone__c" name="Home_phone__c"/>
+				<columnDefinition expression="in_left.AccountOwnerName" name="AccountOwnerName"/>
+				<columnDefinition expression="in_left.ParentAccountId" name="ParentAccountId"/>
+				<columnDefinition expression="in_left.ParentAccountName" name="ParentAccountName"/>
+				<columnDefinition expression="in_left.ParentAccountType" name="ParentAccountType"/>
+				<columnDefinition expression="in_left.Region_Benefit__c" name="Region_Benefit__c"/>
+				<columnDefinition expression="in_left.Market_Benefit__c" name="Market_Benefit__c"/>
+				<columnDefinition expression="in_left.Office_Benefit__c" name="Office_Benefit__c"/>
+				<columnDefinition expression="in_left.BSE" name="BSE"/>
+				<columnDefinition expression="in_left.BSE_Email" name="BSE_Email"/>
+				<columnDefinition expression="in_left.BSR" name="BSR"/>
+				<columnDefinition expression="in_left.BSR_Email" name="BSR_Email"/>
+				<columnDefinition expression="in_left.MarketDirector" name="MarketDirector"/>
+				<columnDefinition expression="in_left.Market_Director_Email" name="Market_Director_Email"/>
+				<columnDefinition expression="in_left.Broker_Class__c" name="Broker_Class__c"/>
+				<columnDefinition expression="in_left.VIOLATION" name="VIOLATION"/>
+				<columnDefinition expression="in_left.VIOLATION_SCORE" name="VIOLATION_SCORE"/>
+				<columnDefinition expression="in_left.std_AccountName" name="std_AccountName"/>
+				<columnDefinition expression="in_left.std_First_Name__c" name="std_First_Name__c"/>
+				<columnDefinition expression="in_left.std_Middle_Name__c" name="std_Middle_Name__c"/>
+				<columnDefinition expression="in_left.std_Last_Name__c" name="std_Last_Name__c"/>
+				<columnDefinition expression="in_right.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
+				<columnDefinition expression="in_right.ParentAccountId_email" name="ParentAccountId_email"/>
+				<columnDefinition expression="in_right.ParentAccountId_phone" name="ParentAccountId_phone"/>
+				<columnDefinition expression="in_right.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
+				<columnDefinition expression="in_right.dup_agent_rule_used" name="dup_agent_rule_used"/>
+				<columnDefinition expression="in_right.dup_agent_can_id" name="dup_agent_can_id"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints bounds="192,312,48,48" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Join 3" endpoint="out"/>
+		<target step="Excel File Writer" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Main_Filter_Bob_Quotes_Sales) --><step id="Main_Filter_Bob_Quotes_Sales" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
+		<properties>
+			<condition>BP_Broker_BoB&lt;&gt;0 or AMS_Broker_BoB &lt;&gt;0 or IBAS_Broker_BoB == &quot;Yes&quot;
+or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won == &quot;Yes&quot;</condition>
+		</properties>
+		<visual-constraints bounds="288,240,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Main_Filter_Bob_Quotes_Sales" endpoint="out"/>
+		<target step="Join 3" endpoint="in_right"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (agent_agency_matching) --><step id="agent_agency_matching" className="com.ataccama.dqc.tasks.io.text.read.TextFileReader" disabled="false" mode="NORMAL">
+		<properties stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" lineMaxReadLength="65536" numberOfLinesInHeader="1" fileName="../data/out/agent_agency_matching.csv" encoding="UTF-8" numberOfLinesInFooter="0" compression="NONE" stringQualifierEscape="&quot;">
+			<columns>
+				<textReaderColumn name="SalesforceId" type="STRING" ignore="false"/>
+				<textReaderColumn name="tmp_ein" type="STRING" ignore="false"/>
+				<textReaderColumn name="tmp_phone" type="STRING" ignore="false"/>
+				<textReaderColumn name="tmp_fax" type="STRING" ignore="false"/>
+				<textReaderColumn name="Email__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Phone" type="STRING" ignore="false"/>
+				<textReaderColumn name="Mobile__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Fax" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId_email" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId_phone" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId_Fax" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId_EIN" type="STRING" ignore="false"/>
+			</columns>
+			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yy-MM-dd"/>
+			<errorHandlingStrategy rejectFileName="rejected.txt">
+				<errorInstructions>
+					<errorInstruction putToLog="true" errorType="EXTRA_DATA" dataStrategy="READ_POSSIBLE" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="LONG_LINE" dataStrategy="STOP" putToReject="true"/>
+					<errorInstruction putToLog="true" errorType="PROCESSING_ERROR" dataStrategy="STOP" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="INVALID_DATE" dataStrategy="READ_POSSIBLE" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="SHORT_LINE" dataStrategy="READ_POSSIBLE" putToReject="true"/>
+					<errorInstruction putToLog="true" errorType="UNPARSABLE_FIELD" dataStrategy="NULL_VALUE" putToReject="false"/>
+				</errorInstructions>
+			</errorHandlingStrategy>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints bounds="456,96,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="agent_agency_matching" endpoint="out"/>
+		<target step="Join 2" endpoint="in_right"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (common-data-problems) --><step id="common-data-problems" className="com.ataccama.dqc.tasks.io.text.read.TextFileReader" disabled="false" mode="NORMAL">
+		<properties stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" lineMaxReadLength="65536" numberOfLinesInHeader="1" fileName="../data/out/common-data-problems.csv" encoding="UTF-8" numberOfLinesInFooter="0" compression="NONE" stringQualifierEscape="&quot;">
+			<columns>
+				<textReaderColumn name="SalesforceId" type="STRING" ignore="false"/>
+				<textReaderColumn name="EIN" type="STRING" ignore="false"/>
+				<textReaderColumn name="NPN__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="AccountName" type="STRING" ignore="false"/>
+				<textReaderColumn name="First_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Middle_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Last_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="AccountRecordType" type="STRING" ignore="false"/>
+				<textReaderColumn name="BP_ID__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="BP_Broker_BoB" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="AMS_ID__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="AMS_Broker_BoB" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="IBAS_ID__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="IBAS_Broker_BoB" type="STRING" ignore="false"/>
+				<textReaderColumn name="Closed_Won" type="STRING" ignore="false"/>
+				<textReaderColumn name="Weighted_Lives" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="CRQS_Quotes" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="Health_Connect_Quotes" type="STRING" ignore="false"/>
+				<textReaderColumn name="HealthConnect_Quote_Count" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="PlatformIntegrationID__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Source_System__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Status__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="BillingStreet" type="STRING" ignore="false"/>
+				<textReaderColumn name="BillingCity" type="STRING" ignore="false"/>
+				<textReaderColumn name="BillingState" type="STRING" ignore="false"/>
+				<textReaderColumn name="BillingPostalCode" type="STRING" ignore="false"/>
+				<textReaderColumn name="BillingCountry" type="STRING" ignore="false"/>
+				<textReaderColumn name="Email__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Phone" type="STRING" ignore="false"/>
+				<textReaderColumn name="Mobile__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Home_phone__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Fax" type="STRING" ignore="false"/>
+				<textReaderColumn name="AccountOwnerName" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountName" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountType" type="STRING" ignore="false"/>
+				<textReaderColumn name="Region_Benefit__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Market_Benefit__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Office_Benefit__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="BSE" type="STRING" ignore="false"/>
+				<textReaderColumn name="BSE_Email" type="STRING" ignore="false"/>
+				<textReaderColumn name="BSR" type="STRING" ignore="false"/>
+				<textReaderColumn name="BSR_Email" type="STRING" ignore="false"/>
+				<textReaderColumn name="MarketDirector" type="STRING" ignore="false"/>
+				<textReaderColumn name="Market_Director_Email" type="STRING" ignore="false"/>
+				<textReaderColumn name="Broker_Class__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="VIOLATION" type="STRING" ignore="false"/>
+				<textReaderColumn name="VIOLATION_SCORE" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="VIOLATION_EXP" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_email" type="STRING" ignore="false"/>
+				<textReaderColumn name="out_email" type="STRING" ignore="false"/>
+				<textReaderColumn name="can_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="match_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="rule_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_can_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_cli_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_role" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_rule_name" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_group_role" type="STRING" ignore="false"/>
+				<textReaderColumn name="out_last_name" type="STRING" ignore="false"/>
+				<textReaderColumn name="out_first_name" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_AccountName" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_First_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_Middle_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_Last_Name__c" type="STRING" ignore="false"/>
+			</columns>
+			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yy-MM-dd"/>
+			<errorHandlingStrategy rejectFileName="rejected.txt">
+				<errorInstructions>
+					<errorInstruction putToLog="true" errorType="EXTRA_DATA" dataStrategy="READ_POSSIBLE" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="LONG_LINE" dataStrategy="STOP" putToReject="true"/>
+					<errorInstruction putToLog="true" errorType="PROCESSING_ERROR" dataStrategy="STOP" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="INVALID_DATE" dataStrategy="READ_POSSIBLE" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="SHORT_LINE" dataStrategy="READ_POSSIBLE" putToReject="true"/>
+					<errorInstruction putToLog="true" errorType="UNPARSABLE_FIELD" dataStrategy="NULL_VALUE" putToReject="false"/>
+				</errorInstructions>
+			</errorHandlingStrategy>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints bounds="96,240,32,32" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="common-data-problems" endpoint="out"/>
+		<target step="Join 3" endpoint="in_left"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (duplicate_agents) --><step id="duplicate_agents" className="com.ataccama.dqc.tasks.io.text.read.TextFileReader" disabled="false" mode="NORMAL">
+		<properties stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" lineMaxReadLength="65536" numberOfLinesInHeader="1" fileName="../data/out/duplicate_agents.csv" encoding="UTF-8" numberOfLinesInFooter="0" compression="NONE" stringQualifierEscape="&quot;">
+			<columns>
+				<textReaderColumn name="SalesforceId" type="STRING" ignore="false"/>
+				<textReaderColumn name="EIN" type="STRING" ignore="false"/>
+				<textReaderColumn name="AccountName" type="STRING" ignore="false"/>
+				<textReaderColumn name="First_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Middle_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Last_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="AccountRecordType" type="STRING" ignore="false"/>
+				<textReaderColumn name="Email__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Phone" type="STRING" ignore="false"/>
+				<textReaderColumn name="Mobile__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Fax" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId" type="STRING" ignore="false"/>
+				<textReaderColumn name="dup_agent_rule_used" type="STRING" ignore="false"/>
+				<textReaderColumn name="dup_agent_can_id" type="STRING" ignore="false"/>
+			</columns>
+			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yy-MM-dd"/>
+			<errorHandlingStrategy rejectFileName="rejected.txt">
+				<errorInstructions>
+					<errorInstruction putToLog="true" errorType="EXTRA_DATA" dataStrategy="READ_POSSIBLE" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="LONG_LINE" dataStrategy="STOP" putToReject="true"/>
+					<errorInstruction putToLog="true" errorType="PROCESSING_ERROR" dataStrategy="STOP" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="INVALID_DATE" dataStrategy="READ_POSSIBLE" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="SHORT_LINE" dataStrategy="READ_POSSIBLE" putToReject="true"/>
+					<errorInstruction putToLog="true" errorType="UNPARSABLE_FIELD" dataStrategy="NULL_VALUE" putToReject="false"/>
+				</errorInstructions>
+			</errorHandlingStrategy>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints bounds="384,24,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="duplicate_agents" endpoint="out"/>
+		<target step="Join" endpoint="in_right"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+</purity-config>

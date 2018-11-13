@@ -1,0 +1,469 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<purity-config xmlns:comm="http://www.ataccama.com/purity/comment" version="10.6.2.ga-2017-03-03">
+	<references/>
+	<component-mappings>
+		<propertyMappings/>
+	</component-mappings>
+
+<!-- (Agency_Agent_2018-11-06) --><step id="Agency_Agent_2018-11-06" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/in/Agency_Agent_2018-11-06_mod.xlsx" startCell="A2" skipEmptyRows="false" sheetName="Sheet1">
+			<columns>
+				<columnDef name="SalesforceId" type="STRING"/>
+				<columnDef name="EIN" type="STRING"/>
+				<columnDef name="NPN__c" type="STRING"/>
+				<columnDef name="AccountName" type="STRING"/>
+				<columnDef name="First_Name__c" type="STRING"/>
+				<columnDef name="Middle_Name__c" type="STRING"/>
+				<columnDef name="Last_Name__c" type="STRING"/>
+				<columnDef name="AccountRecordType" type="STRING"/>
+				<columnDef name="BP_ID__c" type="STRING"/>
+				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
+				<columnDef name="AMS_ID__c" type="STRING"/>
+				<columnDef name="AMS_Broker_BoB" type="INTEGER"/>
+				<columnDef name="IBAS_ID__c" type="STRING"/>
+				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
+				<columnDef name="Closed_Won" type="STRING"/>
+				<columnDef name="Weighted_Lives" type="INTEGER"/>
+				<columnDef name="CRQS_Quotes" type="INTEGER"/>
+				<columnDef name="Health_Connect_Quotes" type="STRING"/>
+				<columnDef name="HealthConnect_Quote_Count" type="INTEGER"/>
+				<columnDef name="PlatformIntegrationID__c" type="STRING"/>
+				<columnDef name="Source_System__c" type="STRING"/>
+				<columnDef name="Status__c" type="STRING"/>
+				<columnDef name="BillingStreet" type="STRING"/>
+				<columnDef name="BillingCity" type="STRING"/>
+				<columnDef name="BillingState" type="STRING"/>
+				<columnDef name="BillingPostalCode" type="STRING"/>
+				<columnDef name="BillingCountry" type="STRING"/>
+				<columnDef name="Email__c" type="STRING"/>
+				<columnDef name="Phone" type="STRING"/>
+				<columnDef name="Mobile__c" type="STRING"/>
+				<columnDef name="Home_phone__c" type="STRING"/>
+				<columnDef name="Fax" type="STRING"/>
+				<columnDef name="AccountOwnerName" type="STRING"/>
+				<columnDef name="ParentAccountId" type="STRING"/>
+				<columnDef name="ParentAccountName" type="STRING"/>
+				<columnDef name="ParentAccountType" type="STRING"/>
+				<columnDef name="Region_Benefit__c" type="STRING"/>
+				<columnDef name="Market_Benefit__c" type="STRING"/>
+				<columnDef name="Office_Benefit__c" type="STRING"/>
+				<columnDef name="BSE" type="STRING"/>
+				<columnDef name="BSE_Email" type="STRING"/>
+				<columnDef name="BSR" type="STRING"/>
+				<columnDef name="BSR_Email" type="STRING"/>
+				<columnDef name="MarketDirector" type="STRING"/>
+				<columnDef name="Market_Director_Email" type="STRING"/>
+				<columnDef name="Broker_Class__c" type="STRING"/>
+			</columns>
+			<shadowColumns>
+				<shadowColumnDef name="VIOLATION" type="STRING"/>
+				<shadowColumnDef name="VIOLATION_SCORE" type="INTEGER"/>
+				<shadowColumnDef name="VIOLATION_EXP" type="STRING"/>
+				<shadowColumnDef name="std_email" type="STRING"/>
+				<shadowColumnDef name="out_email" type="STRING"/>
+				<shadowColumnDef name="can_id" type="STRING"/>
+				<shadowColumnDef name="match_id" type="STRING"/>
+				<shadowColumnDef name="uni_id" type="STRING"/>
+				<shadowColumnDef name="rule_id" type="STRING"/>
+				<shadowColumnDef name="uni_can_id" type="STRING"/>
+				<shadowColumnDef name="uni_cli_id" type="STRING"/>
+				<shadowColumnDef name="uni_role" type="STRING"/>
+				<shadowColumnDef name="uni_rule_name" type="STRING"/>
+				<shadowColumnDef name="uni_group_role" type="STRING"/>
+				<shadowColumnDef name="out_last_name" type="STRING"/>
+				<shadowColumnDef name="out_first_name" type="STRING"/>
+			</shadowColumns>
+		</properties>
+		<visual-constraints bounds="72,24,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Agency_Agent_2018-11-06" endpoint="out"/>
+		<target step="Main_Filter_BoB_Quotes_Sales" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Email_Validate) --><step id="Email_Validate" className="com.ataccama.dqc.tasks.clean.ValidateEmailAlgorithm" disabled="false" mode="NORMAL">
+		<properties outEmail="std_email" outName="out_email" tldLookupFileName="../../Tutorials/data/ext/lkp/email_tld.lkp" in="Email__c">
+			<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+				<scoringEntries>
+					<scoringEntry score="80" explainAs="EML_NULL" explain="true" key="EML_NULL"/>
+					<scoringEntry score="80" explainAs="EML_ADDRESS" explain="true" key="EML_ADDRESS"/>
+					<scoringEntry score="80" explainAs="EML_TLD" explain="true" key="EML_TLD"/>
+					<scoringEntry score="80" explainAs="EML_AMBIGUOUS_DOMAIN" explain="true" key="EML_AMBIGUOUS_DOMAIN"/>
+				</scoringEntries>
+			</scorer>
+		</properties>
+		<visual-constraints bounds="72,264,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Email_Validate" endpoint="out"/>
+		<target step="Simple Scoring" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Extended Unification) --><step id="Extended Unification" className="com.ataccama.dqc.unify.ExtendedUnify" disabled="false" mode="NORMAL">
+		<properties minimumIdToAssign="1" directUpdate="false" readOnly="false" processingMode="NONINCREMENTAL" mapAllColumns="false" exclusiveMode="false">
+			<operations>
+				<iOperationConfig matchingIdColumn="uni_cli_id" id="Union" useCenterAsSurvivor="false" defaultMaxIterations="100" outputDiscardedIds="NONE" class="com.ataccama.dqc.unify.config.UnifyOperation" unificationRoleColumn="uni_role" ruleNameColumn="uni_rule_name" candidateIdColumn="uni_can_id">
+					<defaultCenterSelectionRule>
+						<orderBy expression="VIOLATION_SCORE" orderDescending="false" nullsFirst="false"/>
+					</defaultCenterSelectionRule>
+					<defaultMatchingRules/>
+					<defaultMergeSurvivorSelectionRule/>
+					<groups>
+						<iGroupingMethod matchNearest="false" class="com.ataccama.dqc.tasks.identify.grouping.Union">
+							<centerSelectionRule/>
+							<keys>
+								<unionKey noKeyCond="Email__c is null" noEmptyComponent="false">
+									<components>
+										<unionKeyComponent expression="Email__c" behaveAsSet="false" separator=" "/>
+									</components>
+									<comm:comment>sin</comm:comment>
+								</unionKey>
+								<unionKey noKeyCond="Email__c is null or Phone is null" noEmptyComponent="false">
+									<components>
+										<unionKeyComponent expression="Email__c" behaveAsSet="false" separator=" "/>
+										<unionKeyComponent expression="Phone" behaveAsSet="false" separator=" "/>
+									</components>
+									<comm:comment>last_name + card  </comm:comment>
+								</unionKey>
+							</keys>
+							<matchingRules>
+								<matchingRule maximumAllowed="0.0" name="phone+last_name+first_name">
+									<expression>/* Same Phone and exact match of both names */
+measures.samePhone and measures.sameFirstName and measures.sameLastName</expression>
+									<tests/>
+								</matchingRule>
+								<matchingRule maximumAllowed="0.0" expression="measures.sameEmail and measures.sameFirstName and measures.sameLastName" name="email+last_name+first_name">
+									<tests/>
+								</matchingRule>
+							</matchingRules>
+							<mergeSurvivorSelectionRule/>
+						</iGroupingMethod>
+					</groups>
+					<matchingMeasures>
+						<matchingMeasure name="levFirstName">
+							<expression>$cmfn:=center.First_Name__c;
+$smfn:=slave.First_Name__c;
+
+iif( $cmfn is null or $smfn is null, 1000,
+	 levenshtein($cmfn, $smfn)
+)</expression>
+							<comm:comment>Returns distance 1000 if any of compared first names is null, otherwise returns levenshtein distance of first names.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="levLastName">
+							<expression>$cmln:=center.Last_Name__c;
+$smln:=slave.Last_Name__c;
+
+iif ( $cmln is null or $smln is null, 1000,
+	levenshtein($cmln, $smln)
+)</expression>
+							<comm:comment>Returns distance 1000 if any of compared last names is null, otherwise returns levenshtein distance of last names.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="sameFirstName">
+							<expression>center.First_Name__c=slave.First_Name__c 
+and 
+center.First_Name__c is not null</expression>
+							<comm:comment>Returns true if first names are exactly the same and not null.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="sameLastName">
+							<expression>center.Last_Name__c=slave.Last_Name__c
+and
+center.Last_Name__c is not null</expression>
+							<comm:comment>Returns true if last names are exactly the same and not null.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure expression="measures.sameFirstName and measures.sameLastName" name="sameNames">
+							<comm:comment>Returns true if both first names and last names are the same and not null.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="samePhone">
+							<expression>center.Phone=slave.Phone
+and
+center.Phone is not null</expression>
+							<comm:comment>Returns true if both SIN numbers are the same and not null.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="sameEmail">
+							<expression>center.Email__c=slave.Email__c
+and
+center.Email__c is not null</expression>
+							<comm:comment>Returns true if both birth dates are the same and not null.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="sameEmailFnLn">
+							<expression>center.First_Name__c=slave.First_Name__c 
+and 
+center.First_Name__c is not null
+and
+center.Last_Name__c=slave.Last_Name__c
+and
+center.Last_Name__c is not null
+and
+center.Email__c=slave.Email__c
+and
+center.Email__c is not null</expression>
+						</matchingMeasure>
+					</matchingMeasures>
+				</iOperationConfig>
+			</operations>
+			<outputStrategy exportDiscarded="false" exportUnchanged="true"/>
+			<repositoryColumns/>
+		</properties>
+		<visual-constraints bounds="744,552,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Extended Unification" endpoint="out"/>
+		<target step="duplicate_all" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Filter Agent) --><step id="Filter Agent" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
+		<properties condition="AccountRecordType=&#39;Agent&#39;"/>
+		<visual-constraints bounds="648,264,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Filter Agent" endpoint="out"/>
+		<target step="Extended Unification" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Main_Filter_BoB_Quotes_Sales) --><step id="Main_Filter_BoB_Quotes_Sales" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
+		<properties>
+			<condition>BP_Broker_BoB&lt;&gt;0 or AMS_Broker_BoB &lt;&gt;0 or IBAS_Broker_BoB == &quot;Yes&quot;
+or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won == &quot;Yes&quot;</condition>
+		</properties>
+		<visual-constraints bounds="72,96,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Main_Filter_BoB_Quotes_Sales" endpoint="out"/>
+		<target step="Multiplicator" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Multiplicator) --><step id="Multiplicator" className="com.ataccama.dqc.tasks.flow.Multiplicator" disabled="false" mode="NORMAL">
+		<properties/>
+		<visual-constraints bounds="72,168,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Multiplicator" endpoint="out"/>
+		<target step="Email_Validate" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Multiplicator" endpoint="out"/>
+		<target step="Filter Agent" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Multiplicator" endpoint="out"/>
+		<target step="Quality metrics" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Quality metrics) --><step id="Quality metrics" className="com.ataccama.dqc.tasks.dqi.DataQualityIndicator" disabled="false" mode="NORMAL">
+		<properties explainedColumn="VIOLATION" outRecordsFilterType="ALL">
+			<rules>
+				<dQIRule expression="trim(EIN) == &quot;&quot; or EIN is null " shortDescription="ein is null or empty" name="ein_missing" code="EIN_MISSING"/>
+				<dQIRule expression="trim(Email__c) == &quot;&quot; or Email__c is null" shortDescription="email missing" description="email missing" name="email_missing" code="EMAIL_MISSING"/>
+				<dQIRule expression="(trashNonDigits(First_Name__c))== &quot;&quot;" shortDescription="name with special chars" name="name_special_chars" code="NAME_SPECIAL_CHARS"/>
+				<dQIRule expression="length(trashNonDigits(EIN))&lt;&gt;9" shortDescription="EIN # is invalid" name="ein_invalid" code="EIN_INVALID"/>
+			</rules>
+		</properties>
+		<visual-constraints bounds="216,264,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Quality metrics" endpoint="summary"/>
+		<target step="Report" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Quality metrics" endpoint="out"/>
+		<target step="Wrong records" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Report) --><step id="Report" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" mode="NORMAL">
+		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/07.01 Report.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="false" compression="NONE" stringQualifierEscape="&quot;">
+			<columns>
+				<textWriterColumn name="Name"/>
+				<textWriterColumn name="Code"/>
+				<textWriterColumn name="Short_Description"/>
+				<textWriterColumn name="Description"/>
+				<textWriterColumn name="Expression"/>
+				<textWriterColumn name="Success_Count"/>
+				<textWriterColumn name="Total"/>
+				<textWriterColumn expression="(Success_Count / Total)*100" name="Success_Percent"/>
+			</columns>
+			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
+		</properties>
+		<visual-constraints bounds="528,576,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (Simple Scoring) --><step id="Simple Scoring" className="com.ataccama.dqc.tasks.scoring.SimpleScoring" disabled="false" mode="NORMAL">
+		<properties defaultScoreColumn="VIOLATION_SCORE" defaultExplainColumn="VIOLATION">
+			<scoringCases>
+				<scoringCase condition="trashNonDigits(EIN) = &#39;&#39; or EIN is null" explanation="&quot;EIN_MISSING&quot;" score="10"/>
+				<scoringCase condition="length(trashNonDigits(EIN)) &lt;&gt; 9 or trashNonDigits(EIN) = &#39;000000000&#39; or trashNonDigits(EIN) = &#39;999999999&#39; " explanation="&quot;EIN_INVALID&quot;" score="10"/>
+				<scoringCase condition="trim(Email__c)  = &#39;&#39; or Email__c is null" explanation="&quot;EMAIL_MISSING&quot;" score="10"/>
+				<scoringCase condition="First_Name__c is null" explanation="&quot;FIRST_NAME_MISSING&quot;" score="10"/>
+				<scoringCase condition="Last_Name__c is null" explanation="&quot;LAST_NAME_MISSING&quot;" score="0"/>
+			</scoringCases>
+		</properties>
+		<visual-constraints bounds="48,528,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Simple Scoring" endpoint="out"/>
+		<target step="out" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Wrong records) --><step id="Wrong records" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" mode="NORMAL">
+		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/07.01 Wrong_records.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="false" compression="NONE" stringQualifierEscape="&quot;">
+			<columns>
+				<textWriterColumn name="SalesforceId"/>
+				<textWriterColumn name="EIN"/>
+				<textWriterColumn name="NPN__c"/>
+				<textWriterColumn name="AccountName"/>
+				<textWriterColumn name="First_Name__c"/>
+				<textWriterColumn name="Middle_Name__c"/>
+				<textWriterColumn name="Last_Name__c"/>
+				<textWriterColumn name="AccountRecordType"/>
+				<textWriterColumn name="BP_ID__c"/>
+				<textWriterColumn name="BP_Broker_BoB"/>
+				<textWriterColumn name="AMS_ID__c"/>
+				<textWriterColumn name="AMS_Broker_BoB"/>
+				<textWriterColumn name="IBAS_ID__c"/>
+				<textWriterColumn name="IBAS_Broker_BoB"/>
+				<textWriterColumn name="Closed_Won"/>
+				<textWriterColumn name="Weighted_Lives"/>
+				<textWriterColumn name="CRQS_Quotes"/>
+				<textWriterColumn name="Health_Connect_Quotes"/>
+				<textWriterColumn name="HealthConnect_Quote_Count"/>
+				<textWriterColumn name="PlatformIntegrationID__c"/>
+				<textWriterColumn name="Source_System__c"/>
+				<textWriterColumn name="Status__c"/>
+				<textWriterColumn name="BillingStreet"/>
+				<textWriterColumn name="BillingCity"/>
+				<textWriterColumn name="BillingState"/>
+				<textWriterColumn name="BillingPostalCode"/>
+				<textWriterColumn name="BillingCountry"/>
+				<textWriterColumn name="Email__c"/>
+				<textWriterColumn name="Phone"/>
+				<textWriterColumn name="Mobile__c"/>
+				<textWriterColumn name="Home_phone__c"/>
+				<textWriterColumn name="Fax"/>
+				<textWriterColumn name="AccountOwnerName"/>
+				<textWriterColumn name="ParentAccountId"/>
+				<textWriterColumn name="ParentAccountName"/>
+				<textWriterColumn name="ParentAccountType"/>
+				<textWriterColumn name="Region_Benefit__c"/>
+				<textWriterColumn name="Market_Benefit__c"/>
+				<textWriterColumn name="Office_Benefit__c"/>
+				<textWriterColumn name="BSE"/>
+				<textWriterColumn name="BSE_Email"/>
+				<textWriterColumn name="BSR"/>
+				<textWriterColumn name="BSR_Email"/>
+				<textWriterColumn name="MarketDirector"/>
+				<textWriterColumn name="Market_Director_Email"/>
+				<textWriterColumn name="Broker_Class__c"/>
+			</columns>
+			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
+		</properties>
+		<visual-constraints bounds="336,672,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (duplicate_all) --><step id="duplicate_all" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" mode="NORMAL">
+		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/duplicate_all.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="false" compression="NONE" stringQualifierEscape="&quot;">
+			<columns>
+				<textWriterColumn name="EIN"/>
+				<textWriterColumn name="AccountName"/>
+				<textWriterColumn name="First_Name__c"/>
+				<textWriterColumn name="Middle_Name__c"/>
+				<textWriterColumn name="Last_Name__c"/>
+				<textWriterColumn name="AccountRecordType"/>
+				<textWriterColumn name="Email__c"/>
+				<textWriterColumn name="Phone"/>
+				<textWriterColumn name="can_id"/>
+				<textWriterColumn name="match_id"/>
+				<textWriterColumn name="uni_id"/>
+				<textWriterColumn name="rule_id"/>
+				<textWriterColumn name="std_email"/>
+				<textWriterColumn name="out_email"/>
+				<textWriterColumn name="uni_can_id"/>
+				<textWriterColumn name="uni_cli_id"/>
+				<textWriterColumn name="uni_role"/>
+				<textWriterColumn name="uni_rule_name"/>
+				<textWriterColumn name="uni_group_role"/>
+				<textWriterColumn name="out_last_name"/>
+				<textWriterColumn name="out_first_name"/>
+				<textWriterColumn name="SalesforceId"/>
+			</columns>
+			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
+		</properties>
+		<visual-constraints bounds="696,768,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (out) --><step id="out" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" mode="NORMAL">
+		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/Agency_Agent_Profiling.txt" encoding="UTF-8" writeHeader="true" writeAllColumns="false" compression="NONE" stringQualifierEscape="&quot;">
+			<columns>
+				<textWriterColumn name="SalesforceId"/>
+				<textWriterColumn name="EIN"/>
+				<textWriterColumn name="AccountName"/>
+				<textWriterColumn name="First_Name__c"/>
+				<textWriterColumn name="Middle_Name__c"/>
+				<textWriterColumn name="Last_Name__c"/>
+				<textWriterColumn name="AccountRecordType"/>
+				<textWriterColumn name="Email__c"/>
+				<textWriterColumn name="Phone"/>
+				<textWriterColumn name="VIOLATION"/>
+				<textWriterColumn name="VIOLATION_SCORE"/>
+				<textWriterColumn name="std_email"/>
+				<textWriterColumn name="out_email"/>
+			</columns>
+			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
+		</properties>
+		<visual-constraints bounds="120,792,-1,-1" layout="vertical"/>
+	</step>
+
+</purity-config>
