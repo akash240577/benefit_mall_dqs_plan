@@ -1,0 +1,266 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<purity-config xmlns:comm="http://www.ataccama.com/purity/comment" version="10.6.2.ga-2017-03-03">
+	<references/>
+	<component-mappings>
+		<propertyMappings/>
+	</component-mappings>
+
+<!-- (Duplicate Agents Unification) --><step id="Duplicate Agents Unification" className="com.ataccama.dqc.unify.ExtendedUnify" disabled="false" mode="NORMAL">
+		<properties minimumIdToAssign="1" directUpdate="false" readOnly="false" processingMode="NONINCREMENTAL" mapAllColumns="false" exclusiveMode="false">
+			<operations>
+				<iOperationConfig matchingIdColumn="uni_cli_id" id="Union" useCenterAsSurvivor="false" defaultMaxIterations="100" outputDiscardedIds="NONE" class="com.ataccama.dqc.unify.config.UnifyOperation" unificationRoleColumn="uni_role" ruleNameColumn="uni_rule_name" candidateIdColumn="uni_can_id">
+					<defaultCenterSelectionRule>
+						<orderBy expression="VIOLATION_SCORE" orderDescending="false" nullsFirst="false"/>
+					</defaultCenterSelectionRule>
+					<defaultMatchingRules/>
+					<defaultMergeSurvivorSelectionRule/>
+					<groups>
+						<iGroupingMethod matchNearest="false" class="com.ataccama.dqc.tasks.identify.grouping.Union">
+							<centerSelectionRule/>
+							<keys>
+								<unionKey noKeyCond="std_email is null" noEmptyComponent="false">
+									<components>
+										<unionKeyComponent expression="std_email" behaveAsSet="false" separator=" "/>
+										<unionKeyComponent expression="std_First_Name__c" behaveAsSet="false" separator=" "/>
+										<unionKeyComponent expression="std_Last_Name__c" behaveAsSet="false" separator=" "/>
+									</components>
+									<comm:comment>sin</comm:comment>
+								</unionKey>
+								<unionKey noKeyCond="std_Phone is null" noEmptyComponent="false">
+									<components>
+										<unionKeyComponent expression="std_First_Name__c" behaveAsSet="false" separator=" "/>
+										<unionKeyComponent expression="std_Last_Name__c" behaveAsSet="false" separator=" "/>
+										<unionKeyComponent expression="std_Phone" behaveAsSet="false" separator=" "/>
+									</components>
+									<comm:comment>last_name + card  </comm:comment>
+								</unionKey>
+							</keys>
+							<matchingRules>
+								<matchingRule maximumAllowed="0.0" name="phone+last_name+first_name">
+									<expression>/* Same Phone and exact match of both names */
+measures.samePhone and measures.sameNames</expression>
+									<tests/>
+								</matchingRule>
+								<matchingRule maximumAllowed="0.0" name="email+last_name+first_name">
+									<expression>/* Same email and same  Name */
+measures.sameEmail and measures.sameNames</expression>
+									<tests/>
+								</matchingRule>
+							</matchingRules>
+							<mergeSurvivorSelectionRule/>
+						</iGroupingMethod>
+					</groups>
+					<matchingMeasures>
+						<matchingMeasure name="levFirstName">
+							<expression>$cmfn:=center.std_First_Name__c;
+$smfn:=slave.std_First_Name__c;
+
+iif( $cmfn is null or $smfn is null, 1000,
+	 levenshtein($cmfn, $smfn)
+)</expression>
+							<comm:comment>Returns distance 1000 if any of compared first names is null, otherwise returns levenshtein distance of first names.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="levLastName">
+							<expression>$cmln:=center.std_Last_Name__c;
+$smln:=slave.std_Last_Name__c;
+
+iif ( $cmln is null or $smln is null, 1000,
+	levenshtein($cmln, $smln)
+)</expression>
+							<comm:comment>Returns distance 1000 if any of compared last names is null, otherwise returns levenshtein distance of last names.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="sameFirstName">
+							<expression>$cmfn:=center.std_First_Name__c;
+$smfn:=slave.std_First_Name__c;
+
+$cmfn=$smfn and $cmfn is not null</expression>
+							<comm:comment>Returns true if first names are exactly the same and not null.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="sameLastName">
+							<expression>$cmln:=center.std_Last_Name__c;
+$smln:=slave.std_Last_Name__c;
+
+$cmln=$smln and $cmln is not null</expression>
+							<comm:comment>Returns true if last names are exactly the same and not null.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure expression="measures.sameFirstName and measures.sameLastName" name="sameNames">
+							<comm:comment>Returns true if both first names and last names are the same and not null.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="samePhone">
+							<expression>center.std_Phone=slave.std_Phone
+and
+center.std_Phone is not null</expression>
+							<comm:comment>Returns true if both SIN numbers are the same and not null.</comm:comment>
+						</matchingMeasure>
+						<matchingMeasure name="sameEmail">
+							<expression>center.std_email=slave.std_email
+and
+center.std_email is not null</expression>
+							<comm:comment>Returns true if both birth dates are the same and not null.</comm:comment>
+						</matchingMeasure>
+					</matchingMeasures>
+				</iOperationConfig>
+			</operations>
+			<outputStrategy exportDiscarded="false" exportUnchanged="true"/>
+			<repositoryColumns/>
+		</properties>
+		<visual-constraints bounds="432,72,-1,-1" layout="horizontal"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Duplicate Agents Unification" endpoint="out"/>
+		<target step="duplicate_agents" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Filter Agent) --><step id="Filter Agent" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
+		<properties condition="AccountRecordType=&#39;Agent&#39;"/>
+		<visual-constraints bounds="240,72,-1,-1" layout="horizontal"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Filter Agent" endpoint="out"/>
+		<target step="Duplicate Agents Unification" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (common-data-problems) --><step id="common-data-problems" className="com.ataccama.dqc.tasks.io.text.read.TextFileReader" disabled="false" mode="NORMAL">
+		<properties stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" lineMaxReadLength="65536" numberOfLinesInHeader="1" fileName="../data/out/common-data-problems.csv" encoding="UTF-8" numberOfLinesInFooter="0" compression="NONE" stringQualifierEscape="&quot;">
+			<columns>
+				<textReaderColumn name="SalesforceId" type="STRING" ignore="false"/>
+				<textReaderColumn name="EIN" type="STRING" ignore="false"/>
+				<textReaderColumn name="NPN__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="AccountName" type="STRING" ignore="false"/>
+				<textReaderColumn name="First_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Middle_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Last_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="AccountRecordType" type="STRING" ignore="false"/>
+				<textReaderColumn name="BP_ID__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="BP_Broker_BoB" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="AMS_ID__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="AMS_Broker_BoB" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="IBAS_ID__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="IBAS_Broker_BoB" type="STRING" ignore="false"/>
+				<textReaderColumn name="Closed_Won" type="STRING" ignore="false"/>
+				<textReaderColumn name="Weighted_Lives" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="CRQS_Quotes" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="Health_Connect_Quotes" type="STRING" ignore="false"/>
+				<textReaderColumn name="HealthConnect_Quote_Count" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="PlatformIntegrationID__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Source_System__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Status__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="BillingStreet" type="STRING" ignore="false"/>
+				<textReaderColumn name="BillingCity" type="STRING" ignore="false"/>
+				<textReaderColumn name="BillingState" type="STRING" ignore="false"/>
+				<textReaderColumn name="BillingPostalCode" type="STRING" ignore="false"/>
+				<textReaderColumn name="BillingCountry" type="STRING" ignore="false"/>
+				<textReaderColumn name="Email__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Phone" type="STRING" ignore="false"/>
+				<textReaderColumn name="Mobile__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Home_phone__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Fax" type="STRING" ignore="false"/>
+				<textReaderColumn name="AccountOwnerName" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountName" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountType" type="STRING" ignore="false"/>
+				<textReaderColumn name="Region_Benefit__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Market_Benefit__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Office_Benefit__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="BSE" type="STRING" ignore="false"/>
+				<textReaderColumn name="BSE_Email" type="STRING" ignore="false"/>
+				<textReaderColumn name="BSR" type="STRING" ignore="false"/>
+				<textReaderColumn name="BSR_Email" type="STRING" ignore="false"/>
+				<textReaderColumn name="MarketDirector" type="STRING" ignore="false"/>
+				<textReaderColumn name="Market_Director_Email" type="STRING" ignore="false"/>
+				<textReaderColumn name="Broker_Class__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="VIOLATION" type="STRING" ignore="false"/>
+				<textReaderColumn name="VIOLATION_SCORE" type="INTEGER" ignore="false">
+					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
+				</textReaderColumn>
+				<textReaderColumn name="VIOLATION_EXP" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_email" type="STRING" ignore="false"/>
+				<textReaderColumn name="out_email" type="STRING" ignore="false"/>
+				<textReaderColumn name="can_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="match_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="rule_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_can_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_cli_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_role" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_rule_name" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_group_role" type="STRING" ignore="false"/>
+				<textReaderColumn name="out_last_name" type="STRING" ignore="false"/>
+				<textReaderColumn name="out_first_name" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_AccountName" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_First_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_Middle_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_Last_Name__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_EIN" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_Phone" type="STRING" ignore="false"/>
+				<textReaderColumn name="std_Fax" type="STRING" ignore="false"/>
+			</columns>
+			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yy-MM-dd"/>
+			<errorHandlingStrategy rejectFileName="rejected.txt">
+				<errorInstructions>
+					<errorInstruction putToLog="true" errorType="EXTRA_DATA" dataStrategy="READ_POSSIBLE" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="LONG_LINE" dataStrategy="STOP" putToReject="true"/>
+					<errorInstruction putToLog="true" errorType="PROCESSING_ERROR" dataStrategy="STOP" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="INVALID_DATE" dataStrategy="READ_POSSIBLE" putToReject="false"/>
+					<errorInstruction putToLog="true" errorType="SHORT_LINE" dataStrategy="READ_POSSIBLE" putToReject="true"/>
+					<errorInstruction putToLog="true" errorType="UNPARSABLE_FIELD" dataStrategy="NULL_VALUE" putToReject="false"/>
+				</errorInstructions>
+			</errorHandlingStrategy>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints bounds="24,72,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="common-data-problems" endpoint="out"/>
+		<target step="Filter Agent" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (duplicate_agents) --><step id="duplicate_agents" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" mode="NORMAL">
+		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/duplicate_agents.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="false" compression="NONE" stringQualifierEscape="&quot;">
+			<columns>
+				<textWriterColumn name="SalesforceId"/>
+				<textWriterColumn name="EIN"/>
+				<textWriterColumn name="AccountName"/>
+				<textWriterColumn name="First_Name__c"/>
+				<textWriterColumn name="Middle_Name__c"/>
+				<textWriterColumn name="Last_Name__c"/>
+				<textWriterColumn name="AccountRecordType"/>
+				<textWriterColumn name="Email__c"/>
+				<textWriterColumn name="Phone"/>
+				<textWriterColumn name="Mobile__c"/>
+				<textWriterColumn name="Fax"/>
+				<textWriterColumn name="ParentAccountId"/>
+				<textWriterColumn name="uni_can_id"/>
+				<textWriterColumn name="uni_rule_name"/>
+			</columns>
+			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
+		</properties>
+		<visual-constraints bounds="576,72,-1,-1" layout="horizontal"/>
+	</step>
+
+</purity-config>

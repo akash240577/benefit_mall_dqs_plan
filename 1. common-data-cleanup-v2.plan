@@ -1,0 +1,561 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<purity-config version="10.6.2.ga-2017-03-03">
+	<references/>
+	<component-mappings>
+		<propertyMappings/>
+	</component-mappings>
+
+<!-- (Account Name - Common Data Problems) --><step id="Account Name - Common Data Problems" className="com.ataccama.dqc.tasks.clean.transliterate.TransliterateAlgorithm" disabled="false" mode="NORMAL">
+		<properties>
+			<columns>
+				<fromColumnToColumn to="std_AccountName" from="AccountName">
+					<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="TLT_NULL" explain="false" key="TLT_NULL"/>
+							<scoringEntry explanationColumn="VIOLATION" score="80" explainAs="ACCOUNT_NAME_IS_INVALID" explain="true" key="TLT_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</fromColumnToColumn>
+			</columns>
+			<rules>
+				<substitutionRule from="(met)"/>
+				<substitutionRule from="***DNCU***"/>
+				<substitutionRule from="(No W-9)"/>
+				<substitutionRule from="(NO W-9)"/>
+				<substitutionRule from="(DUPE REC)"/>
+				<substitutionRule from="(AFF)"/>
+				<substitutionRule from="(br)"/>
+				<substitutionRule from="***PAY AGENCY***"/>
+				<substitutionRule from="**PAY AGENCY**"/>
+				<substitutionRule from="*PAY AGENCY*"/>
+				<substitutionRule from="*Pay Agency*"/>
+				<substitutionRule from="Pay agency"/>
+				<substitutionRule from="*dup"/>
+				<substitutionRule from="[not provided]"/>
+				<substitutionRule from="(Dup)"/>
+				<substitutionRule from="*DUP*"/>
+				<substitutionRule from="DUPLICATE"/>
+				<substitutionRule from="(mr.)"/>
+				<substitutionRule from="(brk)"/>
+				<substitutionRule from="(Brk)"/>
+				<substitutionRule from="(NYL)"/>
+				<substitutionRule from="(Ms.)"/>
+				<substitutionRule from="(rev)"/>
+				<substitutionRule from="(ADV FIN"/>
+				<substitutionRule from="NON-CAPTIVE"/>
+				<substitutionRule from="(rep)"/>
+				<substitutionRule from="**PAY AGENCY-Angel&amp;#39;s Care**"/>
+				<substitutionRule from="BP600791"/>
+				<substitutionRule from="**Do not use**"/>
+				<substitutionRule from="**DO NOT USE**"/>
+				<substitutionRule from="*DNU*"/>
+				<substitutionRule from="***DO NOT USE***DUPLICATE****"/>
+				<substitutionRule from="** DO NOT USE **"/>
+				<substitutionRule from="-- DO NOT USE --"/>
+				<substitutionRule from="- Do not use -"/>
+				<substitutionRule from="**PAY - GALLAGHER - Whippany**"/>
+				<substitutionRule from="**PAY MID ATLANTIC BENEFITS**"/>
+				<substitutionRule from="**PAY LINKS INS AGENCY**"/>
+			</rules>
+		</properties>
+		<visual-constraints bounds="264,384,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Account Name - Common Data Problems" endpoint="out"/>
+		<target step="First Name - Common Data Problems" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Add Semicolon in Violation) --><step id="Add Semicolon in Violation" className="com.ataccama.dqc.tasks.expressions.ColumnAssigner" disabled="false" mode="NORMAL">
+		<properties>
+			<assignments>
+				<assignment expression="replace(VIOLATION,&quot; &quot;,&quot;;&quot;)" column="VIOLATION">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+			</assignments>
+		</properties>
+		<visual-constraints bounds="264,1128,48,48" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Add Semicolon in Violation" endpoint="out"/>
+		<target step="out" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Agency_Agent_2018-11-06) --><step id="Agency_Agent_2018-11-06" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/in/Agency_Agent_2018-11-06.xlsx" startCell="A2" skipEmptyRows="false" sheetName="Sheet1">
+			<columns>
+				<columnDef name="SalesforceId" type="STRING"/>
+				<columnDef name="EIN" type="STRING"/>
+				<columnDef name="NPN__c" type="STRING"/>
+				<columnDef name="AccountName" type="STRING"/>
+				<columnDef name="First_Name__c" type="STRING"/>
+				<columnDef name="Middle_Name__c" type="STRING"/>
+				<columnDef name="Last_Name__c" type="STRING"/>
+				<columnDef name="AccountRecordType" type="STRING"/>
+				<columnDef name="BP_ID__c" type="STRING"/>
+				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
+				<columnDef name="AMS_ID__c" type="STRING"/>
+				<columnDef name="AMS_Broker_BoB" type="INTEGER"/>
+				<columnDef name="IBAS_ID__c" type="STRING"/>
+				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
+				<columnDef name="Closed_Won" type="STRING"/>
+				<columnDef name="Weighted_Lives" type="INTEGER"/>
+				<columnDef name="CRQS_Quotes" type="INTEGER"/>
+				<columnDef name="Health_Connect_Quotes" type="STRING"/>
+				<columnDef name="HealthConnect_Quote_Count" type="INTEGER"/>
+				<columnDef name="PlatformIntegrationID__c" type="STRING"/>
+				<columnDef name="Source_System__c" type="STRING"/>
+				<columnDef name="Status__c" type="STRING"/>
+				<columnDef name="BillingStreet" type="STRING"/>
+				<columnDef name="BillingCity" type="STRING"/>
+				<columnDef name="BillingState" type="STRING"/>
+				<columnDef name="BillingPostalCode" type="STRING"/>
+				<columnDef name="BillingCountry" type="STRING"/>
+				<columnDef name="Email__c" type="STRING"/>
+				<columnDef name="Phone" type="STRING"/>
+				<columnDef name="Mobile__c" type="STRING"/>
+				<columnDef name="Home_phone__c" type="STRING"/>
+				<columnDef name="Fax" type="STRING"/>
+				<columnDef name="AccountOwnerName" type="STRING"/>
+				<columnDef name="ParentAccountId" type="STRING"/>
+				<columnDef name="ParentAccountName" type="STRING"/>
+				<columnDef name="ParentAccountType" type="STRING"/>
+				<columnDef name="Region_Benefit__c" type="STRING"/>
+				<columnDef name="Market_Benefit__c" type="STRING"/>
+				<columnDef name="Office_Benefit__c" type="STRING"/>
+				<columnDef name="BSE" type="STRING"/>
+				<columnDef name="BSE_Email" type="STRING"/>
+				<columnDef name="BSR" type="STRING"/>
+				<columnDef name="BSR_Email" type="STRING"/>
+				<columnDef name="MarketDirector" type="STRING"/>
+				<columnDef name="Market_Director_Email" type="STRING"/>
+				<columnDef name="Broker_Class__c" type="STRING"/>
+			</columns>
+			<shadowColumns>
+				<shadowColumnDef name="VIOLATION" type="STRING"/>
+				<shadowColumnDef name="VIOLATION_SCORE" type="INTEGER"/>
+				<shadowColumnDef name="VIOLATION_EXP" type="STRING"/>
+				<shadowColumnDef name="std_email" type="STRING"/>
+				<shadowColumnDef name="out_email" type="STRING"/>
+				<shadowColumnDef name="can_id" type="STRING"/>
+				<shadowColumnDef name="match_id" type="STRING"/>
+				<shadowColumnDef name="uni_id" type="STRING"/>
+				<shadowColumnDef name="rule_id" type="STRING"/>
+				<shadowColumnDef name="uni_can_id" type="STRING"/>
+				<shadowColumnDef name="uni_cli_id" type="STRING"/>
+				<shadowColumnDef name="uni_role" type="STRING"/>
+				<shadowColumnDef name="uni_rule_name" type="STRING"/>
+				<shadowColumnDef name="uni_group_role" type="STRING"/>
+				<shadowColumnDef name="out_last_name" type="STRING"/>
+				<shadowColumnDef name="out_first_name" type="STRING"/>
+				<shadowColumnDef name="std_AccountName" type="STRING"/>
+				<shadowColumnDef name="std_First_Name__c" type="STRING"/>
+				<shadowColumnDef name="std_Middle_Name__c" type="STRING"/>
+				<shadowColumnDef name="std_Last_Name__c" type="STRING"/>
+				<shadowColumnDef name="std_EIN" type="STRING"/>
+				<shadowColumnDef name="std_Phone" type="STRING"/>
+				<shadowColumnDef name="std_Fax" type="STRING"/>
+			</shadowColumns>
+		</properties>
+		<visual-constraints bounds="264,72,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Agency_Agent_2018-11-06" endpoint="out"/>
+		<target step="Filter" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Email_Validate) --><step id="Email_Validate" className="com.ataccama.dqc.tasks.clean.ValidateEmailAlgorithm" disabled="false" mode="NORMAL">
+		<properties outEmail="std_email" tldLookupFileName="C:/Information Builders/Software/Omni-Gen/dqs_workspace/Tutorials/data/ext/lkp/email_tld.lkp" in="Email__c">
+			<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+				<scoringEntries>
+					<scoringEntry score="50" explainAs="EMAIL_IS_MISSING_OR_INVALID" explain="true" key="EML_NULL"/>
+					<scoringEntry score="50" explainAs="EMAIL_IS_MISSING_OR_INVALID" explain="true" key="EML_ADDRESS"/>
+					<scoringEntry score="80" explainAs="EML_TLD" explain="false" key="EML_TLD"/>
+					<scoringEntry score="50" explainAs="EMAIL_IS_MISSING_OR_INVALID" explain="true" key="EML_AMBIGUOUS_DOMAIN"/>
+				</scoringEntries>
+			</scorer>
+		</properties>
+		<visual-constraints bounds="264,1056,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Email_Validate" endpoint="out"/>
+		<target step="Add Semicolon in Violation" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Filter) --><step id="Filter" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
+		<properties>
+			<condition>AccountRecordType = &#39;Agency&#39; or (BP_Broker_BoB&lt;&gt;0 or AMS_Broker_BoB &lt;&gt;0 or IBAS_Broker_BoB == &quot;Yes&quot;
+or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won == &quot;Yes&quot;)</condition>
+		</properties>
+		<visual-constraints bounds="264,168,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Filter" endpoint="out"/>
+		<target step="Multiplicator" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (First Name - Common Data Problems) --><step id="First Name - Common Data Problems" className="com.ataccama.dqc.tasks.clean.transliterate.TransliterateAlgorithm" disabled="false" mode="NORMAL">
+		<properties whenCondition="AccountRecordType = &#39;Agent&#39;">
+			<columns>
+				<fromColumnToColumn to="std_First_Name__c" from="First_Name__c">
+					<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="TLT_NULL" explain="false" key="TLT_NULL"/>
+							<scoringEntry explanationColumn="VIOLATION" score="80" explainAs="FIRST_NAME_IS_INVALID" explain="true" key="TLT_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</fromColumnToColumn>
+			</columns>
+			<rules>
+				<substitutionRule from="&amp; Associates"/>
+				<substitutionRule from="(Jerry) Yeontae"/>
+				<substitutionRule from="*"/>
+				<substitutionRule from=","/>
+				<substitutionRule from="."/>
+				<substitutionRule from="?"/>
+				<substitutionRule from="4th"/>
+				<substitutionRule from="5th"/>
+				<substitutionRule from="#"/>
+				<substitutionRule from="(dup)"/>
+				<substitutionRule from="(mr.)"/>
+				<substitutionRule from="(DECEASED)"/>
+				<substitutionRule from="( Ind Only )"/>
+				<substitutionRule from="DO NOT USE"/>
+				<substitutionRule from="*Do Not Use*"/>
+				<substitutionRule from="Dates"/>
+				<substitutionRule from="**PAY AGENCY**"/>
+				<substitutionRule from="* AGENT NOT WITH BMA"/>
+				<substitutionRule from="(DUPLICATE ACCOUNT)"/>
+				<substitutionRule from="DUP"/>
+			</rules>
+		</properties>
+		<visual-constraints bounds="264,480,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="First Name - Common Data Problems" endpoint="out"/>
+		<target step="Middle Name - Common Data Problems" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Fix Formatting) --><step id="Fix Formatting" className="com.ataccama.dqc.tasks.expressions.ColumnAssigner" disabled="false" mode="NORMAL">
+		<properties>
+			<assignments>
+				<assignment column="std_AccountName">
+					<expression>iif(AccountRecordType == &quot;Agent&quot;, capitalize(trim(std_Last_Name__c+&quot;, &quot;+std_First_Name__c+ &quot; &quot;+ substr(std_Middle_Name__c, 0, 1))), capitalize(std_AccountName))
+ </expression>
+					<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+						<scoringEntries>
+							<scoringEntry explanationColumn="VIOLATION" score="80" explainAs="ACCOUNT_NAME_IS_INVALID" explain="true" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+				<assignment column="std_EIN">
+					<expression>iif(trashNonDigits(EIN) == &#39;&#39; or EIN is null or length(trashNonDigits(EIN)) &lt;&gt; 9 or trashNonDigits(EIN) == &#39;000000000&#39; or trashNonDigits(EIN) == &#39;999999999&#39; 
+or not matches(@&quot;^\d{2}\-?\d{7}$&quot;, trashNonDigits(EIN)), &quot;&quot;, 
+substr(trashNonDigits(EIN), 0, 2) +&quot;-&quot;+ substr(trashNonDigits(EIN), 2))</expression>
+					<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+						<scoringEntries>
+							<scoringEntry explanationColumn="VIOLATION" score="10" explainAs="EIN_IS_MISSING_OR_INVALID" explain="false" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+				<assignment column="std_Phone">
+					<expression>ph :=trashNonDigits(Phone);
+iif(ph != &#39;&#39; and Phone is not null and length(ph) == 10,  
+&quot;(&quot;+substr(ph, 0, 3)+&quot;) &quot;+ substr(ph, 3, 3)+&quot;-&quot;+substr(ph, 6),ph)
+</expression>
+					<scorer>
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+				<assignment column="std_Fax">
+					<expression>ph :=trashNonDigits(Fax);
+iif(ph != &#39;&#39; and Fax is not null and length(ph) == 10,  
+&quot;(&quot;+substr(ph, 0, 3)+&quot;) &quot;+ substr(ph, 3, 3)+&quot;-&quot;+substr(ph, 6),ph)</expression>
+					<scorer>
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+			</assignments>
+		</properties>
+		<visual-constraints bounds="264,960,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Fix Formatting" endpoint="out"/>
+		<target step="Email_Validate" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Last Name - Common Data Problems) --><step id="Last Name - Common Data Problems" className="com.ataccama.dqc.tasks.clean.transliterate.TransliterateAlgorithm" disabled="false" mode="NORMAL">
+		<properties whenCondition="AccountRecordType = &#39;Agent&#39;">
+			<columns>
+				<fromColumnToColumn to="std_Last_Name__c" from="Last_Name__c">
+					<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="TLT_NULL" explain="false" key="TLT_NULL"/>
+							<scoringEntry explanationColumn="VIOLATION" score="80" explainAs="LAST_NAME_IS_INVALID" explain="true" key="TLT_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</fromColumnToColumn>
+			</columns>
+			<rules>
+				<substitutionRule from="#NAME?"/>
+				<substitutionRule from="&amp; Associates"/>
+				<substitutionRule from="&amp; Hobbs Of Balto"/>
+				<substitutionRule from="&amp; Hough"/>
+				<substitutionRule from="(Bretz) Dively"/>
+				<substitutionRule from="***PAY AGENCY***Bell"/>
+				<substitutionRule from="12"/>
+				<substitutionRule from="50"/>
+				<substitutionRule from="8"/>
+				<substitutionRule from="(NO W-9)"/>
+				<substitutionRule from="(OLD-DO NOT USE)"/>
+				<substitutionRule from="INACTIVE"/>
+				<substitutionRule from="(met)"/>
+				<substitutionRule from="*"/>
+				<substitutionRule from="(broker)"/>
+				<substitutionRule from="(rep)"/>
+				<substitutionRule from="***DUPLICAT"/>
+				<substitutionRule from="**DUPLICATE"/>
+				<substitutionRule from="**Do not use**"/>
+			</rules>
+		</properties>
+		<visual-constraints bounds="264,672,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Last Name - Common Data Problems" endpoint="out"/>
+		<target step="Names Exact Match Cleanup" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Middle Name - Common Data Problems) --><step id="Middle Name - Common Data Problems" className="com.ataccama.dqc.tasks.clean.transliterate.TransliterateAlgorithm" disabled="false" mode="NORMAL">
+		<properties whenCondition="AccountRecordType = &#39;Agent&#39;">
+			<columns>
+				<fromColumnToColumn to="std_Middle_Name__c">
+					<from>Middle_Name__c		
+</from>
+					<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="TLT_NULL" explain="false" key="TLT_NULL"/>
+							<scoringEntry explanationColumn="VIOLATION" score="80" explainAs="MIDDLE_NAME_IS_INVALID" explain="true" key="TLT_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</fromColumnToColumn>
+			</columns>
+			<rules>
+				<substitutionRule from=" "/>
+				<substitutionRule from="- DC/VA business"/>
+				<substitutionRule from="-- DO NOT USE --"/>
+				<substitutionRule from="- Do not use -"/>
+				<substitutionRule from="&quot;Bill&quot;"/>
+				<substitutionRule from="&quot;Bob&quot;"/>
+				<substitutionRule from="&quot;David&quot;"/>
+				<substitutionRule from="&quot;DUP&quot;MISPELLED LAST NAME"/>
+				<substitutionRule from="&quot; &quot;"/>
+				<substitutionRule from="&amp;"/>
+				<substitutionRule from="( DO Not USE)"/>
+				<substitutionRule from="( )"/>
+				<substitutionRule from="*"/>
+				<substitutionRule from="** DO NOT USE **"/>
+				<substitutionRule from="** Do Not Use**"/>
+				<substitutionRule from="****DUPLICATE"/>
+				<substitutionRule from="****PAY AGENCY****"/>
+				<substitutionRule from="***DNU***"/>
+				<substitutionRule from="***DO NOT USE****"/>
+				<substitutionRule from="***DO NOT USE*****"/>
+				<substitutionRule from="***DO NOT USE***DUPLICATE***"/>
+				<substitutionRule from="***DO NOT USE***DUPLICATE****"/>
+				<substitutionRule from="***DUP ACCT***DO NOT USE******"/>
+				<substitutionRule from="***DUPLICATE ACCT****"/>
+				<substitutionRule from="** **"/>
+				<substitutionRule from="**DECEASED BROKER **"/>
+				<substitutionRule from="**DECEASED**"/>
+				<substitutionRule from="**DNU - OLD BIZ ONLY**"/>
+				<substitutionRule from="**DO NOT USE****"/>
+				<substitutionRule from="**DO NOT USE***"/>
+				<substitutionRule from="**DO NOT USE**"/>
+				<substitutionRule from="**DO NOT USE**DUPLICATE***"/>
+				<substitutionRule from="**DO NOT USE**DUPLICATE**"/>
+				<substitutionRule from="**DO NOT USE-DUP**"/>
+				<substitutionRule from="**DUP ACCT***"/>
+				<substitutionRule from="**DUP**"/>
+				<substitutionRule from="**DUPLICATE**"/>
+				<substitutionRule from="**DUPLICATE-PAY AGENCY**"/>
+				<substitutionRule from="**PAY AGENCY"/>
+				<substitutionRule from="**PAYAGENCY**"/>
+				<substitutionRule from="**SEE BP #1179158**"/>
+				<substitutionRule from="**SEE BP #2595066**"/>
+				<substitutionRule from="**SEE BP #731904**"/>
+				<substitutionRule from="**SEE BP #845464**"/>
+				<substitutionRule from="**SEE BP #848428**"/>
+				<substitutionRule from="*DNU*"/>
+				<substitutionRule from="*DO NOT USE - AGENT DECEASED*"/>
+				<substitutionRule from="*DO NOT USE*"/>
+				<substitutionRule from="*DUP**"/>
+				<substitutionRule from="*DUP*"/>
+				<substitutionRule from="*DUP"/>
+				<substitutionRule from="*DUPLICATE*"/>
+				<substitutionRule from="*PAY AGENCY*"/>
+				<substitutionRule from="..."/>
+				<substitutionRule from="."/>
+				<substitutionRule from="_"/>
+				<substitutionRule from="~~~DO NOT USE~~~"/>
+				<substitutionRule from="Dates"/>
+				<substitutionRule from="NON-CAPTIVE"/>
+			</rules>
+		</properties>
+		<visual-constraints bounds="264,576,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Middle Name - Common Data Problems" endpoint="out"/>
+		<target step="Last Name - Common Data Problems" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Multiplicator) --><step id="Multiplicator" className="com.ataccama.dqc.tasks.flow.Multiplicator" disabled="false" mode="NORMAL">
+		<properties/>
+		<visual-constraints bounds="264,264,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Multiplicator" endpoint="out"/>
+		<target step="Account Name - Common Data Problems" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Names Exact Match Cleanup) --><step id="Names Exact Match Cleanup" className="com.ataccama.dqc.tasks.expressions.ColumnAssigner" disabled="false" mode="NORMAL">
+		<properties whenCondition="AccountRecordType = &#39;Agent&#39;">
+			<assignments>
+				<assignment column="std_First_Name__c">
+					<expression>a := iif(trim(std_First_Name__c) in {&quot;April&quot;, &quot;Sun&quot;, &quot;Jan&quot;, &quot;May&quot;, &quot;June&quot;, &quot;August&quot;, &quot;Jun&quot;, &quot;Thu&quot;, &quot;A C&quot;, &quot;A L&quot;}, &quot;&quot;, trim(std_First_Name__c));
+capitalize(a) </expression>
+					<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+						<scoringEntries>
+							<scoringEntry explanationColumn="VIOLATION" score="80" explainAs="FIRST_NAME_IS_INVALID" explain="true" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+				<assignment column="std_Middle_Name__c">
+					<expression>a := iif(trim(std_Middle_Name__c) in {&quot;MAY&quot;,&quot;JUNE&quot;,&quot;&quot;, null}, &quot;&quot;, trim(std_Middle_Name__c));
+capitalize(a)</expression>
+					<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+						<scoringEntries>
+							<scoringEntry explanationColumn="VIOLATION" score="10" explainAs="MIDDLE_NAME_IS_INVALID" explain="true" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+				<assignment column="std_Last_Name__c">
+					<expression>a := iif(trim(std_Last_Name__c) in {&quot;Sunday&quot;,&quot;SUN&quot;,&quot;March&quot;,&quot;April&quot;,&quot;November&quot;,&quot;Sun&quot;, &quot;Jan&quot;, &quot;May&quot;, &quot;June&quot;, &quot;August&quot;, &quot;Jun&quot;, &quot;Thu&quot;, &quot;A&quot;, &quot;&quot;, null}, &quot;&quot;, trim(std_Last_Name__c));
+capitalize(a)</expression>
+					<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
+						<scoringEntries>
+							<scoringEntry explanationColumn="VIOLATION" score="80" explainAs="LAST_NAME_IS_INVALID" explain="true" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+			</assignments>
+		</properties>
+		<visual-constraints bounds="264,768,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Names Exact Match Cleanup" endpoint="out"/>
+		<target step="Simple Scoring" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Simple Scoring) --><step id="Simple Scoring" className="com.ataccama.dqc.tasks.scoring.SimpleScoring" disabled="false" mode="NORMAL">
+		<properties defaultScoreColumn="VIOLATION_SCORE" defaultExplainColumn="VIOLATION">
+			<scoringCases>
+				<scoringCase explanation="&quot;EIN_IS_MISSING_OR_INVALID&quot;" score="10">
+					<condition>trashNonDigits(EIN) == &#39;&#39; or EIN is null or length(trashNonDigits(EIN)) != 9 or trashNonDigits(EIN) == &#39;000000000&#39; or trashNonDigits(EIN) == &#39;999999999&#39; 
+or not matches(@&quot;^\d{2}\-?\d{7}$&quot;, trashNonDigits(EIN))</condition>
+				</scoringCase>
+				<scoringCase explanation="&quot;PHONE_IS_INVALID_FORMAT&quot;" score="20">
+					<condition>trashNonDigits(Phone) == &#39;&#39; or Phone is null or length(trashNonDigits(Phone)) != 10 or trashNonDigits(Phone) == &#39;0000000000&#39; or trim(Phone) == &#39;#NAME?&#39; 
+or not matches(@&quot;^\(\d{3}\)\s\d{3}-\d{4}&quot;, trim(Phone))</condition>
+				</scoringCase>
+				<scoringCase explanation="&quot;FAX_IS_INVALID_FORMAT&quot;" score="20">
+					<condition>trashNonDigits(Fax) == &#39;&#39; or Fax is null or length(trashNonDigits(Fax)) != 10 or trashNonDigits(Fax) == &#39;0000000000&#39; or trim(Fax) == &#39;#NAME?&#39; 
+or not matches(@&quot;^\(\d{3}\)\s\d{3}-\d{4}&quot;, trim(Fax))</condition>
+				</scoringCase>
+			</scoringCases>
+		</properties>
+		<visual-constraints bounds="264,864,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Simple Scoring" endpoint="out"/>
+		<target step="Fix Formatting" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (out) --><step id="out" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" mode="NORMAL">
+		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/common-data-problems.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="true" compression="NONE" stringQualifierEscape="&quot;">
+			<columns/>
+			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
+		</properties>
+		<visual-constraints bounds="264,1224,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<modelComment bounds="480,72,145,49" borderColor="183,183,0" backgroundColor="255,255,180" foregroundColor="51,51,51">Master data sheet will
+be used</modelComment>
+
+</purity-config>
