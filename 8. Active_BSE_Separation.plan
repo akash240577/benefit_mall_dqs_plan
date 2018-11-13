@@ -41,12 +41,12 @@
 
 
 
-<!-- (BSR) --><step id="BSR" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
-		<properties condition="containsWord(Job_Title,&quot;Representative&quot;)"/>
+<!-- (BSE) --><step id="BSE" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
+		<properties condition="containsWord(Job_Title,&quot;Executive&quot;)"/>
 		<visual-constraints bounds="264,168,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="BSR" endpoint="out"/>
+		<source step="BSE" endpoint="out"/>
 		<target step="Join" endpoint="in_right"/>
 		<visual-constraints>
 			<bendpoints/>
@@ -147,7 +147,7 @@
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Column Assigner" endpoint="out"/>
-		<target step="BSR" endpoint="in"/>
+		<target step="BSE" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -156,7 +156,7 @@
 
 
 <!-- (Excel File Writer) --><step id="Excel File Writer" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/Active_BSR_separated.xls" excel2007="false">
+		<properties fileName="../data/out/Active_BSE_separated.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -169,7 +169,7 @@
 
 
 <!-- (Join) --><step id="Join" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
-		<properties leftKey="BSR" matchStrategy="MERGE" rightKey="Full_Name" joinType="LEFT">
+		<properties leftKey="BSE" matchStrategy="MERGE" rightKey="Full_Name" joinType="LEFT">
 			<columnDefinitions>
 				<columnDefinition expression="in_left.SalesforceId" name="SalesforceId"/>
 				<columnDefinition expression="in_left.EIN" name="EIN"/>
@@ -228,7 +228,7 @@
 				<columnDefinition expression="in_left.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
 				<columnDefinition expression="in_left.dup_agent_rule_used" name="dup_agent_rule_used"/>
 				<columnDefinition expression="in_left.dup_agent_can_id" name="dup_agent_can_id"/>
-				<columnDefinition expression="iif(in_right.Full_Name is not null,&quot;Yes&quot;,&quot;No&quot;)" name="ACTIVE_BSR"/>
+				<columnDefinition expression="iif(in_right.Full_Name is not null,&quot;Yes&quot;,&quot;No&quot;)" name="ACTIVE_BSE"/>
 			</columnDefinitions>
 		</properties>
 		<visual-constraints bounds="168,240,-1,-1" layout="vertical"/>
@@ -306,7 +306,7 @@
 			</columns>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="72,96,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="96,120,32,32" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Merged" endpoint="out"/>
@@ -321,7 +321,7 @@
 <!-- (Sort) --><step id="Sort" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
 		<properties>
 			<sort>
-				<orderBy expression="ACTIVE_BSR" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="ACTIVE_BSE" orderDescending="true" nullsFirst="false"/>
 				<orderBy orderDescending="true" nullsFirst="false">
 					<expression>BP_Broker_BoB
 </expression>

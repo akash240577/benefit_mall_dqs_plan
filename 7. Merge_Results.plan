@@ -440,8 +440,8 @@
 				<columnDefinition expression="in_left.MarketDirector" name="MarketDirector"/>
 				<columnDefinition expression="in_left.Market_Director_Email" name="Market_Director_Email"/>
 				<columnDefinition expression="in_left.Broker_Class__c" name="Broker_Class__c"/>
-				<columnDefinition expression="in_right.dup_agent_rule_used" name="dup_agent_rule_used"/>
-				<columnDefinition expression="in_right.dup_agent_can_id" name="dup_agent_can_id"/>
+				<columnDefinition expression="in_right.uni_rule_name" name="dup_agent_rule_used"/>
+				<columnDefinition expression="in_right.uni_can_id" name="dup_agent_can_id"/>
 			</columnDefinitions>
 		</properties>
 		<visual-constraints bounds="240,96,-1,-1" layout="vertical"/>
@@ -760,7 +760,6 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<columnMapping in_b="MarketDirector" dest="MarketDirector" in_a="MarketDirector"/>
 				<columnMapping in_b="Market_Director_Email" dest="Market_Director_Email" in_a="Market_Director_Email"/>
 				<columnMapping in_b="Broker_Class__c" dest="Broker_Class__c" in_a="Broker_Class__c"/>
-				<columnMapping dest="dup_agent_can_id" in_a="dup_agent_can_id"/>
 				<columnMapping dest="VIOLATION" in_a="VIOLATION"/>
 				<columnMapping dest="VIOLATION_SCORE" in_a="VIOLATION_SCORE"/>
 				<columnMapping dest="std_AccountName" in_a="std_AccountName"/>
@@ -771,6 +770,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<columnMapping dest="ParentAccountId_email" in_a="ParentAccountId_email"/>
 				<columnMapping dest="ParentAccountId_phone" in_a="ParentAccountId_phone"/>
 				<columnMapping dest="ParentAccountId_Fax" in_a="ParentAccountId_Fax"/>
+				<columnMapping dest="dup_agent_can_id" in_a="dup_agent_can_id"/>
 				<columnMapping dest="dup_agent_rule_used" in_a="dup_agent_rule_used"/>
 			</columnMappings>
 		</properties>
@@ -949,8 +949,8 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<textReaderColumn name="Mobile__c" type="STRING" ignore="false"/>
 				<textReaderColumn name="Fax" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId" type="STRING" ignore="false"/>
-				<textReaderColumn name="dup_agent_rule_used" type="STRING" ignore="false"/>
-				<textReaderColumn name="dup_agent_can_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_can_id" type="STRING" ignore="false"/>
+				<textReaderColumn name="uni_rule_name" type="STRING" ignore="false"/>
 			</columns>
 			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yy-MM-dd"/>
 			<errorHandlingStrategy rejectFileName="rejected.txt">
@@ -965,7 +965,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 			</errorHandlingStrategy>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="384,24,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="408,24,32,32" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="duplicate_agents" endpoint="out"/>
