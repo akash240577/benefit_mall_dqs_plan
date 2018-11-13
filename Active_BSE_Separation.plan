@@ -1,0 +1,345 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<purity-config version="10.6.2.ga-2017-03-03">
+	<references/>
+	<component-mappings>
+		<propertyMappings/>
+	</component-mappings>
+
+<!-- (Active BSEs BSRs and MDs) --><step id="Active BSEs BSRs and MDs" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/in/Active BSEs BSRs and MDs.xlsx" startCell="A2" skipEmptyRows="false" sheetName="Sheet1">
+			<columns>
+				<columnDef name="Employee_Name" type="STRING"/>
+				<columnDef name="Empl_Status" type="STRING"/>
+				<columnDef name="Company_Name" type="STRING"/>
+				<columnDef name="Work_Email_Address" type="STRING"/>
+				<columnDef name="Job_Title" type="STRING"/>
+				<columnDef name="Cost_Center" type="STRING"/>
+				<columnDef name="Function" type="STRING"/>
+				<columnDef name="StateOffice" type="STRING"/>
+				<columnDef name="Location" type="STRING"/>
+				<columnDef name="Region" type="STRING"/>
+				<columnDef name="Direct_Supervisor" type="STRING"/>
+			</columns>
+			<shadowColumns>
+				<shadowColumnDef name="First_Name" type="STRING"/>
+				<shadowColumnDef name="Last_Name" type="STRING"/>
+				<shadowColumnDef name="Last_Name_MI" type="STRING"/>
+				<shadowColumnDef name="First_Name+ Last_Name" type="STRING"/>
+				<shadowColumnDef name="First_Name_MI" type="STRING"/>
+				<shadowColumnDef name="Full_Name" type="STRING"/>
+			</shadowColumns>
+		</properties>
+		<visual-constraints bounds="288,24,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Active BSEs BSRs and MDs" endpoint="out"/>
+		<target step="Column Assigner" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (BSE) --><step id="BSE" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
+		<properties condition="containsWord(Job_Title,&quot;Executive&quot;)"/>
+		<visual-constraints bounds="264,168,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="BSE" endpoint="out"/>
+		<target step="Join" endpoint="in_right"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Column Assigner) --><step id="Column Assigner" className="com.ataccama.dqc.tasks.expressions.ColumnAssigner" disabled="false" mode="NORMAL">
+		<properties>
+			<assignments>
+				<assignment expression="Employee_Name" column="Employee_Name">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+				<assignment expression="substr(Employee_Name,0,indexOf(Employee_Name,&quot;,&quot;))" column="Last_Name">
+					<scorer>
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+				<assignment expression="substr(Employee_Name,indexOf(Employee_Name,&quot;,&quot;)+1)" column="First_Name_MI">
+					<scorer>
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+				<assignment expression="substr(First_Name_MI,0,indexOf(First_Name_MI,&quot; &quot;))" column="First_Name">
+					<scorer>
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+				<assignment expression="trim(First_Name) + &quot; &quot; + trim(Last_Name)" column="Full_Name">
+					<scorer>
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
+				<assignment expression="Empl_Status" column="Empl_Status">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+				<assignment expression="Company_Name" column="Company_Name">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+				<assignment expression="Work_Email_Address" column="Work_Email_Address">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+				<assignment expression="Job_Title" column="Job_Title">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+				<assignment expression="Cost_Center" column="Cost_Center">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+				<assignment expression="[Function]" column="Function">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+				<assignment expression="StateOffice" column="StateOffice">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+				<assignment expression="Location" column="Location">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+				<assignment expression="Region" column="Region">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+				<assignment expression="Direct_Supervisor" column="Direct_Supervisor">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
+			</assignments>
+		</properties>
+		<visual-constraints bounds="288,96,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Column Assigner" endpoint="out"/>
+		<target step="BSE" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Excel File Writer) --><step id="Excel File Writer" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/Active_BSE_separated.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="168,384,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (Join) --><step id="Join" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
+		<properties leftKey="BSE" matchStrategy="MERGE" rightKey="Full_Name" joinType="LEFT">
+			<columnDefinitions>
+				<columnDefinition expression="in_left.SalesforceId" name="SalesforceId"/>
+				<columnDefinition expression="in_left.EIN" name="EIN"/>
+				<columnDefinition expression="in_left.AccountName" name="AccountName"/>
+				<columnDefinition expression="in_left.NPN__c" name="NPN__c"/>
+				<columnDefinition expression="in_left.First_Name__c" name="First_Name__c"/>
+				<columnDefinition expression="in_left.Middle_Name__c" name="Middle_Name__c"/>
+				<columnDefinition expression="in_left.Email__c" name="Email__c"/>
+				<columnDefinition expression="in_left.Phone" name="Phone"/>
+				<columnDefinition expression="in_left.Last_Name__c" name="Last_Name__c"/>
+				<columnDefinition expression="in_left.AccountRecordType" name="AccountRecordType"/>
+				<columnDefinition expression="in_left.Mobile__c" name="Mobile__c"/>
+				<columnDefinition expression="in_left.Fax" name="Fax"/>
+				<columnDefinition expression="in_left.BP_ID__c" name="BP_ID__c"/>
+				<columnDefinition expression="in_left.BP_Broker_BoB" name="BP_Broker_BoB"/>
+				<columnDefinition expression="in_left.AMS_ID__c" name="AMS_ID__c"/>
+				<columnDefinition expression="in_left.AMS_Broker_BoB" name="AMS_Broker_BoB"/>
+				<columnDefinition expression="in_left.IBAS_ID__c" name="IBAS_ID__c"/>
+				<columnDefinition expression="in_left.IBAS_Broker_BoB" name="IBAS_Broker_BoB"/>
+				<columnDefinition expression="in_left.Closed_Won" name="Closed_Won"/>
+				<columnDefinition expression="in_left.Weighted_Lives" name="Weighted_Lives"/>
+				<columnDefinition expression="in_left.CRQS_Quotes" name="CRQS_Quotes"/>
+				<columnDefinition expression="in_left.Health_Connect_Quotes" name="Health_Connect_Quotes"/>
+				<columnDefinition expression="in_left.HealthConnect_Quote_Count" name="HealthConnect_Quote_Count"/>
+				<columnDefinition expression="in_left.PlatformIntegrationID__c" name="PlatformIntegrationID__c"/>
+				<columnDefinition expression="in_left.Source_System__c" name="Source_System__c"/>
+				<columnDefinition expression="in_left.Status__c" name="Status__c"/>
+				<columnDefinition expression="in_left.BillingStreet" name="BillingStreet"/>
+				<columnDefinition expression="in_left.BillingCity" name="BillingCity"/>
+				<columnDefinition expression="in_left.BillingState" name="BillingState"/>
+				<columnDefinition expression="in_left.BillingPostalCode" name="BillingPostalCode"/>
+				<columnDefinition expression="in_left.BillingCountry" name="BillingCountry"/>
+				<columnDefinition expression="in_left.Home_phone__c" name="Home_phone__c"/>
+				<columnDefinition expression="in_left.AccountOwnerName" name="AccountOwnerName"/>
+				<columnDefinition expression="in_left.ParentAccountId" name="ParentAccountId"/>
+				<columnDefinition expression="in_left.ParentAccountName" name="ParentAccountName"/>
+				<columnDefinition expression="in_left.ParentAccountType" name="ParentAccountType"/>
+				<columnDefinition expression="in_left.Region_Benefit__c" name="Region_Benefit__c"/>
+				<columnDefinition expression="in_left.Market_Benefit__c" name="Market_Benefit__c"/>
+				<columnDefinition expression="in_left.Office_Benefit__c" name="Office_Benefit__c"/>
+				<columnDefinition expression="in_left.BSE" name="BSE"/>
+				<columnDefinition expression="in_left.BSE_Email" name="BSE_Email"/>
+				<columnDefinition expression="in_left.BSR" name="BSR"/>
+				<columnDefinition expression="in_left.BSR_Email" name="BSR_Email"/>
+				<columnDefinition expression="in_left.MarketDirector" name="MarketDirector"/>
+				<columnDefinition expression="in_left.Market_Director_Email" name="Market_Director_Email"/>
+				<columnDefinition expression="in_left.Broker_Class__c" name="Broker_Class__c"/>
+				<columnDefinition expression="in_left.VIOLATION" name="VIOLATION"/>
+				<columnDefinition expression="in_left.VIOLATION_SCORE" name="VIOLATION_SCORE"/>
+				<columnDefinition expression="in_left.std_AccountName" name="std_AccountName"/>
+				<columnDefinition expression="in_left.std_First_Name__c" name="std_First_Name__c"/>
+				<columnDefinition expression="in_left.std_Middle_Name__c" name="std_Middle_Name__c"/>
+				<columnDefinition expression="in_left.std_Last_Name__c" name="std_Last_Name__c"/>
+				<columnDefinition expression="in_left.ParentAccountId_email" name="ParentAccountId_email"/>
+				<columnDefinition expression="in_left.ParentAccountId_phone" name="ParentAccountId_phone"/>
+				<columnDefinition expression="in_left.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
+				<columnDefinition expression="in_left.dup_agent_rule_used" name="dup_agent_rule_used"/>
+				<columnDefinition expression="in_left.dup_agent_can_id" name="dup_agent_can_id"/>
+				<columnDefinition expression="iif(in_right.Full_Name is not null,&quot;Yes&quot;,&quot;No&quot;)" name="ACTIVE_BSE"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints bounds="168,240,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Join" endpoint="out"/>
+		<target step="Sort" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Merged) --><step id="Merged" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/out/Merged.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
+			<columns>
+				<columnDef name="SalesforceId" type="STRING"/>
+				<columnDef name="EIN" type="STRING"/>
+				<columnDef name="AccountName" type="STRING"/>
+				<columnDef name="NPN__c" type="STRING"/>
+				<columnDef name="First_Name__c" type="STRING"/>
+				<columnDef name="Middle_Name__c" type="STRING"/>
+				<columnDef name="Email__c" type="STRING"/>
+				<columnDef name="Phone" type="STRING"/>
+				<columnDef name="Last_Name__c" type="STRING"/>
+				<columnDef name="AccountRecordType" type="STRING"/>
+				<columnDef name="Mobile__c" type="STRING"/>
+				<columnDef name="Fax" type="STRING"/>
+				<columnDef name="BP_ID__c" type="STRING"/>
+				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
+				<columnDef name="AMS_ID__c" type="STRING"/>
+				<columnDef name="AMS_Broker_BoB" type="INTEGER"/>
+				<columnDef name="IBAS_ID__c" type="STRING"/>
+				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
+				<columnDef name="Closed_Won" type="STRING"/>
+				<columnDef name="Weighted_Lives" type="INTEGER"/>
+				<columnDef name="CRQS_Quotes" type="INTEGER"/>
+				<columnDef name="Health_Connect_Quotes" type="STRING"/>
+				<columnDef name="HealthConnect_Quote_Count" type="INTEGER"/>
+				<columnDef name="PlatformIntegrationID__c" type="STRING"/>
+				<columnDef name="Source_System__c" type="STRING"/>
+				<columnDef name="Status__c" type="STRING"/>
+				<columnDef name="BillingStreet" type="STRING"/>
+				<columnDef name="BillingCity" type="STRING"/>
+				<columnDef name="BillingState" type="STRING"/>
+				<columnDef name="BillingPostalCode" type="STRING"/>
+				<columnDef name="BillingCountry" type="STRING"/>
+				<columnDef name="Home_phone__c" type="STRING"/>
+				<columnDef name="AccountOwnerName" type="STRING"/>
+				<columnDef name="ParentAccountId" type="STRING"/>
+				<columnDef name="ParentAccountName" type="STRING"/>
+				<columnDef name="ParentAccountType" type="STRING"/>
+				<columnDef name="Region_Benefit__c" type="STRING"/>
+				<columnDef name="Market_Benefit__c" type="STRING"/>
+				<columnDef name="Office_Benefit__c" type="STRING"/>
+				<columnDef name="BSE" type="STRING"/>
+				<columnDef name="BSE_Email" type="STRING"/>
+				<columnDef name="BSR" type="STRING"/>
+				<columnDef name="BSR_Email" type="STRING"/>
+				<columnDef name="MarketDirector" type="STRING"/>
+				<columnDef name="Market_Director_Email" type="STRING"/>
+				<columnDef name="Broker_Class__c" type="STRING"/>
+				<columnDef name="VIOLATION" type="STRING"/>
+				<columnDef name="VIOLATION_SCORE" type="INTEGER"/>
+				<columnDef name="std_AccountName" type="STRING"/>
+				<columnDef name="std_First_Name__c" type="STRING"/>
+				<columnDef name="std_Middle_Name__c" type="STRING"/>
+				<columnDef name="std_Last_Name__c" type="STRING"/>
+				<columnDef name="ParentAccountId_email" type="STRING"/>
+				<columnDef name="ParentAccountId_phone" type="STRING"/>
+				<columnDef name="ParentAccountId_Fax" type="STRING"/>
+				<columnDef name="dup_agent_rule_used" type="STRING"/>
+				<columnDef name="dup_agent_can_id" type="STRING"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints bounds="72,96,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Merged" endpoint="out"/>
+		<target step="Join" endpoint="in_left"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Sort) --><step id="Sort" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
+		<properties>
+			<sort>
+				<orderBy expression="ACTIVE_BSE" orderDescending="true" nullsFirst="false"/>
+				<orderBy orderDescending="true" nullsFirst="false">
+					<expression>BP_Broker_BoB
+</expression>
+				</orderBy>
+				<orderBy expression="AMS_Broker_BoB" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="CRQS_Quotes" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="HealthConnect_Quote_Count" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="Weighted_Lives" orderDescending="true" nullsFirst="false"/>
+			</sort>
+		</properties>
+		<visual-constraints bounds="168,312,48,48" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Sort" endpoint="out"/>
+		<target step="Excel File Writer" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+</purity-config>
