@@ -496,6 +496,7 @@
 				<columnDefinition expression="in_right.ParentAccountId_email" name="ParentAccountId_email"/>
 				<columnDefinition expression="in_right.ParentAccountId_phone" name="ParentAccountId_phone"/>
 				<columnDefinition expression="in_right.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
+				<columnDefinition expression="in_right.ParentAccountId_Split_Payment" name="ParentAccountId_Split_Payment"/>
 				<columnDefinition expression="in_left.ParentAccountName" name="ParentAccountName"/>
 				<columnDefinition expression="in_left.ParentAccountType" name="ParentAccountType"/>
 				<columnDefinition expression="in_left.Region_Benefit__c" name="Region_Benefit__c"/>
@@ -584,6 +585,7 @@
 				<columnDefinition expression="in_right.ParentAccountId_email" name="ParentAccountId_email"/>
 				<columnDefinition expression="in_right.ParentAccountId_phone" name="ParentAccountId_phone"/>
 				<columnDefinition expression="in_right.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
+				<columnDefinition expression="in_right.ParentAccountId_Split_Payment" name="ParentAccountId_Split_Payment"/>
 				<columnDefinition expression="in_right.dup_agent_rule_used" name="dup_agent_rule_used"/>
 				<columnDefinition expression="in_right.dup_agent_can_id" name="dup_agent_can_id"/>
 			</columnDefinitions>
@@ -770,6 +772,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<columnMapping dest="ParentAccountId_email" in_a="ParentAccountId_email"/>
 				<columnMapping dest="ParentAccountId_phone" in_a="ParentAccountId_phone"/>
 				<columnMapping dest="ParentAccountId_Fax" in_a="ParentAccountId_Fax"/>
+				<columnMapping dest="ParentAccountId_Split_Payment" in_a="ParentAccountId_Split_Payment"/>
 				<columnMapping dest="dup_agent_can_id" in_a="dup_agent_can_id"/>
 				<columnMapping dest="dup_agent_rule_used" in_a="dup_agent_rule_used"/>
 			</columnMappings>
@@ -790,17 +793,11 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 		<properties stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" lineMaxReadLength="65536" numberOfLinesInHeader="1" fileName="../data/out/agent_agency_matching.csv" encoding="UTF-8" numberOfLinesInFooter="0" compression="NONE" stringQualifierEscape="&quot;">
 			<columns>
 				<textReaderColumn name="SalesforceId" type="STRING" ignore="false"/>
-				<textReaderColumn name="tmp_ein" type="STRING" ignore="false"/>
-				<textReaderColumn name="tmp_phone" type="STRING" ignore="false"/>
-				<textReaderColumn name="tmp_fax" type="STRING" ignore="false"/>
-				<textReaderColumn name="Email__c" type="STRING" ignore="false"/>
-				<textReaderColumn name="Phone" type="STRING" ignore="false"/>
-				<textReaderColumn name="Mobile__c" type="STRING" ignore="false"/>
-				<textReaderColumn name="Fax" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_email" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_phone" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_Fax" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_EIN" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId_Split_Payment" type="STRING" ignore="false"/>
 			</columns>
 			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yy-MM-dd"/>
 			<errorHandlingStrategy rejectFileName="rejected.txt">
@@ -815,7 +812,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 			</errorHandlingStrategy>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="456,96,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="408,96,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="agent_agency_matching" endpoint="out"/>
