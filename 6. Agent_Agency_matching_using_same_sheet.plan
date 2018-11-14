@@ -19,23 +19,6 @@
 
 
 
-<!-- (Filter Right Email Domain) --><step id="Filter Right Email Domain" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
-		<properties>
-			<condition>not isInFile(SalesforceId,&quot;../data/ext/lkp/common-email-domain.lkp&quot;)
-</condition>
-		</properties>
-		<visual-constraints bounds="240,600,-1,-1" layout="vertical"/>
-	</step>
-	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Filter Right Email Domain" endpoint="out"/>
-		<target step="Match Email Domain" endpoint="in_right"/>
-		<visual-constraints>
-			<bendpoints/>
-		</visual-constraints>
-	</connection>
-
-
-
 <!-- (Filter_Agents_without_Agency) --><step id="Filter_Agents_without_Agency" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
 		<properties>
 			<condition>AccountRecordType == &quot;Agent&quot; 
@@ -101,34 +84,6 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Match Email" endpoint="out"/>
-		<target step="Match Email Domain" endpoint="in_left"/>
-		<visual-constraints>
-			<bendpoints/>
-		</visual-constraints>
-	</connection>
-
-
-
-<!-- (Match Email Domain) --><step id="Match Email Domain" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
-		<properties leftKey="substr(std_email,indexOf(std_email,&quot;@&quot;)+1)" matchStrategy="MERGE" rightKey="substr(std_email,indexOf(std_email,&quot;@&quot;)+1)" joinType="LEFT">
-			<columnDefinitions>
-				<columnDefinition expression="in_left.SalesforceId" name="SalesforceId"/>
-				<columnDefinition expression="in_left.Email__c" name="Email__c"/>
-				<columnDefinition expression="in_left.Phone" name="Phone"/>
-				<columnDefinition expression="in_left.Mobile__c" name="Mobile__c"/>
-				<columnDefinition expression="in_left.Fax" name="Fax"/>
-				<columnDefinition expression="in_left.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
-				<columnDefinition expression="in_left.ParentAccountId_email" name="ParentAccountId_email"/>
-				<columnDefinition expression="in_right.SalesforceId" name="ParentAccountId_email_domain"/>
-				<columnDefinition expression="in_left.ParentAccountId_phone" name="ParentAccountId_phone"/>
-				<columnDefinition expression="in_left.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
-				<columnDefinition expression="in_left.std_email" name="std_email"/>
-			</columnDefinitions>
-		</properties>
-		<visual-constraints bounds="72,720,-1,-1" layout="vertical"/>
-	</step>
-	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Match Email Domain" endpoint="out"/>
 		<target step="out" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
@@ -162,13 +117,6 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 		<properties/>
 		<visual-constraints bounds="336,480,-1,-1" layout="vertical"/>
 	</step>
-	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Multiplicator 2" endpoint="out"/>
-		<target step="Filter Right Email Domain" endpoint="in"/>
-		<visual-constraints>
-			<bendpoints/>
-		</visual-constraints>
-	</connection>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Multiplicator 2" endpoint="out"/>
 		<target step="Match  phone" endpoint="in_right"/>
@@ -366,18 +314,17 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 
 
 <!-- (out) --><step id="out" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" mode="NORMAL">
-		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/agent_agency_matching.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="false" compression="NONE" stringQualifierEscape="&quot;">
+		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/agent_agency_matching_using_same_sheet.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="false" compression="NONE" stringQualifierEscape="&quot;">
 			<columns>
 				<textWriterColumn name="SalesforceId"/>
 				<textWriterColumn name="ParentAccountId_email"/>
-				<textWriterColumn name="ParentAccountId_email_domain"/>
 				<textWriterColumn name="ParentAccountId_phone"/>
 				<textWriterColumn name="ParentAccountId_Fax"/>
 				<textWriterColumn name="ParentAccountId_EIN"/>
 			</columns>
 			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
 		</properties>
-		<visual-constraints bounds="72,816,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="72,744,-1,-1" layout="vertical"/>
 	</step>
 
 </purity-config>

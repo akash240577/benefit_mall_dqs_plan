@@ -8,7 +8,7 @@
 <!-- (Duplicate Agents Unification) --><step id="Duplicate Agents Unification" className="com.ataccama.dqc.unify.ExtendedUnify" disabled="false" mode="NORMAL">
 		<properties minimumIdToAssign="1" directUpdate="false" readOnly="false" processingMode="NONINCREMENTAL" mapAllColumns="false" exclusiveMode="false">
 			<operations>
-				<iOperationConfig matchingIdColumn="uni_cli_id" id="Union" useCenterAsSurvivor="false" defaultMaxIterations="100" outputDiscardedIds="NONE" class="com.ataccama.dqc.unify.config.UnifyOperation" unificationRoleColumn="uni_role" ruleNameColumn="uni_rule_name" candidateIdColumn="uni_can_id">
+				<iOperationConfig matchingIdColumn="uni_cli_id" id="Union" useCenterAsSurvivor="false" defaultMaxIterations="100" candidateRecordDescriptorColumn="can_record_desc" outputDiscardedIds="NONE" matchQualityColumn="match_quality" class="com.ataccama.dqc.unify.config.UnifyOperation" unificationRoleColumn="uni_role" ruleNameColumn="uni_rule_name" candidateIdColumn="uni_can_id" recordDescriptorColumn="record_desc">
 					<defaultCenterSelectionRule>
 						<orderBy expression="VIOLATION_SCORE" orderDescending="false" nullsFirst="false"/>
 					</defaultCenterSelectionRule>
@@ -104,11 +104,11 @@ center.std_email is not null</expression>
 			<outputStrategy exportDiscarded="false" exportUnchanged="true"/>
 			<repositoryColumns/>
 		</properties>
-		<visual-constraints bounds="432,72,-1,-1" layout="horizontal"/>
+		<visual-constraints bounds="384,72,-1,-1" layout="horizontal"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Duplicate Agents Unification" endpoint="out"/>
-		<target step="duplicate_agents" endpoint="in"/>
+		<target step="Multiplicator" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -123,6 +123,60 @@ center.std_email is not null</expression>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Filter Agent" endpoint="out"/>
 		<target step="Duplicate Agents Unification" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Frequency Analysis) --><step id="Frequency Analysis" className="com.ataccama.dqc.tasks.analysis.frequency.FrequencyAnalysisAlgorithm" disabled="false" mode="NORMAL">
+		<properties defaultLocale="en_US">
+			<analyses>
+				<analysis expression="uni_can_id" name="DUPLICATE"/>
+			</analyses>
+		</properties>
+		<visual-constraints bounds="504,192,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Frequency Analysis" endpoint="out_result"/>
+		<target step="Lookup Builder" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Lookup Builder) --><step id="Lookup Builder" className="com.ataccama.dqc.tasks.builders.LookupBuilder" disabled="false" mode="NORMAL">
+		<properties approximativeIndex="false" compressed="false" duplicities="FIRST" bestDistanceIndex="false" fileName="../data/ext/lkp/duplicate_uni_can_id.lkp" bidirectApproximativeIndex="false" key="value">
+			<additionalColumns>
+				<columnExprDef expression="frequency" name="frequency"/>
+			</additionalColumns>
+			<matchingValue doRemoveRepeatedChars="false" doSqueezeWS="false" doRemoveDia="false" doUpperCase="false"/>
+			<userMetadata>
+				<items/>
+			</userMetadata>
+		</properties>
+		<visual-constraints bounds="504,288,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (Multiplicator) --><step id="Multiplicator" className="com.ataccama.dqc.tasks.flow.Multiplicator" disabled="false" mode="NORMAL">
+		<properties/>
+		<visual-constraints bounds="504,72,-1,-1" layout="horizontal"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Multiplicator" endpoint="out"/>
+		<target step="Frequency Analysis" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Multiplicator" endpoint="out"/>
+		<target step="duplicate_agents" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -226,7 +280,11 @@ center.std_email is not null</expression>
 					<errorInstruction putToLog="true" errorType="UNPARSABLE_FIELD" dataStrategy="NULL_VALUE" putToReject="false"/>
 				</errorInstructions>
 			</errorHandlingStrategy>
-			<shadowColumns/>
+			<shadowColumns>
+				<shadowColumnDef name="match_quality" type="FLOAT"/>
+				<shadowColumnDef name="can_record_desc" type="STRING"/>
+				<shadowColumnDef name="record_desc" type="STRING"/>
+			</shadowColumns>
 		</properties>
 		<visual-constraints bounds="24,72,-1,-1" layout="vertical"/>
 	</step>
@@ -241,7 +299,7 @@ center.std_email is not null</expression>
 
 
 <!-- (duplicate_agents) --><step id="duplicate_agents" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" mode="NORMAL">
-		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/duplicate_agents.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="false" compression="NONE" stringQualifierEscape="&quot;">
+		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/duplicate_agents_intermediate.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="false" compression="NONE" stringQualifierEscape="&quot;">
 			<columns>
 				<textWriterColumn name="SalesforceId"/>
 				<textWriterColumn name="EIN"/>
@@ -257,10 +315,12 @@ center.std_email is not null</expression>
 				<textWriterColumn name="ParentAccountId"/>
 				<textWriterColumn name="uni_can_id"/>
 				<textWriterColumn name="uni_rule_name"/>
+				<textWriterColumn name="VIOLATION"/>
+				<textWriterColumn name="VIOLATION_SCORE"/>
 			</columns>
 			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
 		</properties>
-		<visual-constraints bounds="576,72,-1,-1" layout="horizontal"/>
+		<visual-constraints bounds="648,72,-1,-1" layout="horizontal"/>
 	</step>
 
 </purity-config>

@@ -222,6 +222,27 @@
 
 
 
+<!-- (Condition - National) --><step id="Condition - National" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
+		<properties condition="Market_Benefit__c=&quot;National&quot;"/>
+		<visual-constraints bounds="120,1467,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - National" endpoint="out_true"/>
+		<target step="National" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - National" endpoint="out_false"/>
+		<target step="Test" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
 <!-- (Condition - New Jersey) --><step id="Condition - New Jersey" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
 		<properties condition="Market_Benefit__c=&quot;New Jersey&quot;"/>
 		<visual-constraints bounds="120,192,-1,-1" layout="vertical"/>
@@ -291,7 +312,7 @@
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Condition - North Texas-Fort Worth" endpoint="out_false"/>
-		<target step="National and Unknown" endpoint="in"/>
+		<target step="Condition - Unknown" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -432,6 +453,27 @@
 
 
 
+<!-- (Condition - Unknown) --><step id="Condition - Unknown" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
+		<properties condition="Market_Benefit__c=&quot;Unknown&quot;"/>
+		<visual-constraints bounds="120,1371,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - Unknown" endpoint="out_false"/>
+		<target step="Condition - National" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - Unknown" endpoint="out_true"/>
+		<target step="Unknown" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
 <!-- (Georgia) --><step id="Georgia" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
 		<properties fileName="../data/out/market/bse/Georgia_Agency_Agent_Profiled.xls" excel2007="false">
 			<inputs>
@@ -445,15 +487,15 @@
 
 
 
-<!-- (National and Unknown) --><step id="National and Unknown" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/National_Unkown_Agency_Agent_Profiled.xls" excel2007="false">
+<!-- (National) --><step id="National" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/market/bse/National_Agency_Agent_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
 				</excelSheetInput>
 			</inputs>
 		</properties>
-		<visual-constraints bounds="120,1392,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="264,1512,-1,-1" layout="vertical"/>
 	</step>
 
 
@@ -532,6 +574,32 @@
 			</inputs>
 		</properties>
 		<visual-constraints bounds="264,1032,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (Test) --><step id="Test" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/market/bse/Test_Agency_Agent_Profiled.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="96,1587,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (Unknown) --><step id="Unknown" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/market/bse/Unknown_Agency_Agent_Profiled.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="264,1416,-1,-1" layout="vertical"/>
 	</step>
 
 </purity-config>
