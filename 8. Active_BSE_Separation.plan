@@ -29,11 +29,11 @@
 				<shadowColumnDef name="Full_Name" type="STRING"/>
 			</shadowColumns>
 		</properties>
-		<visual-constraints bounds="288,24,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="264,24,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Active BSEs BSRs and MDs" endpoint="out"/>
-		<target step="Column Assigner" endpoint="in"/>
+		<target step="BSE" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -43,111 +43,11 @@
 
 <!-- (BSE) --><step id="BSE" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
 		<properties condition="containsWord(Job_Title,&quot;Executive&quot;)"/>
-		<visual-constraints bounds="264,168,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="264,144,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="BSE" endpoint="out"/>
 		<target step="Join" endpoint="in_right"/>
-		<visual-constraints>
-			<bendpoints/>
-		</visual-constraints>
-	</connection>
-
-
-
-<!-- (Column Assigner) --><step id="Column Assigner" className="com.ataccama.dqc.tasks.expressions.ColumnAssigner" disabled="false" mode="NORMAL">
-		<properties>
-			<assignments>
-				<assignment expression="Employee_Name" column="Employee_Name">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-				<assignment expression="substr(Employee_Name,0,indexOf(Employee_Name,&quot;,&quot;))" column="Last_Name">
-					<scorer>
-						<scoringEntries>
-							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
-						</scoringEntries>
-					</scorer>
-				</assignment>
-				<assignment expression="substr(Employee_Name,indexOf(Employee_Name,&quot;,&quot;)+1)" column="First_Name_MI">
-					<scorer>
-						<scoringEntries>
-							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
-						</scoringEntries>
-					</scorer>
-				</assignment>
-				<assignment expression="substr(First_Name_MI,0,indexOf(First_Name_MI,&quot; &quot;))" column="First_Name">
-					<scorer>
-						<scoringEntries>
-							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
-						</scoringEntries>
-					</scorer>
-				</assignment>
-				<assignment expression="trim(First_Name) + &quot; &quot; + trim(Last_Name)" column="Full_Name">
-					<scorer>
-						<scoringEntries>
-							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
-						</scoringEntries>
-					</scorer>
-				</assignment>
-				<assignment expression="Empl_Status" column="Empl_Status">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-				<assignment expression="Company_Name" column="Company_Name">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-				<assignment expression="Work_Email_Address" column="Work_Email_Address">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-				<assignment expression="Job_Title" column="Job_Title">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-				<assignment expression="Cost_Center" column="Cost_Center">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-				<assignment expression="[Function]" column="Function">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-				<assignment expression="StateOffice" column="StateOffice">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-				<assignment expression="Location" column="Location">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-				<assignment expression="Region" column="Region">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-				<assignment expression="Direct_Supervisor" column="Direct_Supervisor">
-					<scorer>
-						<scoringEntries/>
-					</scorer>
-				</assignment>
-			</assignments>
-		</properties>
-		<visual-constraints bounds="288,96,-1,-1" layout="vertical"/>
-	</step>
-	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Column Assigner" endpoint="out"/>
-		<target step="BSE" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -169,7 +69,7 @@
 
 
 <!-- (Join) --><step id="Join" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
-		<properties leftKey="BSE" matchStrategy="MERGE" rightKey="Full_Name" joinType="LEFT">
+		<properties leftKey="lower(BSE_Email)" matchStrategy="MERGE" rightKey="lower(Work_Email_Address)" joinType="LEFT">
 			<columnDefinitions>
 				<columnDefinition expression="in_left.SalesforceId" name="SalesforceId"/>
 				<columnDefinition expression="in_left.EIN" name="EIN"/>
@@ -228,7 +128,8 @@
 				<columnDefinition expression="in_left.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
 				<columnDefinition expression="in_left.dup_agent_rule_used" name="dup_agent_rule_used"/>
 				<columnDefinition expression="in_left.dup_agent_can_id" name="dup_agent_can_id"/>
-				<columnDefinition expression="iif(in_right.Full_Name is not null,&quot;Yes&quot;,&quot;No&quot;)" name="ACTIVE_BSE"/>
+				<columnDefinition expression="iif(in_right.Work_Email_Address is not null,&quot;Yes&quot;,&quot;No&quot;)" name="ACTIVE_BSE"/>
+				<columnDefinition expression="in_right.Work_Email_Address" name="Work_Email_Address"/>
 			</columnDefinitions>
 		</properties>
 		<visual-constraints bounds="168,240,-1,-1" layout="vertical"/>
@@ -306,7 +207,7 @@
 			</columns>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="96,120,32,32" layout="vertical"/>
+		<visual-constraints bounds="96,144,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Merged" endpoint="out"/>
