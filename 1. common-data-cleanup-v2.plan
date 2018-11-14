@@ -29,6 +29,7 @@
 				<substitutionRule from="**PAY AGENCY**"/>
 				<substitutionRule from="*PAY AGENCY*"/>
 				<substitutionRule from="*Pay Agency*"/>
+				<substitutionRule from="PAY AGENCY"/>
 				<substitutionRule from="Pay agency"/>
 				<substitutionRule from="*dup"/>
 				<substitutionRule from="[not provided]"/>
@@ -46,6 +47,7 @@
 				<substitutionRule from="(rep)"/>
 				<substitutionRule from="**PAY AGENCY-Angel&amp;#39;s Care**"/>
 				<substitutionRule from="BP600791"/>
+				<substitutionRule from="*DNU-INACTIVE AGENT*"/>
 				<substitutionRule from="**Do not use**"/>
 				<substitutionRule from="**DO NOT USE**"/>
 				<substitutionRule from="*DNU*"/>
@@ -56,6 +58,19 @@
 				<substitutionRule from="**PAY - GALLAGHER - Whippany**"/>
 				<substitutionRule from="**PAY MID ATLANTIC BENEFITS**"/>
 				<substitutionRule from="**PAY LINKS INS AGENCY**"/>
+				<substitutionRule from="- DUP"/>
+				<substitutionRule from="-DUP"/>
+				<substitutionRule from="*DUP"/>
+				<substitutionRule from="-Dup"/>
+				<substitutionRule from="*Dup"/>
+				<substitutionRule from="DUP"/>
+				<substitutionRule from="Dnu-Inactive Agent"/>
+				<substitutionRule from="*DNU - INACTIVE"/>
+				<substitutionRule from="*Dnu - Inactive"/>
+				<substitutionRule from="- Dnu"/>
+				<substitutionRule from=" Dnu"/>
+				<substitutionRule from="Do Not Use"/>
+				<substitutionRule from="- DNU *direct agent"/>
 			</rules>
 		</properties>
 		<visual-constraints bounds="264,384,-1,-1" layout="vertical"/>
@@ -80,7 +95,7 @@
 				</assignment>
 			</assignments>
 		</properties>
-		<visual-constraints bounds="264,1128,48,48" layout="vertical"/>
+		<visual-constraints bounds="264,1152,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Add Semicolon in Violation" endpoint="out"/>
@@ -235,13 +250,6 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 			<rules>
 				<substitutionRule from="&amp; Associates"/>
 				<substitutionRule from="(Jerry) Yeontae"/>
-				<substitutionRule from="*"/>
-				<substitutionRule from=","/>
-				<substitutionRule from="."/>
-				<substitutionRule from="?"/>
-				<substitutionRule from="4th"/>
-				<substitutionRule from="5th"/>
-				<substitutionRule from="#"/>
 				<substitutionRule from="(dup)"/>
 				<substitutionRule from="(mr.)"/>
 				<substitutionRule from="(DECEASED)"/>
@@ -249,10 +257,29 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<substitutionRule from="DO NOT USE"/>
 				<substitutionRule from="*Do Not Use*"/>
 				<substitutionRule from="Dates"/>
+				<substitutionRule from="*** PAY AGENCY***"/>
+				<substitutionRule from="*** PAY AGENCY ***"/>
 				<substitutionRule from="**PAY AGENCY**"/>
+				<substitutionRule from="PAY AGENCY"/>
 				<substitutionRule from="* AGENT NOT WITH BMA"/>
 				<substitutionRule from="(DUPLICATE ACCOUNT)"/>
+				<substitutionRule from="*DNU-INACTIVE AGENT*"/>
+				<substitutionRule from="*DNU*"/>
+				<substitutionRule from="*Dup"/>
 				<substitutionRule from="DUP"/>
+				<substitutionRule from="Pay Agency"/>
+				<substitutionRule from="-Do Not Us"/>
+				<substitutionRule from="Dnu-Inactive Agent"/>
+				<substitutionRule from=" dnu"/>
+				<substitutionRule from="dnu "/>
+				<substitutionRule from=" Dnu"/>
+				<substitutionRule from="Dnu "/>
+				<substitutionRule from="*"/>
+				<substitutionRule from=","/>
+				<substitutionRule from="?"/>
+				<substitutionRule from="4th"/>
+				<substitutionRule from="5th"/>
+				<substitutionRule from="#"/>
 			</rules>
 		</properties>
 		<visual-constraints bounds="264,480,-1,-1" layout="vertical"/>
@@ -356,6 +383,8 @@ iif(ph != &#39;&#39; and Fax is not null and length(ph) == 10,
 				<substitutionRule from="***DUPLICAT"/>
 				<substitutionRule from="**DUPLICATE"/>
 				<substitutionRule from="**Do not use**"/>
+				<substitutionRule from="**Pay agency ELECTIVE"/>
+				<substitutionRule from="Pay Agency"/>
 			</rules>
 		</properties>
 		<visual-constraints bounds="264,672,-1,-1" layout="vertical"/>
@@ -444,6 +473,9 @@ iif(ph != &#39;&#39; and Fax is not null and length(ph) == 10,
 				<substitutionRule from="~~~DO NOT USE~~~"/>
 				<substitutionRule from="Dates"/>
 				<substitutionRule from="NON-CAPTIVE"/>
+				<substitutionRule from="**PAY AGENCY**"/>
+				<substitutionRule from="Dnu-"/>
+				<substitutionRule from="*DNU - "/>
 			</rules>
 		</properties>
 		<visual-constraints bounds="264,576,-1,-1" layout="vertical"/>
@@ -550,12 +582,12 @@ or not matches(@&quot;^\(\d{3}\)\s\d{3}-\d{4}&quot;, trim(Fax))</condition>
 			<columns/>
 			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
 		</properties>
-		<visual-constraints bounds="264,1224,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="264,1272,-1,-1" layout="vertical"/>
 	</step>
 
 
 
-<modelComment bounds="480,72,145,49" borderColor="183,183,0" backgroundColor="255,255,180" foregroundColor="51,51,51">Master data sheet will
+<modelComment bounds="672,48,227,72" borderColor="183,183,0" backgroundColor="255,255,180" foregroundColor="51,51,51">Master data sheet will
 be used</modelComment>
 
 </purity-config>
