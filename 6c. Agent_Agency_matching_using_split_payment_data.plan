@@ -117,7 +117,7 @@
 			</errorHandlingStrategy>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="48,48,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="48,48,32,32" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="agent_agency_matching_using_same_sheet" endpoint="out"/>

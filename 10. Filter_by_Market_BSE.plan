@@ -45,7 +45,7 @@
 
 
 <!-- ( Southern Florida) --><step id=" Southern Florida" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/ Southern_Florida_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Southern_Florida_Agency_Agent_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -75,7 +75,7 @@
 				<columnDef name="BP_ID__c" type="STRING"/>
 				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
 				<columnDef name="AMS_ID__c" type="STRING"/>
-				<columnDef name="AMS_Broker_BoB" type="INTEGER"/>
+				<columnDef name="AMS_Broker_BoB" type="STRING"/>
 				<columnDef name="IBAS_ID__c" type="STRING"/>
 				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
 				<columnDef name="Closed_Won" type="STRING"/>
@@ -118,10 +118,12 @@
 				<columnDef name="dup_agent_rule_used" type="STRING"/>
 				<columnDef name="dup_agent_can_id" type="STRING"/>
 				<columnDef name="ACTIVE_BSE" type="STRING"/>
+				<columnDef name="Work_Email_Address" type="STRING"/>
+				<columnDef name="Record_Source" type="STRING"/>
 			</columns>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="120,24,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="120,0,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Active_BSE_separated" endpoint="out"/>

@@ -79,6 +79,13 @@
 						</scoringEntries>
 					</scorer>
 				</assignment>
+				<assignment expression="iif(Record_Source=&#39;Payments&#39;,&quot;Yes&quot;,Closed_Won)" column="Closed_Won">
+					<scorer>
+						<scoringEntries>
+							<scoringEntry score="0" explainAs="CA_CHANGED" explain="false" key="CA_CHANGED"/>
+						</scoringEntries>
+					</scorer>
+				</assignment>
 			</assignments>
 		</properties>
 		<visual-constraints bounds="648,672,-1,-1" layout="vertical"/>

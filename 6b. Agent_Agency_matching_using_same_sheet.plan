@@ -360,6 +360,11 @@
 						</scoringEntries>
 					</scorer>
 				</assignment>
+				<assignment expression="Record_Source" column="Record_Source">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
 			</assignments>
 		</properties>
 		<visual-constraints bounds="168,48,-1,-1" layout="horizontal"/>
@@ -576,12 +581,12 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
 				</textReaderColumn>
 				<textReaderColumn name="AMS_ID__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Closed_Won" type="STRING" ignore="false"/>
 				<textReaderColumn name="AMS_Broker_BoB" type="INTEGER" ignore="false">
 					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
 				</textReaderColumn>
 				<textReaderColumn name="IBAS_ID__c" type="STRING" ignore="false"/>
 				<textReaderColumn name="IBAS_Broker_BoB" type="STRING" ignore="false"/>
-				<textReaderColumn name="Closed_Won" type="STRING" ignore="false"/>
 				<textReaderColumn name="Weighted_Lives" type="INTEGER" ignore="false">
 					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
 				</textReaderColumn>
@@ -619,6 +624,7 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 				<textReaderColumn name="MarketDirector" type="STRING" ignore="false"/>
 				<textReaderColumn name="Market_Director_Email" type="STRING" ignore="false"/>
 				<textReaderColumn name="Broker_Class__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Record_Source" type="STRING" ignore="false"/>
 				<textReaderColumn name="VIOLATION" type="STRING" ignore="false"/>
 				<textReaderColumn name="VIOLATION_SCORE" type="INTEGER" ignore="false">
 					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
@@ -657,15 +663,15 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 				</errorInstructions>
 			</errorHandlingStrategy>
 			<shadowColumns>
+				<shadowColumnDef name="std_email_domain" type="STRING"/>
 				<shadowColumnDef name="ParentAccountId_EIN" type="STRING"/>
 				<shadowColumnDef name="ParentAccountId_phone" type="STRING"/>
 				<shadowColumnDef name="ParentAccountId_Fax" type="STRING"/>
 				<shadowColumnDef name="ParentAccountId_email" type="STRING"/>
 				<shadowColumnDef name="ParentAccountId_email_domain" type="STRING"/>
-				<shadowColumnDef name="std_email_domain" type="STRING"/>
 			</shadowColumns>
 		</properties>
-		<visual-constraints bounds="24,48,-1,-1" layout="horizontal"/>
+		<visual-constraints bounds="24,48,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="common-data-problems" endpoint="out"/>

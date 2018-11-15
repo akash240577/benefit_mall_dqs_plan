@@ -75,7 +75,7 @@
 				<columnDef name="BP_ID__c" type="STRING"/>
 				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
 				<columnDef name="AMS_ID__c" type="STRING"/>
-				<columnDef name="AMS_Broker_BoB" type="INTEGER"/>
+				<columnDef name="AMS_Broker_BoB" type="STRING"/>
 				<columnDef name="IBAS_ID__c" type="STRING"/>
 				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
 				<columnDef name="Closed_Won" type="STRING"/>
@@ -117,7 +117,9 @@
 				<columnDef name="ParentAccountId_Fax" type="STRING"/>
 				<columnDef name="dup_agent_rule_used" type="STRING"/>
 				<columnDef name="dup_agent_can_id" type="STRING"/>
-				<columnDef name="ACTIVE_BSR" type="STRING"/>
+				<columnDef name="ACTIVE_BSE" type="STRING"/>
+				<columnDef name="Work_Email_Address" type="STRING"/>
+				<columnDef name="Record_Source" type="STRING"/>
 			</columns>
 			<shadowColumns/>
 		</properties>

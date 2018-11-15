@@ -8,7 +8,7 @@
 <!-- (Duplicate Agents Unification) --><step id="Duplicate Agents Unification" className="com.ataccama.dqc.unify.ExtendedUnify" disabled="false" mode="NORMAL">
 		<properties minimumIdToAssign="1" directUpdate="false" readOnly="false" processingMode="NONINCREMENTAL" mapAllColumns="false" exclusiveMode="false">
 			<operations>
-				<iOperationConfig matchingIdColumn="uni_cli_id" id="Union" useCenterAsSurvivor="false" defaultMaxIterations="100" candidateRecordDescriptorColumn="can_record_desc" outputDiscardedIds="NONE" matchQualityColumn="match_quality" class="com.ataccama.dqc.unify.config.UnifyOperation" unificationRoleColumn="uni_role" ruleNameColumn="uni_rule_name" candidateIdColumn="uni_can_id" recordDescriptorColumn="record_desc">
+				<iOperationConfig matchingIdColumn="uni_cli_id" id="Union" useCenterAsSurvivor="false" defaultMaxIterations="100" outputDiscardedIds="NONE" class="com.ataccama.dqc.unify.config.UnifyOperation" unificationRoleColumn="uni_role" ruleNameColumn="uni_rule_name" candidateIdColumn="uni_can_id">
 					<defaultCenterSelectionRule>
 						<orderBy expression="VIOLATION_SCORE" orderDescending="false" nullsFirst="false"/>
 					</defaultCenterSelectionRule>
@@ -200,12 +200,12 @@ center.std_email is not null</expression>
 					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
 				</textReaderColumn>
 				<textReaderColumn name="AMS_ID__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Closed_Won" type="STRING" ignore="false"/>
 				<textReaderColumn name="AMS_Broker_BoB" type="INTEGER" ignore="false">
 					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
 				</textReaderColumn>
 				<textReaderColumn name="IBAS_ID__c" type="STRING" ignore="false"/>
 				<textReaderColumn name="IBAS_Broker_BoB" type="STRING" ignore="false"/>
-				<textReaderColumn name="Closed_Won" type="STRING" ignore="false"/>
 				<textReaderColumn name="Weighted_Lives" type="INTEGER" ignore="false">
 					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
 				</textReaderColumn>
@@ -243,6 +243,7 @@ center.std_email is not null</expression>
 				<textReaderColumn name="MarketDirector" type="STRING" ignore="false"/>
 				<textReaderColumn name="Market_Director_Email" type="STRING" ignore="false"/>
 				<textReaderColumn name="Broker_Class__c" type="STRING" ignore="false"/>
+				<textReaderColumn name="Record_Source" type="STRING" ignore="false"/>
 				<textReaderColumn name="VIOLATION" type="STRING" ignore="false"/>
 				<textReaderColumn name="VIOLATION_SCORE" type="INTEGER" ignore="false">
 					<dataFormatParameters thousandsSeparator="" decimalSeparator="."/>
@@ -280,13 +281,9 @@ center.std_email is not null</expression>
 					<errorInstruction putToLog="true" errorType="UNPARSABLE_FIELD" dataStrategy="NULL_VALUE" putToReject="false"/>
 				</errorInstructions>
 			</errorHandlingStrategy>
-			<shadowColumns>
-				<shadowColumnDef name="match_quality" type="FLOAT"/>
-				<shadowColumnDef name="can_record_desc" type="STRING"/>
-				<shadowColumnDef name="record_desc" type="STRING"/>
-			</shadowColumns>
+			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="24,72,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="48,72,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="common-data-problems" endpoint="out"/>
@@ -317,6 +314,7 @@ center.std_email is not null</expression>
 				<textWriterColumn name="uni_rule_name"/>
 				<textWriterColumn name="VIOLATION"/>
 				<textWriterColumn name="VIOLATION_SCORE"/>
+				<textWriterColumn name="Record_Source"/>
 			</columns>
 			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
 		</properties>

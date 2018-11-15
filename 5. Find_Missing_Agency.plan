@@ -23,8 +23,8 @@ isInFile(SalesforceId,&quot;../data/ext/lkp/Missing_ParentAccountId.lkp&quot;)
 
 
 
-<!-- (Agency_Agent_2018-11-06) --><step id="Agency_Agent_2018-11-06" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
-		<properties useModelApi="false" fileName="../data/in/Agency_Agent_2018-11-06.xlsx" startCell="A2" skipEmptyRows="false" sheetName="Sheet1">
+<!-- (Agent_Agency_Payments_Combined) --><step id="Agent_Agency_Payments_Combined" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/out/Agent_Agency_Payments_Combined.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
 			<columns>
 				<columnDef name="SalesforceId" type="STRING"/>
 				<columnDef name="EIN" type="STRING"/>
@@ -37,10 +37,10 @@ isInFile(SalesforceId,&quot;../data/ext/lkp/Missing_ParentAccountId.lkp&quot;)
 				<columnDef name="BP_ID__c" type="STRING"/>
 				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
 				<columnDef name="AMS_ID__c" type="STRING"/>
+				<columnDef name="Closed_Won" type="STRING"/>
 				<columnDef name="AMS_Broker_BoB" type="INTEGER"/>
 				<columnDef name="IBAS_ID__c" type="STRING"/>
 				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
-				<columnDef name="Closed_Won" type="STRING"/>
 				<columnDef name="Weighted_Lives" type="INTEGER"/>
 				<columnDef name="CRQS_Quotes" type="INTEGER"/>
 				<columnDef name="Health_Connect_Quotes" type="STRING"/>
@@ -72,13 +72,14 @@ isInFile(SalesforceId,&quot;../data/ext/lkp/Missing_ParentAccountId.lkp&quot;)
 				<columnDef name="MarketDirector" type="STRING"/>
 				<columnDef name="Market_Director_Email" type="STRING"/>
 				<columnDef name="Broker_Class__c" type="STRING"/>
+				<columnDef name="Record_Source" type="STRING"/>
 			</columns>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="96,24,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="96,0,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Agency_Agent_2018-11-06" endpoint="out"/>
+		<source step="Agent_Agency_Payments_Combined" endpoint="out"/>
 		<target step="Agency to include" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>

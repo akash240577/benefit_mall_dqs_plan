@@ -429,7 +429,7 @@
 				<columnDef name="BP_ID__c" type="STRING"/>
 				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
 				<columnDef name="AMS_ID__c" type="STRING"/>
-				<columnDef name="AMS_Broker_BoB" type="INTEGER"/>
+				<columnDef name="AMS_Broker_BoB" type="STRING"/>
 				<columnDef name="IBAS_ID__c" type="STRING"/>
 				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
 				<columnDef name="Closed_Won" type="STRING"/>
@@ -461,20 +461,24 @@
 				<columnDef name="Market_Director_Email" type="STRING"/>
 				<columnDef name="Broker_Class__c" type="STRING"/>
 				<columnDef name="VIOLATION" type="STRING"/>
-				<columnDef name="VIOLATION_SCORE" type="INTEGER"/>
+				<columnDef name="VIOLATION_SCORE" type="STRING"/>
 				<columnDef name="std_AccountName" type="STRING"/>
 				<columnDef name="std_First_Name__c" type="STRING"/>
 				<columnDef name="std_Middle_Name__c" type="STRING"/>
 				<columnDef name="std_Last_Name__c" type="STRING"/>
+				<columnDef name="ParentAccountId_EIN" type="STRING"/>
 				<columnDef name="ParentAccountId_email" type="STRING"/>
+				<columnDef name="ParentAccountId_email_domain" type="STRING"/>
 				<columnDef name="ParentAccountId_phone" type="STRING"/>
 				<columnDef name="ParentAccountId_Fax" type="STRING"/>
-				<columnDef name="dup_agent_rule_used" type="STRING"/>
+				<columnDef name="ParentAccountId_Split_Payment" type="STRING"/>
 				<columnDef name="dup_agent_can_id" type="STRING"/>
+				<columnDef name="dup_agent_rule_used" type="STRING"/>
+				<columnDef name="Record_Source" type="STRING"/>
 			</columns>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="120,24,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="120,0,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Merged" endpoint="out"/>
