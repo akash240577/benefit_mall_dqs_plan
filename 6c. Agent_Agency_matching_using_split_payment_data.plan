@@ -76,6 +76,7 @@
 				<columnDefinition expression="in_left.SalesforceId" name="SalesforceId"/>
 				<columnDefinition expression="in_left.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
 				<columnDefinition expression="in_left.ParentAccountId_email" name="ParentAccountId_email"/>
+				<columnDefinition expression="in_left.ParentAccountId_email_domain" name="ParentAccountId_email_domain"/>
 				<columnDefinition expression="in_left.ParentAccountId_phone" name="ParentAccountId_phone"/>
 				<columnDefinition expression="in_left.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
 				<columnDefinition expression="in_right.NewParentAccountId" name="ParentAccountId_Split_Payment"/>
@@ -98,6 +99,7 @@
 			<columns>
 				<textReaderColumn name="SalesforceId" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_email" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId_email_domain" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_phone" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_Fax" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_EIN" type="STRING" ignore="false"/>
@@ -115,7 +117,7 @@
 			</errorHandlingStrategy>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="72,48,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="48,48,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="agent_agency_matching_using_same_sheet" endpoint="out"/>
@@ -128,15 +130,8 @@
 
 
 <!-- (out) --><step id="out" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" mode="NORMAL">
-		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/agent_agency_matching.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="false" compression="NONE" stringQualifierEscape="&quot;">
-			<columns>
-				<textWriterColumn name="SalesforceId"/>
-				<textWriterColumn name="ParentAccountId_email"/>
-				<textWriterColumn name="ParentAccountId_phone"/>
-				<textWriterColumn name="ParentAccountId_Fax"/>
-				<textWriterColumn name="ParentAccountId_EIN"/>
-				<textWriterColumn name="ParentAccountId_Split_Payment"/>
-			</columns>
+		<properties useStringQualifierOnAllColumns="false" stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" generateMetadata="true" fileName="../data/out/agent_agency_matching.csv" encoding="UTF-8" writeHeader="true" writeAllColumns="true" compression="NONE" stringQualifierEscape="&quot;">
+			<columns/>
 			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
 		</properties>
 		<visual-constraints bounds="72,264,-1,-1" layout="vertical"/>

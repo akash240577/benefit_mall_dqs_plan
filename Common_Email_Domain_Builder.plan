@@ -38,7 +38,7 @@
 				<shadowColumnDef name="domain" type="STRING"/>
 			</shadowColumns>
 		</properties>
-		<visual-constraints bounds="144,48,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="144,24,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="common-email-domains" endpoint="out"/>

@@ -344,6 +344,11 @@
 						<scoringEntries/>
 					</scorer>
 				</assignment>
+				<assignment expression="null" column="ParentAccountId_email_domain">
+					<scorer>
+						<scoringEntries/>
+					</scorer>
+				</assignment>
 				<assignment expression="null" column="ParentAccountId_phone">
 					<scorer>
 						<scoringEntries/>
@@ -494,6 +499,8 @@
 				<columnDefinition expression="in_left.AccountOwnerName" name="AccountOwnerName"/>
 				<columnDefinition expression="in_left.ParentAccountId" name="ParentAccountId"/>
 				<columnDefinition expression="in_right.ParentAccountId_email" name="ParentAccountId_email"/>
+				<columnDefinition expression="in_right.ParentAccountId_email_domain" name="ParentAccountId_email_domain"/>
+				<columnDefinition expression="in_right.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
 				<columnDefinition expression="in_right.ParentAccountId_phone" name="ParentAccountId_phone"/>
 				<columnDefinition expression="in_right.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
 				<columnDefinition expression="in_right.ParentAccountId_Split_Payment" name="ParentAccountId_Split_Payment"/>
@@ -511,7 +518,6 @@
 				<columnDefinition expression="in_left.Broker_Class__c" name="Broker_Class__c"/>
 				<columnDefinition expression="in_left.dup_agent_rule_used" name="dup_agent_rule_used"/>
 				<columnDefinition expression="in_left.dup_agent_can_id" name="dup_agent_can_id"/>
-				<columnDefinition expression="in_right.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
 			</columnDefinitions>
 		</properties>
 		<visual-constraints bounds="288,168,-1,-1" layout="vertical"/>
@@ -583,6 +589,7 @@
 				<columnDefinition expression="in_left.std_Last_Name__c" name="std_Last_Name__c"/>
 				<columnDefinition expression="in_right.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
 				<columnDefinition expression="in_right.ParentAccountId_email" name="ParentAccountId_email"/>
+				<columnDefinition expression="in_right.ParentAccountId_email_domain" name="ParentAccountId_email_domain"/>
 				<columnDefinition expression="in_right.ParentAccountId_phone" name="ParentAccountId_phone"/>
 				<columnDefinition expression="in_right.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
 				<columnDefinition expression="in_right.ParentAccountId_Split_Payment" name="ParentAccountId_Split_Payment"/>
@@ -699,6 +706,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<shadowColumnDef name="ParentAccountId_Fax" type="STRING"/>
 				<shadowColumnDef name="dup_agent_can_id" type="STRING"/>
 				<shadowColumnDef name="dup_agent_rule_used" type="STRING"/>
+				<shadowColumnDef name="ParentAccountId_email_domain" type="STRING"/>
 			</shadowColumns>
 		</properties>
 		<visual-constraints bounds="384,384,-1,-1" layout="vertical"/>
@@ -770,6 +778,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<columnMapping dest="std_Last_Name__c" in_a="std_Last_Name__c"/>
 				<columnMapping dest="ParentAccountId_EIN" in_a="ParentAccountId_EIN"/>
 				<columnMapping dest="ParentAccountId_email" in_a="ParentAccountId_email"/>
+				<columnMapping dest="ParentAccountId_email_domain" in_a="ParentAccountId_email_domain"/>
 				<columnMapping dest="ParentAccountId_phone" in_a="ParentAccountId_phone"/>
 				<columnMapping dest="ParentAccountId_Fax" in_a="ParentAccountId_Fax"/>
 				<columnMapping dest="ParentAccountId_Split_Payment" in_a="ParentAccountId_Split_Payment"/>
@@ -793,10 +802,11 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 		<properties stringQualifier="&quot;" lineSeparator="\r\n" fieldSeparator=";" lineMaxReadLength="65536" numberOfLinesInHeader="1" fileName="../data/out/agent_agency_matching.csv" encoding="UTF-8" numberOfLinesInFooter="0" compression="NONE" stringQualifierEscape="&quot;">
 			<columns>
 				<textReaderColumn name="SalesforceId" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId_EIN" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_email" type="STRING" ignore="false"/>
+				<textReaderColumn name="ParentAccountId_email_domain" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_phone" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_Fax" type="STRING" ignore="false"/>
-				<textReaderColumn name="ParentAccountId_EIN" type="STRING" ignore="false"/>
 				<textReaderColumn name="ParentAccountId_Split_Payment" type="STRING" ignore="false"/>
 			</columns>
 			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yy-MM-dd"/>
@@ -812,7 +822,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 			</errorHandlingStrategy>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="408,96,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="456,96,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="agent_agency_matching" endpoint="out"/>
