@@ -73,7 +73,7 @@
 				<substitutionRule from="- DNU *direct agent"/>
 			</rules>
 		</properties>
-		<visual-constraints bounds="264,384,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,168,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Account Name - Common Data Problems" endpoint="out"/>
@@ -95,7 +95,7 @@
 				</assignment>
 			</assignments>
 		</properties>
-		<visual-constraints bounds="264,1152,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,960,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Add Semicolon in Violation" endpoint="out"/>
@@ -107,8 +107,8 @@
 
 
 
-<!-- (Agency_Agent_2018-11-06) --><step id="Agency_Agent_2018-11-06" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
-		<properties useModelApi="false" fileName="../data/in/Agency_Agent_2018-11-06.xlsx" startCell="A2" skipEmptyRows="false" sheetName="Sheet1">
+<!-- (Agent_Agency_Payments_Combined) --><step id="Agent_Agency_Payments_Combined" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/out/Agent_Agency_Payments_Combined.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
 			<columns>
 				<columnDef name="SalesforceId" type="STRING"/>
 				<columnDef name="EIN" type="STRING"/>
@@ -121,10 +121,10 @@
 				<columnDef name="BP_ID__c" type="STRING"/>
 				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
 				<columnDef name="AMS_ID__c" type="STRING"/>
+				<columnDef name="Closed_Won" type="STRING"/>
 				<columnDef name="AMS_Broker_BoB" type="INTEGER"/>
 				<columnDef name="IBAS_ID__c" type="STRING"/>
 				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
-				<columnDef name="Closed_Won" type="STRING"/>
 				<columnDef name="Weighted_Lives" type="INTEGER"/>
 				<columnDef name="CRQS_Quotes" type="INTEGER"/>
 				<columnDef name="Health_Connect_Quotes" type="STRING"/>
@@ -156,6 +156,7 @@
 				<columnDef name="MarketDirector" type="STRING"/>
 				<columnDef name="Market_Director_Email" type="STRING"/>
 				<columnDef name="Broker_Class__c" type="STRING"/>
+				<columnDef name="Record_Source" type="STRING"/>
 			</columns>
 			<shadowColumns>
 				<shadowColumnDef name="VIOLATION" type="STRING"/>
@@ -183,11 +184,11 @@
 				<shadowColumnDef name="std_Fax" type="STRING"/>
 			</shadowColumns>
 		</properties>
-		<visual-constraints bounds="264,72,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,48,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Agency_Agent_2018-11-06" endpoint="out"/>
-		<target step="Filter" endpoint="in"/>
+		<source step="Agent_Agency_Payments_Combined" endpoint="out"/>
+		<target step="Account Name - Common Data Problems" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -206,28 +207,11 @@
 				</scoringEntries>
 			</scorer>
 		</properties>
-		<visual-constraints bounds="264,1056,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,864,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Email_Validate" endpoint="out"/>
 		<target step="Add Semicolon in Violation" endpoint="in"/>
-		<visual-constraints>
-			<bendpoints/>
-		</visual-constraints>
-	</connection>
-
-
-
-<!-- (Filter) --><step id="Filter" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
-		<properties>
-			<condition>AccountRecordType = &#39;Agency&#39; or (BP_Broker_BoB&lt;&gt;0 or AMS_Broker_BoB &lt;&gt;0 or IBAS_Broker_BoB == &quot;Yes&quot;
-or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won == &quot;Yes&quot;)</condition>
-		</properties>
-		<visual-constraints bounds="264,168,-1,-1" layout="vertical"/>
-	</step>
-	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Filter" endpoint="out"/>
-		<target step="Multiplicator" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -282,7 +266,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<substitutionRule from="#"/>
 			</rules>
 		</properties>
-		<visual-constraints bounds="264,480,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,264,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="First Name - Common Data Problems" endpoint="out"/>
@@ -339,7 +323,7 @@ iif(ph != &#39;&#39; and Fax is not null and length(ph) == 10,
 				</assignment>
 			</assignments>
 		</properties>
-		<visual-constraints bounds="264,960,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,768,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Fix Formatting" endpoint="out"/>
@@ -387,7 +371,7 @@ iif(ph != &#39;&#39; and Fax is not null and length(ph) == 10,
 				<substitutionRule from="Pay Agency"/>
 			</rules>
 		</properties>
-		<visual-constraints bounds="264,672,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,456,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Last Name - Common Data Problems" endpoint="out"/>
@@ -478,25 +462,11 @@ iif(ph != &#39;&#39; and Fax is not null and length(ph) == 10,
 				<substitutionRule from="*DNU - "/>
 			</rules>
 		</properties>
-		<visual-constraints bounds="264,576,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,360,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Middle Name - Common Data Problems" endpoint="out"/>
 		<target step="Last Name - Common Data Problems" endpoint="in"/>
-		<visual-constraints>
-			<bendpoints/>
-		</visual-constraints>
-	</connection>
-
-
-
-<!-- (Multiplicator) --><step id="Multiplicator" className="com.ataccama.dqc.tasks.flow.Multiplicator" disabled="false" mode="NORMAL">
-		<properties/>
-		<visual-constraints bounds="264,264,-1,-1" layout="vertical"/>
-	</step>
-	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Multiplicator" endpoint="out"/>
-		<target step="Account Name - Common Data Problems" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -509,7 +479,7 @@ iif(ph != &#39;&#39; and Fax is not null and length(ph) == 10,
 			<assignments>
 				<assignment column="std_First_Name__c">
 					<expression>a := iif(trim(std_First_Name__c) in {&quot;April&quot;, &quot;Sun&quot;, &quot;Jan&quot;, &quot;May&quot;, &quot;June&quot;, &quot;August&quot;, &quot;Jun&quot;, &quot;Thu&quot;, &quot;A C&quot;, &quot;A L&quot;}, &quot;&quot;, trim(std_First_Name__c));
-capitalize(a) </expression>
+capitalize(a)</expression>
 					<scorer explanationColumn="VIOLATION" scoreColumn="VIOLATION_SCORE">
 						<scoringEntries>
 							<scoringEntry explanationColumn="VIOLATION" score="80" explainAs="FIRST_NAME_IS_INVALID" explain="true" key="CA_CHANGED"/>
@@ -536,7 +506,7 @@ capitalize(a)</expression>
 				</assignment>
 			</assignments>
 		</properties>
-		<visual-constraints bounds="264,768,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,576,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Names Exact Match Cleanup" endpoint="out"/>
@@ -565,7 +535,7 @@ or not matches(@&quot;^\(\d{3}\)\s\d{3}-\d{4}&quot;, trim(Fax))</condition>
 				</scoringCase>
 			</scoringCases>
 		</properties>
-		<visual-constraints bounds="264,864,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,672,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Simple Scoring" endpoint="out"/>
@@ -582,12 +552,16 @@ or not matches(@&quot;^\(\d{3}\)\s\d{3}-\d{4}&quot;, trim(Fax))</condition>
 			<columns/>
 			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
 		</properties>
-		<visual-constraints bounds="264,1272,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,1080,-1,-1" layout="vertical"/>
 	</step>
 
 
 
-<modelComment bounds="672,48,227,72" borderColor="183,183,0" backgroundColor="255,255,180" foregroundColor="51,51,51">Master data sheet will
-be used</modelComment>
+<modelComment bounds="672,72,625,97" borderColor="183,183,0" backgroundColor="255,255,180" foregroundColor="51,51,51">Takes Agent_Agency_Payments_Combined.xls as input
+and produces a clean csv with violation and score added.</modelComment>
+
+
+
+<modelComment bounds="648,1032,481,60" borderColor="183,183,0" backgroundColor="128,255,128" foregroundColor="51,51,51">Outputs common-data-problems.csv</modelComment>
 
 </purity-config>

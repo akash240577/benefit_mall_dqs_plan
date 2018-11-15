@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<purity-config version="10.6.2.ga-2017-03-03">
+	<references/>
+	<component-mappings>
+		<propertyMappings/>
+	</component-mappings>
+
+<!-- (Agency_Agent_2018-11-06) --><step id="Agency_Agent_2018-11-06" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/in/Agency_Agent_2018-11-06.xlsx" startCell="A2" skipEmptyRows="false" sheetName="Sheet1">
+			<columns>
+				<columnDef name="SalesforceId" type="STRING"/>
+				<columnDef name="EIN" type="STRING"/>
+				<columnDef name="NPN__c" type="STRING"/>
+				<columnDef name="AccountName" type="STRING"/>
+				<columnDef name="First_Name__c" type="STRING"/>
+				<columnDef name="Middle_Name__c" type="STRING"/>
+				<columnDef name="Last_Name__c" type="STRING"/>
+				<columnDef name="AccountRecordType" type="STRING"/>
+				<columnDef name="BP_ID__c" type="STRING"/>
+				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
+				<columnDef name="AMS_ID__c" type="STRING"/>
+				<columnDef name="AMS_Broker_BoB" type="INTEGER"/>
+				<columnDef name="IBAS_ID__c" type="STRING"/>
+				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
+				<columnDef name="Closed_Won" type="STRING"/>
+				<columnDef name="Weighted_Lives" type="INTEGER"/>
+				<columnDef name="CRQS_Quotes" type="INTEGER"/>
+				<columnDef name="Health_Connect_Quotes" type="STRING"/>
+				<columnDef name="HealthConnect_Quote_Count" type="INTEGER"/>
+				<columnDef name="PlatformIntegrationID__c" type="STRING"/>
+				<columnDef name="Source_System__c" type="STRING"/>
+				<columnDef name="Status__c" type="STRING"/>
+				<columnDef name="BillingStreet" type="STRING"/>
+				<columnDef name="BillingCity" type="STRING"/>
+				<columnDef name="BillingState" type="STRING"/>
+				<columnDef name="BillingPostalCode" type="STRING"/>
+				<columnDef name="BillingCountry" type="STRING"/>
+				<columnDef name="Email__c" type="STRING"/>
+				<columnDef name="Phone" type="STRING"/>
+				<columnDef name="Mobile__c" type="STRING"/>
+				<columnDef name="Home_phone__c" type="STRING"/>
+				<columnDef name="Fax" type="STRING"/>
+				<columnDef name="AccountOwnerName" type="STRING"/>
+				<columnDef name="ParentAccountId" type="STRING"/>
+				<columnDef name="ParentAccountName" type="STRING"/>
+				<columnDef name="ParentAccountType" type="STRING"/>
+				<columnDef name="Region_Benefit__c" type="STRING"/>
+				<columnDef name="Market_Benefit__c" type="STRING"/>
+				<columnDef name="Office_Benefit__c" type="STRING"/>
+				<columnDef name="BSE" type="STRING"/>
+				<columnDef name="BSE_Email" type="STRING"/>
+				<columnDef name="BSR" type="STRING"/>
+				<columnDef name="BSR_Email" type="STRING"/>
+				<columnDef name="MarketDirector" type="STRING"/>
+				<columnDef name="Market_Director_Email" type="STRING"/>
+				<columnDef name="Broker_Class__c" type="STRING"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints bounds="264,240,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Agency_Agent_2018-11-06" endpoint="out"/>
+		<target step="Filter 2" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Brokers Associated by Payments_2) --><step id="Brokers Associated by Payments_2" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/in/Brokers Associated by Payments.xlsx" startCell="A2" skipEmptyRows="false" sheetName="Brokers">
+			<columns>
+				<columnDef name="POSTING_RECORD_ID" type="INTEGER"/>
+				<columnDef name="Date" type="DATETIME"/>
+				<columnDef name="CLIENT_ID" type="INTEGER"/>
+				<columnDef name="SalesforceID" type="STRING"/>
+				<columnDef name="NAME" type="STRING"/>
+				<columnDef name="ACCOUNT_NUM" type="INTEGER"/>
+				<columnDef name="TAX_PAYER_ID" type="STRING"/>
+				<columnDef name="CLIENT_CLASSIFICATION_DESC" type="STRING"/>
+				<columnDef name="AFFILIATED_CLIENT_ID" type="INTEGER"/>
+				<columnDef name="EMAIL_ADDR" type="STRING"/>
+			</columns>
+			<shadowColumns>
+				<shadowColumnDef name="Closed_Won" defaultExpression="toString(&quot;Yes&quot;)" type="STRING"/>
+			</shadowColumns>
+		</properties>
+		<visual-constraints bounds="1076,236,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Brokers Associated by Payments_2" endpoint="out"/>
+		<target step="Payments File Multiplicator" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Filter 2) --><step id="Filter 2" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
+		<properties>
+			<condition>AccountRecordType = &#39;Agency&#39; or (BP_Broker_BoB&lt;&gt;0 or AMS_Broker_BoB &lt;&gt;0 or IBAS_Broker_BoB == &quot;Yes&quot;
+or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won == &quot;Yes&quot;)</condition>
+		</properties>
+		<visual-constraints bounds="432,360,-1,-1" layout="horizontal"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Filter 2" endpoint="out"/>
+		<target step="Inner Join" endpoint="in_left"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Filter DoesNotMatch with Agent_Agency) --><step id="Filter DoesNotMatch with Agent_Agency" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
+		<properties condition="tmp_DoesMatch is NULL "/>
+		<visual-constraints bounds="720,672,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Filter DoesNotMatch with Agent_Agency" endpoint="out"/>
+		<target step="Lookup Builder 2" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Inner Join) --><step id="Inner Join" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
+		<properties leftKey="SalesforceId" matchStrategy="MERGE" rightKey="SalesforceID" joinType="INNER">
+			<columnDefinitions>
+				<columnDefinition expression="in_right.POSTING_RECORD_ID" name="POSTING_RECORD_ID"/>
+				<columnDefinition expression="in_right.Date" name="Date"/>
+				<columnDefinition expression="in_right.CLIENT_ID" name="CLIENT_ID"/>
+				<columnDefinition expression="in_right.SalesforceID" name="SalesforceID"/>
+				<columnDefinition expression="in_right.NAME" name="NAME"/>
+				<columnDefinition expression="in_right.ACCOUNT_NUM" name="ACCOUNT_NUM"/>
+				<columnDefinition expression="in_right.TAX_PAYER_ID" name="TAX_PAYER_ID"/>
+				<columnDefinition expression="in_right.CLIENT_CLASSIFICATION_DESC" name="CLIENT_CLASSIFICATION_DESC"/>
+				<columnDefinition expression="in_right.AFFILIATED_CLIENT_ID" name="AFFILIATED_CLIENT_ID"/>
+				<columnDefinition expression="in_right.EMAIL_ADDR" name="EMAIL_ADDR"/>
+				<columnDefinition expression="1" name="tmp_DoesMatch" type="INTEGER"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints bounds="672,456,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Inner Join" endpoint="out"/>
+		<target step="Right Join" endpoint="in_left"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Lookup Builder 2) --><step id="Lookup Builder 2" className="com.ataccama.dqc.tasks.builders.LookupBuilder" disabled="false" mode="NORMAL">
+		<properties approximativeIndex="true" compressed="false" duplicities="FIRST" bestDistanceIndex="false" fileName="../data/ext/lkp/Agent_Matching_Broker_Payments.lkp" bidirectApproximativeIndex="false" key="SalesforceID">
+			<additionalColumns>
+				<columnExprDef name="POSTING_RECORD_ID"/>
+				<columnExprDef name="Date"/>
+				<columnExprDef name="CLIENT_ID"/>
+				<columnExprDef name="SalesforceID"/>
+				<columnExprDef name="NAME"/>
+				<columnExprDef name="ACCOUNT_NUM"/>
+				<columnExprDef name="TAX_PAYER_ID"/>
+				<columnExprDef name="CLIENT_CLASSIFICATION_DESC"/>
+				<columnExprDef name="AFFILIATED_CLIENT_ID"/>
+				<columnExprDef name="EMAIL_ADDR"/>
+				<columnExprDef name="Closed_Won"/>
+				<columnExprDef name="tmp_DoesMatch"/>
+				<columnExprDef expression="toString(&quot;Payments&quot;)" name="Record_Source"/>
+			</additionalColumns>
+			<matchingValue doRemoveRepeatedChars="false" doSqueezeWS="false" doRemoveDia="false" doUpperCase="false"/>
+			<userMetadata>
+				<items/>
+			</userMetadata>
+		</properties>
+		<visual-constraints bounds="528,768,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (Payments File Multiplicator) --><step id="Payments File Multiplicator" className="com.ataccama.dqc.tasks.flow.Multiplicator" disabled="false" mode="NORMAL">
+		<properties/>
+		<visual-constraints bounds="1028,404,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Payments File Multiplicator" endpoint="out"/>
+		<target step="Inner Join" endpoint="in_right"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Payments File Multiplicator" endpoint="out"/>
+		<target step="Right Join" endpoint="in_right"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Right Join) --><step id="Right Join" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
+		<properties leftKey="SalesforceID" matchStrategy="MERGE" rightKey="SalesforceID" joinType="RIGHT">
+			<columnDefinitions>
+				<columnDefinition expression="in_left.tmp_DoesMatch" name="tmp_DoesMatch"/>
+				<columnDefinition expression="in_right.POSTING_RECORD_ID" name="POSTING_RECORD_ID"/>
+				<columnDefinition expression="in_right.Date" name="Date"/>
+				<columnDefinition expression="in_right.CLIENT_ID" name="CLIENT_ID"/>
+				<columnDefinition expression="in_right.SalesforceID" name="SalesforceID"/>
+				<columnDefinition expression="in_right.NAME" name="NAME"/>
+				<columnDefinition expression="in_right.ACCOUNT_NUM" name="ACCOUNT_NUM"/>
+				<columnDefinition expression="in_right.TAX_PAYER_ID" name="TAX_PAYER_ID"/>
+				<columnDefinition expression="in_right.CLIENT_CLASSIFICATION_DESC" name="CLIENT_CLASSIFICATION_DESC"/>
+				<columnDefinition expression="in_right.AFFILIATED_CLIENT_ID" name="AFFILIATED_CLIENT_ID"/>
+				<columnDefinition expression="in_right.EMAIL_ADDR" name="EMAIL_ADDR"/>
+				<columnDefinition expression="in_right.Closed_Won" name="Closed_Won"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints bounds="720,576,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Right Join" endpoint="out"/>
+		<target step="Filter DoesNotMatch with Agent_Agency" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<modelComment bounds="264,72,913,121" borderColor="183,183,0" backgroundColor="255,255,180" foregroundColor="51,51,51">Takes raw &quot;Agent Agency&quot; file and raw &quot;Broker Associated y Payments&quot; files 
+and join those files to find out Agent/Agencies which are present in 
+&quot;Broker Associated by Payments&quot; file but does not have any sales or quotes 
+in &quot;Agent Agency&quot; file</modelComment>
+
+
+
+<modelComment bounds="264,864,745,145" borderColor="183,183,0" backgroundColor="128,255,128" foregroundColor="51,51,51">Creates a lkp file with only those agent/agencies who does not have any sales/quotes 
+in raw agent/agency file
+../data/ext/lkp/Agent_Matching_Broker_Payments.lkp</modelComment>
+
+</purity-config>
