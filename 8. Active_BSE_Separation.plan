@@ -63,7 +63,7 @@
 				</excelSheetInput>
 			</inputs>
 		</properties>
-		<visual-constraints bounds="168,384,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="168,408,-1,-1" layout="vertical"/>
 	</step>
 
 
@@ -244,13 +244,13 @@
 			<sort>
 				<orderBy expression="ACTIVE_BSE" orderDescending="true" nullsFirst="false"/>
 				<orderBy orderDescending="true" nullsFirst="false">
-					<expression>BP_Broker_BoB
+					<expression>toFloat(BP_Broker_BoB)
 </expression>
 				</orderBy>
-				<orderBy expression="AMS_Broker_BoB" orderDescending="true" nullsFirst="false"/>
-				<orderBy expression="CRQS_Quotes" orderDescending="true" nullsFirst="false"/>
-				<orderBy expression="HealthConnect_Quote_Count" orderDescending="true" nullsFirst="false"/>
-				<orderBy expression="Weighted_Lives" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="toFloat(AMS_Broker_BoB)" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="toInteger(CRQS_Quotes)" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="toInteger(HealthConnect_Quote_Count)" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="toInteger(Weighted_Lives)" orderDescending="true" nullsFirst="false"/>
 			</sort>
 		</properties>
 		<visual-constraints bounds="168,312,48,48" layout="vertical"/>

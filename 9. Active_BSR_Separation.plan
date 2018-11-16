@@ -146,7 +146,7 @@
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Join" endpoint="out"/>
-		<target step="Sort" endpoint="in"/>
+		<target step="Sort 2" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -239,24 +239,24 @@
 
 
 
-<!-- (Sort) --><step id="Sort" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
+<!-- (Sort 2) --><step id="Sort 2" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
 		<properties>
 			<sort>
 				<orderBy expression="ACTIVE_BSE" orderDescending="true" nullsFirst="false"/>
 				<orderBy orderDescending="true" nullsFirst="false">
-					<expression>BP_Broker_BoB
+					<expression>toFloat(BP_Broker_BoB)
 </expression>
 				</orderBy>
-				<orderBy expression="AMS_Broker_BoB" orderDescending="true" nullsFirst="false"/>
-				<orderBy expression="CRQS_Quotes" orderDescending="true" nullsFirst="false"/>
-				<orderBy expression="HealthConnect_Quote_Count" orderDescending="true" nullsFirst="false"/>
-				<orderBy expression="Weighted_Lives" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="toFloat(AMS_Broker_BoB)" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="toInteger(CRQS_Quotes)" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="toInteger(HealthConnect_Quote_Count)" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="toInteger(Weighted_Lives)" orderDescending="true" nullsFirst="false"/>
 			</sort>
 		</properties>
 		<visual-constraints bounds="168,312,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Sort" endpoint="out"/>
+		<source step="Sort 2" endpoint="out"/>
 		<target step="Excel File Writer" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
