@@ -401,6 +401,7 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 			<columns>
 				<columnAssign expression="SalesforceId" name="SalesforceId"/>
 				<columnAssign expression="lookup.SalesforceId" name="ParentAccountId_EIN"/>
+				<columnAssign expression="lookup.AccountName" name="ParentAccountId_EIN_AccountName"/>
 			</columns>
 			<scorer>
 				<scoringEntries>
@@ -433,6 +434,13 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 				<columnAssign expression="ParentAccountId_phone" name="ParentAccountId_phone"/>
 				<columnAssign expression="ParentAccountId_Fax" name="ParentAccountId_Fax"/>
 				<columnAssign expression="lookup.SalesforceId" name="ParentAccountId_email"/>
+				<columnAssign name="ParentAccountId_email_AccountName">
+					<expression>lookup.AccountName
+</expression>
+				</columnAssign>
+				<columnAssign expression="ParentAccountId_EIN_AccountName" name="ParentAccountId_EIN_AccountName"/>
+				<columnAssign expression="ParentAccountId_phone_AccountName" name="ParentAccountId_phone_AccountName"/>
+				<columnAssign expression="ParentAccountId_Fax_AccountName" name="ParentAccountId_Fax_AccountName"/>
 			</columns>
 			<scorer>
 				<scoringEntries>
@@ -466,6 +474,11 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 				<columnAssign expression="ParentAccountId_Fax" name="ParentAccountId_Fax"/>
 				<columnAssign expression="ParentAccountId_email" name="ParentAccountId_email"/>
 				<columnAssign expression="lookup.SalesforceId" name="ParentAccountId_email_domain"/>
+				<columnAssign expression="lookup.AccountName" name="ParentAccountId_email_domain_AccountName"/>
+				<columnAssign expression="ParentAccountId_EIN_AccountName" name="ParentAccountId_EIN_AccountName"/>
+				<columnAssign expression="ParentAccountId_phone_AccountName" name="ParentAccountId_phone_AccountName"/>
+				<columnAssign expression="ParentAccountId_Fax_AccountName" name="ParentAccountId_Fax_AccountName"/>
+				<columnAssign expression="ParentAccountId_email_AccountName" name="ParentAccountId_email_AccountName"/>
 			</columns>
 			<scorer>
 				<scoringEntries>
@@ -495,8 +508,11 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 			<columns>
 				<columnAssign expression="SalesforceId" name="SalesforceId"/>
 				<columnAssign expression="ParentAccountId_EIN" name="ParentAccountId_EIN"/>
+				<columnAssign expression="ParentAccountId_EIN_AccountName" name="ParentAccountId_EIN_AccountName"/>
 				<columnAssign expression="ParentAccountId_phone" name="ParentAccountId_phone"/>
+				<columnAssign expression="ParentAccountId_phone_AccountName" name="ParentAccountId_phone_AccountName"/>
 				<columnAssign expression="lookup.SalesforceId" name="ParentAccountId_Fax"/>
+				<columnAssign expression="lookup.AccountName" name="ParentAccountId_Fax_AccountName"/>
 			</columns>
 			<scorer>
 				<scoringEntries>
@@ -526,7 +542,8 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 			<columns>
 				<columnAssign expression="SalesforceId" name="SalesforceId"/>
 				<columnAssign expression="ParentAccountId_EIN" name="ParentAccountId_EIN"/>
-				<columnAssign expression="lookup.SalesforceId" name="ParentAccountId_phone"/>
+				<columnAssign expression="ParentAccountId_EIN_AccountName" name="ParentAccountId_EIN_AccountName"/>
+				<columnAssign expression="lookup.AccountName" name="ParentAccountId_phone_AccountName"/>
 			</columns>
 			<scorer>
 				<scoringEntries>
@@ -669,6 +686,12 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 				<shadowColumnDef name="ParentAccountId_Fax" type="STRING"/>
 				<shadowColumnDef name="ParentAccountId_email" type="STRING"/>
 				<shadowColumnDef name="ParentAccountId_email_domain" type="STRING"/>
+				<shadowColumnDef name="ParentAccountId_AccountName" type="STRING"/>
+				<shadowColumnDef name="ParentAccountId_EIN_AccountName" type="STRING"/>
+				<shadowColumnDef name="ParentAccountId_phone_AccountName" type="STRING"/>
+				<shadowColumnDef name="ParentAccountId_Fax_AccountName" type="STRING"/>
+				<shadowColumnDef name="ParentAccountId_email_AccountName" type="STRING"/>
+				<shadowColumnDef name="ParentAccountId_email_domain_AccountName" type="STRING"/>
 			</shadowColumns>
 		</properties>
 		<visual-constraints bounds="24,48,-1,-1" layout="vertical"/>
@@ -688,10 +711,15 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 			<columns>
 				<textWriterColumn name="SalesforceId"/>
 				<textWriterColumn name="ParentAccountId_email"/>
+				<textWriterColumn name="ParentAccountId_email_AccountName"/>
 				<textWriterColumn name="ParentAccountId_email_domain"/>
+				<textWriterColumn name="ParentAccountId_email_domain_AccountName"/>
 				<textWriterColumn name="ParentAccountId_phone"/>
+				<textWriterColumn name="ParentAccountId_phone_AccountName"/>
 				<textWriterColumn name="ParentAccountId_Fax"/>
+				<textWriterColumn name="ParentAccountId_Fax_AccountName"/>
 				<textWriterColumn name="ParentAccountId_EIN"/>
+				<textWriterColumn name="ParentAccountId_EIN_AccountName"/>
 			</columns>
 			<dataFormatParameters trueValue="true" falseValue="false" thousandsSeparator="" dateFormatLocale="en_US" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd"/>
 		</properties>

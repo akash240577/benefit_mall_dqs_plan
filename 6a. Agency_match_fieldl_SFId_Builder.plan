@@ -402,6 +402,13 @@
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Multiplicator" endpoint="out"/>
+		<target step="SFId AccountName lookup builder" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Multiplicator" endpoint="out"/>
 		<target step="ein look up builder" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
@@ -435,6 +442,21 @@
 			<bendpoints/>
 		</visual-constraints>
 	</connection>
+
+
+
+<!-- (SFId AccountName lookup builder) --><step id="SFId AccountName lookup builder" className="com.ataccama.dqc.tasks.builders.LookupBuilder" disabled="false" mode="NORMAL">
+		<properties approximativeIndex="false" compressed="false" duplicities="FIRST" bestDistanceIndex="false" fileName="../data/ext/lkp/sfid_account_name.lkp" bidirectApproximativeIndex="false" key="SalesforceId">
+			<additionalColumns>
+				<columnExprDef expression="AccountName" name="AccountName"/>
+			</additionalColumns>
+			<matchingValue doRemoveRepeatedChars="true" doSqueezeWS="true" doRemoveDia="false" doUpperCase="false"/>
+			<userMetadata>
+				<items/>
+			</userMetadata>
+		</properties>
+		<visual-constraints bounds="480,264,-1,-1" layout="vertical"/>
+	</step>
 
 
 
@@ -555,6 +577,7 @@
 		<properties approximativeIndex="false" compressed="false" duplicities="FIRST" bestDistanceIndex="false" fileName="../data/ext/lkp/agency_ein_sfid.lkp" bidirectApproximativeIndex="false" key="std_EIN">
 			<additionalColumns>
 				<columnExprDef expression="SalesforceId" name="SalesforceId"/>
+				<columnExprDef expression="AccountName" name="AccountName"/>
 			</additionalColumns>
 			<matchingValue doRemoveRepeatedChars="true" doSqueezeWS="true" doRemoveDia="false" doUpperCase="false"/>
 			<userMetadata>
@@ -570,6 +593,7 @@
 		<properties approximativeIndex="false" compressed="false" duplicities="FIRST" bestDistanceIndex="false" fileName="../data/ext/lkp/agency_email_sfid.lkp" bidirectApproximativeIndex="false" key="std_email">
 			<additionalColumns>
 				<columnExprDef expression="SalesforceId" name="SalesforceId"/>
+				<columnExprDef expression="AccountName" name="AccountName"/>
 			</additionalColumns>
 			<matchingValue doRemoveRepeatedChars="false" doSqueezeWS="false" doRemoveDia="false" doUpperCase="false"/>
 			<userMetadata>
@@ -585,6 +609,7 @@
 		<properties approximativeIndex="false" compressed="false" duplicities="FIRST" bestDistanceIndex="false" fileName="../data/ext/lkp/agency_email_domain_sfid.lkp" bidirectApproximativeIndex="false" key="std_email_domain">
 			<additionalColumns>
 				<columnExprDef expression="SalesforceId" name="SalesforceId"/>
+				<columnExprDef expression="AccountName" name="AccountName"/>
 			</additionalColumns>
 			<matchingValue doRemoveRepeatedChars="false" doSqueezeWS="false" doRemoveDia="false" doUpperCase="false"/>
 			<userMetadata>
@@ -600,6 +625,7 @@
 		<properties approximativeIndex="false" compressed="false" duplicities="FIRST" bestDistanceIndex="false" fileName="../data/ext/lkp/agency_fax_sfid.lkp" bidirectApproximativeIndex="false" key="std_Fax">
 			<additionalColumns>
 				<columnExprDef expression="SalesforceId" name="SalesforceId"/>
+				<columnExprDef expression="AccountName" name="AccountName"/>
 			</additionalColumns>
 			<matchingValue doRemoveRepeatedChars="true" doSqueezeWS="true" doRemoveDia="false" doUpperCase="false"/>
 			<userMetadata>
@@ -615,6 +641,7 @@
 		<properties approximativeIndex="false" compressed="false" duplicities="FIRST" bestDistanceIndex="false" fileName="../data/ext/lkp/agency_phone_sfid.lkp" bidirectApproximativeIndex="false" key="std_Phone">
 			<additionalColumns>
 				<columnExprDef expression="SalesforceId" name="SalesforceId"/>
+				<columnExprDef expression="AccountName" name="AccountName"/>
 			</additionalColumns>
 			<matchingValue doRemoveRepeatedChars="true" doSqueezeWS="true" doRemoveDia="false" doUpperCase="false"/>
 			<userMetadata>

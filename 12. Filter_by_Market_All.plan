@@ -78,7 +78,7 @@
 				</excelSheetInput>
 			</inputs>
 		</properties>
-		<visual-constraints bounds="264,144,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="360,120,-1,-1" layout="vertical"/>
 	</step>
 
 
@@ -146,20 +146,41 @@
 
 
 
-<!-- (Condition - National) --><step id="Condition - National" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
-		<properties condition="Market_Benefit__c=&quot;National&quot;"/>
-		<visual-constraints bounds="120,1488,-1,-1" layout="vertical"/>
+<!-- (Condition - MD) --><step id="Condition - MD" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
+		<properties condition="Market_Benefit__c=&quot;Mid-Atlantic&quot;"/>
+		<visual-constraints bounds="120,1584,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Condition - National" endpoint="out_true"/>
-		<target step="National" endpoint="in"/>
+		<source step="Condition - MD" endpoint="out_true"/>
+		<target step="MD" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
 	</connection>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Condition - National" endpoint="out_false"/>
+		<source step="Condition - MD" endpoint="out_false"/>
 		<target step="Test" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Condition - National) --><step id="Condition - National" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
+		<properties condition="Market_Benefit__c=&quot;National&quot;"/>
+		<visual-constraints bounds="120,1488,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - National" endpoint="out_false"/>
+		<target step="Condition - MD" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - National" endpoint="out_true"/>
+		<target step="National" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -411,6 +432,19 @@
 
 
 
+<!-- (MD) --><step id="MD" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/market/Maryland_Agency_Agent_Profiled.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="288,1632,-1,-1" layout="vertical"/>
+	</step>
+
+
+
 <!-- (Merged) --><step id="Merged" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
 		<properties useModelApi="false" fileName="../data/out/Merged.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
 			<columns>
@@ -589,7 +623,7 @@
 				</excelSheetInput>
 			</inputs>
 		</properties>
-		<visual-constraints bounds="96,1608,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="96,1680,-1,-1" layout="vertical"/>
 	</step>
 
 

@@ -135,6 +135,32 @@
 
 
 
+<!-- (CO Active) --><step id="CO Active" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/market/bse/Colorado_Active_Agency_Agent_Profiled.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="528,312,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (CO Inactive) --><step id="CO Inactive" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/market/bse/Colorado_InActive_Agency_Agent_Profiled.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="432,288,-1,-1" layout="vertical"/>
+	</step>
+
+
+
 <!-- (Central Texas) --><step id="Central Texas" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
 		<properties fileName="../data/out/market/bse/Central_Texas_Agency_Agent_Profiled.xls" excel2007="false">
 			<inputs>
@@ -144,19 +170,6 @@
 			</inputs>
 		</properties>
 		<visual-constraints bounds="264,1128,-1,-1" layout="vertical"/>
-	</step>
-
-
-
-<!-- (Colorado) --><step id="Colorado" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Colorado_Agency_Agent_Profiled.xls" excel2007="false">
-			<inputs>
-				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
-					<columns/>
-				</excelSheetInput>
-			</inputs>
-		</properties>
-		<visual-constraints bounds="264,144,-1,-1" layout="vertical"/>
 	</step>
 
 
@@ -188,7 +201,7 @@
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Condition - Colorado" endpoint="out_true"/>
-		<target step="Colorado" endpoint="in"/>
+		<target step="Condition - Colorado Active" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -196,6 +209,27 @@
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Condition - Colorado" endpoint="out_false"/>
 		<target step="Condition - New Jersey" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Condition - Colorado Active) --><step id="Condition - Colorado Active" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
+		<properties condition="ACTIVE_BSE=&quot;Yes&quot;"/>
+		<visual-constraints bounds="432,144,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - Colorado Active" endpoint="out_false"/>
+		<target step="CO Inactive" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - Colorado Active" endpoint="out_true"/>
+		<target step="Sort" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -564,6 +598,24 @@
 		</properties>
 		<visual-constraints bounds="264,336,-1,-1" layout="vertical"/>
 	</step>
+
+
+
+<!-- (Sort) --><step id="Sort" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
+		<properties>
+			<sort>
+				<orderBy expression="BSE" orderDescending="false" nullsFirst="false"/>
+			</sort>
+		</properties>
+		<visual-constraints bounds="504,216,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Sort" endpoint="out"/>
+		<target step="CO Active" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
 
 
 
