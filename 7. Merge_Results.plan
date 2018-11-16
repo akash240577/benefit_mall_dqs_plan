@@ -439,6 +439,87 @@
 
 
 
+<!-- (Excel File Writer) --><step id="Excel File Writer" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/Merged.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="false" inputName="in">
+					<columns>
+						<columnExprDef name="SalesforceId"/>
+						<columnExprDef name="EIN"/>
+						<columnExprDef name="AccountName"/>
+						<columnExprDef name="NPN__c"/>
+						<columnExprDef name="First_Name__c"/>
+						<columnExprDef name="Middle_Name__c"/>
+						<columnExprDef name="Email__c"/>
+						<columnExprDef name="Phone"/>
+						<columnExprDef name="Last_Name__c"/>
+						<columnExprDef name="AccountRecordType"/>
+						<columnExprDef name="Mobile__c"/>
+						<columnExprDef name="Fax"/>
+						<columnExprDef name="BP_ID__c"/>
+						<columnExprDef name="BP_Broker_BoB"/>
+						<columnExprDef name="AMS_ID__c"/>
+						<columnExprDef name="AMS_Broker_BoB"/>
+						<columnExprDef name="IBAS_ID__c"/>
+						<columnExprDef name="IBAS_Broker_BoB"/>
+						<columnExprDef name="Closed_Won"/>
+						<columnExprDef name="Weighted_Lives"/>
+						<columnExprDef name="CRQS_Quotes"/>
+						<columnExprDef name="Health_Connect_Quotes"/>
+						<columnExprDef name="HealthConnect_Quote_Count"/>
+						<columnExprDef name="PlatformIntegrationID__c"/>
+						<columnExprDef name="Source_System__c"/>
+						<columnExprDef name="Status__c"/>
+						<columnExprDef name="BillingStreet"/>
+						<columnExprDef name="BillingCity"/>
+						<columnExprDef name="BillingState"/>
+						<columnExprDef name="BillingPostalCode"/>
+						<columnExprDef name="BillingCountry"/>
+						<columnExprDef name="Home_phone__c"/>
+						<columnExprDef name="AccountOwnerName"/>
+						<columnExprDef name="ParentAccountId"/>
+						<columnExprDef name="ParentAccountName"/>
+						<columnExprDef name="ParentAccountType"/>
+						<columnExprDef name="Region_Benefit__c"/>
+						<columnExprDef name="Market_Benefit__c"/>
+						<columnExprDef name="Office_Benefit__c"/>
+						<columnExprDef name="BSE"/>
+						<columnExprDef name="BSE_Email"/>
+						<columnExprDef name="BSR"/>
+						<columnExprDef name="BSR_Email"/>
+						<columnExprDef name="MarketDirector"/>
+						<columnExprDef name="Market_Director_Email"/>
+						<columnExprDef name="Broker_Class__c"/>
+						<columnExprDef name="VIOLATION"/>
+						<columnExprDef name="VIOLATION_SCORE"/>
+						<columnExprDef name="std_AccountName"/>
+						<columnExprDef name="std_First_Name__c"/>
+						<columnExprDef name="std_Middle_Name__c"/>
+						<columnExprDef name="std_Last_Name__c"/>
+						<columnExprDef name="ParentAccountId_EIN"/>
+						<columnExprDef name="ParentAccountId_EIN_AccountName"/>
+						<columnExprDef name="ParentAccountId_email"/>
+						<columnExprDef name="ParentAccountId_email_AccountName"/>
+						<columnExprDef name="ParentAccountId_email_domain"/>
+						<columnExprDef name="ParentAccountId_email_domain_AccountName"/>
+						<columnExprDef name="ParentAccountId_phone"/>
+						<columnExprDef name="ParentAccountId_phone_AccountName"/>
+						<columnExprDef name="ParentAccountId_Fax"/>
+						<columnExprDef name="ParentAccountId_Fax_AccountName"/>
+						<columnExprDef name="ParentAccountId_Split_Payment"/>
+						<columnExprDef name="ParentAccountId_Split_Payment_AccountName"/>
+						<columnExprDef name="dup_agent_can_id"/>
+						<columnExprDef name="dup_agent_rule_used"/>
+						<columnExprDef name="Record_Source"/>
+					</columns>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="192,576,-1,-1" layout="vertical"/>
+	</step>
+
+
+
 <!-- (Join) --><step id="Join" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
 		<properties leftKey="SalesforceId" matchStrategy="MERGE" rightKey="SalesforceId" joinType="LEFT">
 			<columnDefinitions>
@@ -701,81 +782,6 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 
 
 
-<!-- (Merged.xls) --><step id="Merged.xls" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/Merged.xls" excel2007="false">
-			<inputs>
-				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="false" inputName="in">
-					<columns>
-						<columnExprDef name="SalesforceId"/>
-						<columnExprDef name="EIN"/>
-						<columnExprDef name="AccountName"/>
-						<columnExprDef name="NPN__c"/>
-						<columnExprDef name="First_Name__c"/>
-						<columnExprDef name="Middle_Name__c"/>
-						<columnExprDef name="Email__c"/>
-						<columnExprDef name="Phone"/>
-						<columnExprDef name="Last_Name__c"/>
-						<columnExprDef name="AccountRecordType"/>
-						<columnExprDef name="Mobile__c"/>
-						<columnExprDef name="Fax"/>
-						<columnExprDef name="BP_ID__c"/>
-						<columnExprDef name="BP_Broker_BoB"/>
-						<columnExprDef name="AMS_ID__c"/>
-						<columnExprDef name="AMS_Broker_BoB"/>
-						<columnExprDef name="IBAS_ID__c"/>
-						<columnExprDef name="IBAS_Broker_BoB"/>
-						<columnExprDef name="Closed_Won"/>
-						<columnExprDef name="Weighted_Lives"/>
-						<columnExprDef name="CRQS_Quotes"/>
-						<columnExprDef name="Health_Connect_Quotes"/>
-						<columnExprDef name="HealthConnect_Quote_Count"/>
-						<columnExprDef name="PlatformIntegrationID__c"/>
-						<columnExprDef name="Source_System__c"/>
-						<columnExprDef name="Status__c"/>
-						<columnExprDef name="BillingStreet"/>
-						<columnExprDef name="BillingCity"/>
-						<columnExprDef name="BillingState"/>
-						<columnExprDef name="BillingPostalCode"/>
-						<columnExprDef name="BillingCountry"/>
-						<columnExprDef name="Home_phone__c"/>
-						<columnExprDef name="AccountOwnerName"/>
-						<columnExprDef name="ParentAccountId"/>
-						<columnExprDef name="ParentAccountName"/>
-						<columnExprDef name="ParentAccountType"/>
-						<columnExprDef name="Region_Benefit__c"/>
-						<columnExprDef name="Market_Benefit__c"/>
-						<columnExprDef name="Office_Benefit__c"/>
-						<columnExprDef name="BSE"/>
-						<columnExprDef name="BSE_Email"/>
-						<columnExprDef name="BSR"/>
-						<columnExprDef name="BSR_Email"/>
-						<columnExprDef name="MarketDirector"/>
-						<columnExprDef name="Market_Director_Email"/>
-						<columnExprDef name="Broker_Class__c"/>
-						<columnExprDef name="VIOLATION"/>
-						<columnExprDef name="VIOLATION_SCORE"/>
-						<columnExprDef name="std_AccountName"/>
-						<columnExprDef name="std_First_Name__c"/>
-						<columnExprDef name="std_Middle_Name__c"/>
-						<columnExprDef name="std_Last_Name__c"/>
-						<columnExprDef name="ParentAccountId_EIN"/>
-						<columnExprDef name="ParentAccountId_email"/>
-						<columnExprDef name="ParentAccountId_email_domain"/>
-						<columnExprDef name="ParentAccountId_phone"/>
-						<columnExprDef name="ParentAccountId_Fax"/>
-						<columnExprDef name="ParentAccountId_Split_Payment"/>
-						<columnExprDef name="dup_agent_can_id"/>
-						<columnExprDef name="dup_agent_rule_used"/>
-						<columnExprDef name="Record_Source"/>
-					</columns>
-				</excelSheetInput>
-			</inputs>
-		</properties>
-		<visual-constraints bounds="192,552,-1,-1" layout="vertical"/>
-	</step>
-
-
-
 <!-- (Missing_Agency_to_include) --><step id="Missing_Agency_to_include" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
 		<properties useModelApi="false" fileName="../data/out/Missing_Agency_to_include.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
 			<columns>
@@ -939,7 +945,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Union" endpoint="out"/>
-		<target step="Merged.xls" endpoint="in"/>
+		<target step="Excel File Writer" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
