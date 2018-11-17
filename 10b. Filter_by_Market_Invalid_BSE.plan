@@ -6,7 +6,7 @@
 	</component-mappings>
 
 <!-- ( Northern California) --><step id=" Northern California" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Northern_California_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Northern_California_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -19,7 +19,7 @@
 
 
 <!-- ( Northern Florida) --><step id=" Northern Florida" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Northern_Florida_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Northern_Florida_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -32,7 +32,7 @@
 
 
 <!-- ( Southerm California) --><step id=" Southerm California" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Southern_California_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Southern_California_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -45,7 +45,7 @@
 
 
 <!-- ( Southern Florida) --><step id=" Southern Florida" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Southern_Florida_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Southern_Florida_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -57,8 +57,8 @@
 
 
 
-<!-- (Active_BSE_separated) --><step id="Active_BSE_separated" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
-		<properties useModelApi="false" fileName="../data/out/Active_BSE_separated.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
+<!-- (Agency_Agent_Ordered_By_Active_BSE) --><step id="Agency_Agent_Ordered_By_Active_BSE" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/out/Agency_Agent_Ordered_By_Active_BSE.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
 			<columns>
 				<columnDef name="SalesforceId" type="STRING"/>
 				<columnDef name="EIN" type="STRING"/>
@@ -107,27 +107,38 @@
 				<columnDef name="Market_Director_Email" type="STRING"/>
 				<columnDef name="Broker_Class__c" type="STRING"/>
 				<columnDef name="VIOLATION" type="STRING"/>
-				<columnDef name="VIOLATION_SCORE" type="STRING"/>
+				<columnDef name="VIOLATION_SCORE" type="INTEGER"/>
 				<columnDef name="std_AccountName" type="STRING"/>
 				<columnDef name="std_First_Name__c" type="STRING"/>
 				<columnDef name="std_Middle_Name__c" type="STRING"/>
 				<columnDef name="std_Last_Name__c" type="STRING"/>
-				<columnDef name="ParentAccountId_email" type="STRING"/>
-				<columnDef name="ParentAccountId_phone" type="STRING"/>
-				<columnDef name="ParentAccountId_Fax" type="STRING"/>
 				<columnDef name="dup_agent_rule_used" type="STRING"/>
 				<columnDef name="dup_agent_can_id" type="STRING"/>
-				<columnDef name="ACTIVE_BSE" type="STRING"/>
 				<columnDef name="Work_Email_Address" type="STRING"/>
+				<columnDef name="ParentAccountId_Fax" type="STRING"/>
+				<columnDef name="ParentAccountId_Fax_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_email" type="STRING"/>
+				<columnDef name="ParentAccountId_email_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_phone" type="STRING"/>
+				<columnDef name="ParentAccountId_phone_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_email_domain" type="STRING"/>
+				<columnDef name="ParentAccountId_email_domain_AccountName" type="STRING"/>
 				<columnDef name="Record_Source" type="STRING"/>
+				<columnDef name="ParentAccountId_EIN" type="STRING"/>
+				<columnDef name="ParentAccountId_EIN_AccountName" type="STRING"/>
+				<columnDef name="ACTIVE_BSE" type="STRING"/>
+				<columnDef name="Approval" type="STRING"/>
+				<columnDef name="Comments" type="STRING"/>
+				<columnDef name="ParentAccountId_Split_Payment" type="STRING"/>
+				<columnDef name="ParentAccountId_Split_Payment_AccountName" type="STRING"/>
 			</columns>
 			<shadowColumns/>
 		</properties>
 		<visual-constraints bounds="120,0,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Active_BSE_separated" endpoint="out"/>
-		<target step="Condition - Colorado" endpoint="in"/>
+		<source step="Agency_Agent_Ordered_By_Active_BSE" endpoint="out"/>
+		<target step="Filter" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -135,34 +146,21 @@
 
 
 
-<!-- (CO Active) --><step id="CO Active" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Colorado_Active_Agency_Agent_Profiled.xls" excel2007="false">
-			<inputs>
-				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
-					<columns/>
-				</excelSheetInput>
-			</inputs>
-		</properties>
-		<visual-constraints bounds="528,264,-1,-1" layout="vertical"/>
-	</step>
-
-
-
 <!-- (CO Inactive) --><step id="CO Inactive" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Colorado_InActive_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Colorado_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
 				</excelSheetInput>
 			</inputs>
 		</properties>
-		<visual-constraints bounds="432,240,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="288,144,-1,-1" layout="vertical"/>
 	</step>
 
 
 
 <!-- (Central Texas) --><step id="Central Texas" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Central_Texas_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Central_Texas_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -197,11 +195,11 @@
 
 <!-- (Condition - Colorado) --><step id="Condition - Colorado" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
 		<properties condition="Market_Benefit__c=&quot;Colorado&quot;"/>
-		<visual-constraints bounds="120,96,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="120,144,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Condition - Colorado" endpoint="out_true"/>
-		<target step="Condition - Colorado Active" endpoint="in"/>
+		<target step="CO Inactive" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -209,27 +207,6 @@
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Condition - Colorado" endpoint="out_false"/>
 		<target step="Condition - New Jersey" endpoint="in"/>
-		<visual-constraints>
-			<bendpoints/>
-		</visual-constraints>
-	</connection>
-
-
-
-<!-- (Condition - Colorado Active) --><step id="Condition - Colorado Active" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
-		<properties condition="ACTIVE_BSE=&quot;Yes&quot;"/>
-		<visual-constraints bounds="432,96,-1,-1" layout="vertical"/>
-	</step>
-	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Condition - Colorado Active" endpoint="out_false"/>
-		<target step="CO Inactive" endpoint="in"/>
-		<visual-constraints>
-			<bendpoints/>
-		</visual-constraints>
-	</connection>
-	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Condition - Colorado Active" endpoint="out_true"/>
-		<target step="Sort" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -281,7 +258,7 @@
 
 <!-- (Condition - New Jersey) --><step id="Condition - New Jersey" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
 		<properties condition="Market_Benefit__c=&quot;New Jersey&quot;"/>
-		<visual-constraints bounds="120,192,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="120,216,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Condition - New Jersey" endpoint="out_false"/>
@@ -510,8 +487,22 @@
 
 
 
+<!-- (Filter) --><step id="Filter" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
+		<properties condition="ACTIVE_BSE=&#39;No&#39;"/>
+		<visual-constraints bounds="120,72,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Filter" endpoint="out"/>
+		<target step="Condition - Colorado" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
 <!-- (Georgia) --><step id="Georgia" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Georgia_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Georgia_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -524,7 +515,7 @@
 
 
 <!-- (National) --><step id="National" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/National_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/National_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -537,7 +528,7 @@
 
 
 <!-- (New Jersey) --><step id="New Jersey" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/New_Jersey_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/New_Jersey_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -550,7 +541,7 @@
 
 
 <!-- (New York) --><step id="New York" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/New_York_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/New_York_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -563,7 +554,7 @@
 
 
 <!-- (North Texas-Dallas) --><step id="North Texas-Dallas" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/North_Texas_Dallas_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/North_Texas_Dallas_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -576,7 +567,7 @@
 
 
 <!-- (North Texas-Fort Worth) --><step id="North Texas-Fort Worth" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/North_Texas_Fort_Worth_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/North_Texas_Fort_Worth_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -589,7 +580,7 @@
 
 
 <!-- (Ohio) --><step id="Ohio" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Ohio_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Ohio_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -601,26 +592,8 @@
 
 
 
-<!-- (Sort) --><step id="Sort" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
-		<properties>
-			<sort>
-				<orderBy expression="BSE" orderDescending="false" nullsFirst="false"/>
-			</sort>
-		</properties>
-		<visual-constraints bounds="504,168,-1,-1" layout="vertical"/>
-	</step>
-	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Sort" endpoint="out"/>
-		<target step="CO Active" endpoint="in"/>
-		<visual-constraints>
-			<bendpoints/>
-		</visual-constraints>
-	</connection>
-
-
-
 <!-- (South Texas) --><step id="South Texas" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/South_Texas_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/South_Texas_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -633,7 +606,7 @@
 
 
 <!-- (Test) --><step id="Test" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Test_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Test_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
@@ -646,7 +619,7 @@
 
 
 <!-- (Unknown) --><step id="Unknown" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Unknown_Agency_Agent_Profiled.xls" excel2007="false">
+		<properties fileName="../data/out/market/bse/Unknown_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
