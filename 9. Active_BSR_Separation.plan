@@ -56,7 +56,7 @@
 
 
 <!-- (Excel File Writer) --><step id="Excel File Writer" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/Active_BSR_separated.xls" excel2007="false">
+		<properties fileName="../data/out/Agency_Agent_Ordered_By_Active_BSR.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
 					<columns/>
