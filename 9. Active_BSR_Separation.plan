@@ -86,7 +86,7 @@
 				<columnDefinition expression="in_left.BP_ID__c" name="BP_ID__c"/>
 				<columnDefinition expression="in_left.BP_Broker_BoB" name="BP_Broker_BoB"/>
 				<columnDefinition expression="in_left.AMS_ID__c" name="AMS_ID__c"/>
-				<columnDefinition expression="in_left.AMS_Broker_BoB" name="AMS_Broker_BoB"/>
+				<columnDefinition expression="iif(in_left.AMS_Broker_BoB is null,&quot;0&quot;,in_left.AMS_Broker_BoB)" name="AMS_Broker_BoB"/>
 				<columnDefinition expression="in_left.IBAS_ID__c" name="IBAS_ID__c"/>
 				<columnDefinition expression="in_left.IBAS_Broker_BoB" name="IBAS_Broker_BoB"/>
 				<columnDefinition expression="in_left.Closed_Won" name="Closed_Won"/>
@@ -129,17 +129,19 @@
 				<columnDefinition expression="in_left.dup_agent_rule_used" name="dup_agent_rule_used"/>
 				<columnDefinition expression="in_left.dup_agent_can_id" name="dup_agent_can_id"/>
 				<columnDefinition expression="in_right.Work_Email_Address" name="Work_Email_Address"/>
-				<columnDefinition expression="in_left.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
-				<columnDefinition expression="in_left.ParentAccountId_EIN_AccountName" name="ParentAccountId_EIN_AccountName"/>
 				<columnDefinition expression="in_left.ParentAccountId_email_AccountName" name="ParentAccountId_email_AccountName"/>
 				<columnDefinition expression="in_left.ParentAccountId_email_domain" name="ParentAccountId_email_domain"/>
 				<columnDefinition expression="in_left.ParentAccountId_email_domain_AccountName" name="ParentAccountId_email_domain_AccountName"/>
 				<columnDefinition expression="in_left.ParentAccountId_phone_AccountName" name="ParentAccountId_phone_AccountName"/>
 				<columnDefinition expression="in_left.ParentAccountId_Fax_AccountName" name="ParentAccountId_Fax_AccountName"/>
-				<columnDefinition expression="in_left.ParentAccountId_Split_Payment" name="ParentAccountId_Split_Payment"/>
-				<columnDefinition expression="in_left.ParentAccountId_Split_Payment_AccountName" name="ParentAccountId_Split_Payment_AccountName"/>
+				<columnDefinition expression="in_left.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
+				<columnDefinition expression="in_left.ParentAccountId_EIN_AccountName" name="ParentAccountId_EIN_AccountName"/>
 				<columnDefinition expression="in_left.Record_Source" name="Record_Source"/>
 				<columnDefinition expression="iif(in_right.Work_Email_Address is not null,&quot;Yes&quot;,&quot;No&quot;)" name="ACTIVE_BSE"/>
+				<columnDefinition expression="&#39;&#39;" name="Approval"/>
+				<columnDefinition expression="&#39;&#39;" name="Comments"/>
+				<columnDefinition expression="in_left.ParentAccountId_Split_Payment" name="ParentAccountId_Split_Payment"/>
+				<columnDefinition expression="in_left.ParentAccountId_Split_Payment_AccountName" name="ParentAccountId_Split_Payment_AccountName"/>
 			</columnDefinitions>
 		</properties>
 		<visual-constraints bounds="168,240,-1,-1" layout="vertical"/>
