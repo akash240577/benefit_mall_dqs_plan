@@ -235,20 +235,41 @@
 
 
 
-<!-- (Condition - National) --><step id="Condition - National" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
-		<properties condition="Market_Benefit__c=&quot;National&quot;"/>
-		<visual-constraints bounds="120,1467,-1,-1" layout="vertical"/>
+<!-- (Condition - MD) --><step id="Condition - MD" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
+		<properties condition="Market_Benefit__c=&quot;Mid-Atlantic&quot;"/>
+		<visual-constraints bounds="120,1584,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Condition - National" endpoint="out_true"/>
-		<target step="National" endpoint="in"/>
+		<source step="Condition - MD" endpoint="out_true"/>
+		<target step="National 2" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
 	</connection>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - MD" endpoint="out_false"/>
+		<target step="test" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Condition - National) --><step id="Condition - National" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
+		<properties condition="Market_Benefit__c=&quot;National&quot;"/>
+		<visual-constraints bounds="120,1467,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Condition - National" endpoint="out_false"/>
-		<target step="Test" endpoint="in"/>
+		<target step="Condition - MD" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - National" endpoint="out_true"/>
+		<target step="National" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -527,6 +548,19 @@
 
 
 
+<!-- (National 2) --><step id="National 2" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/market/bse/Maryland_Invalid_BSE_Profiled.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="288,1605,-1,-1" layout="vertical"/>
+	</step>
+
+
+
 <!-- (New Jersey) --><step id="New Jersey" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
 		<properties fileName="../data/out/market/bse/New_Jersey_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
@@ -605,19 +639,6 @@
 
 
 
-<!-- (Test) --><step id="Test" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/market/bse/Test_Invalid_BSE_Profiled.xls" excel2007="false">
-			<inputs>
-				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
-					<columns/>
-				</excelSheetInput>
-			</inputs>
-		</properties>
-		<visual-constraints bounds="96,1587,-1,-1" layout="vertical"/>
-	</step>
-
-
-
 <!-- (Unknown) --><step id="Unknown" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
 		<properties fileName="../data/out/market/bse/Unknown_Invalid_BSE_Profiled.xls" excel2007="false">
 			<inputs>
@@ -627,6 +648,19 @@
 			</inputs>
 		</properties>
 		<visual-constraints bounds="264,1416,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (test) --><step id="test" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/market/bse/Test_Invalid_BSE_Profiled.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="120,1680,-1,-1" layout="vertical"/>
 	</step>
 
 </purity-config>
