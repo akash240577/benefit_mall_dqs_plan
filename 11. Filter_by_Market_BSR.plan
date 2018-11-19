@@ -126,7 +126,7 @@
 				<columnDef name="ParentAccountId_EIN" type="STRING"/>
 				<columnDef name="ParentAccountId_EIN_AccountName" type="STRING"/>
 				<columnDef name="Record_Source" type="STRING"/>
-				<columnDef name="ACTIVE_BSE" type="STRING"/>
+				<columnDef name="ACTIVE_BSR" type="STRING"/>
 				<columnDef name="Approval" type="STRING"/>
 				<columnDef name="Comments" type="STRING"/>
 				<columnDef name="ParentAccountId_Split_Payment" type="STRING"/>

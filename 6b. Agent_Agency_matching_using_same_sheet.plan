@@ -543,6 +543,7 @@ and (ParentAccountId is null or ParentAccountId == &quot;&quot;)</condition>
 				<columnAssign expression="SalesforceId" name="SalesforceId"/>
 				<columnAssign expression="ParentAccountId_EIN" name="ParentAccountId_EIN"/>
 				<columnAssign expression="ParentAccountId_EIN_AccountName" name="ParentAccountId_EIN_AccountName"/>
+				<columnAssign expression="lookup.SalesforceId" name="ParentAccountId_phone"/>
 				<columnAssign expression="lookup.AccountName" name="ParentAccountId_phone_AccountName"/>
 			</columns>
 			<scorer>

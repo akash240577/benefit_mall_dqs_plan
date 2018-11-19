@@ -427,7 +427,7 @@
 				</assignment>
 			</assignments>
 		</properties>
-		<visual-constraints bounds="336,408,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="336,480,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Column Assigner" endpoint="out"/>
@@ -439,7 +439,7 @@
 
 
 
-<!-- (Excel File Writer) --><step id="Excel File Writer" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+<!-- (Excel File Writer) --><step id="Excel File Writer" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="true" mode="NORMAL">
 		<properties fileName="../data/out/Merged.xls" excel2007="false">
 			<inputs>
 				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="false" inputName="in">
@@ -496,6 +496,10 @@
 						<columnExprDef name="std_First_Name__c"/>
 						<columnExprDef name="std_Middle_Name__c"/>
 						<columnExprDef name="std_Last_Name__c"/>
+						<columnExprDef name="std_email"/>
+						<columnExprDef name="std_EIN"/>
+						<columnExprDef name="std_Phone"/>
+						<columnExprDef name="std_Fax"/>
 						<columnExprDef name="ParentAccountId_EIN"/>
 						<columnExprDef name="ParentAccountId_EIN_AccountName"/>
 						<columnExprDef name="ParentAccountId_email"/>
@@ -515,7 +519,92 @@
 				</excelSheetInput>
 			</inputs>
 		</properties>
-		<visual-constraints bounds="192,576,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="792,600,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (Excel File Writer 2) --><step id="Excel File Writer 2" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/Merged.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="false" writeAllColumns="false" inputName="in">
+					<columns>
+						<columnExprDef name="SalesforceId"/>
+						<columnExprDef name="EIN"/>
+						<columnExprDef name="AccountName"/>
+						<columnExprDef name="NPN__c"/>
+						<columnExprDef name="First_Name__c"/>
+						<columnExprDef name="Middle_Name__c"/>
+						<columnExprDef name="Email__c"/>
+						<columnExprDef name="Phone"/>
+						<columnExprDef name="Last_Name__c"/>
+						<columnExprDef name="AccountRecordType"/>
+						<columnExprDef name="Mobile__c"/>
+						<columnExprDef name="Fax"/>
+						<columnExprDef name="BP_ID__c"/>
+						<columnExprDef name="BP_Broker_BoB"/>
+						<columnExprDef name="AMS_ID__c"/>
+						<columnExprDef name="AMS_Broker_BoB"/>
+						<columnExprDef name="IBAS_ID__c"/>
+						<columnExprDef name="IBAS_Broker_BoB"/>
+						<columnExprDef name="Closed_Won"/>
+						<columnExprDef name="Weighted_Lives"/>
+						<columnExprDef name="CRQS_Quotes"/>
+						<columnExprDef name="Health_Connect_Quotes"/>
+						<columnExprDef name="HealthConnect_Quote_Count"/>
+						<columnExprDef name="PlatformIntegrationID__c"/>
+						<columnExprDef name="Source_System__c"/>
+						<columnExprDef name="Status__c"/>
+						<columnExprDef name="BillingStreet"/>
+						<columnExprDef name="BillingCity"/>
+						<columnExprDef name="BillingState"/>
+						<columnExprDef name="BillingPostalCode"/>
+						<columnExprDef name="BillingCountry"/>
+						<columnExprDef name="Home_phone__c"/>
+						<columnExprDef name="AccountOwnerName"/>
+						<columnExprDef name="ParentAccountId"/>
+						<columnExprDef name="ParentAccountName"/>
+						<columnExprDef name="ParentAccountType"/>
+						<columnExprDef name="Region_Benefit__c"/>
+						<columnExprDef name="Market_Benefit__c"/>
+						<columnExprDef name="Office_Benefit__c"/>
+						<columnExprDef name="BSE"/>
+						<columnExprDef name="BSE_Email"/>
+						<columnExprDef name="BSR"/>
+						<columnExprDef name="BSR_Email"/>
+						<columnExprDef name="MarketDirector"/>
+						<columnExprDef name="Market_Director_Email"/>
+						<columnExprDef name="Broker_Class__c"/>
+						<columnExprDef name="VIOLATION"/>
+						<columnExprDef name="VIOLATION_SCORE"/>
+						<columnExprDef name="std_AccountName"/>
+						<columnExprDef name="std_First_Name__c"/>
+						<columnExprDef name="std_Middle_Name__c"/>
+						<columnExprDef name="std_Last_Name__c"/>
+						<columnExprDef name="std_email"/>
+						<columnExprDef name="std_EIN"/>
+						<columnExprDef name="std_Phone"/>
+						<columnExprDef name="std_Fax"/>
+						<columnExprDef name="ParentAccountId_EIN"/>
+						<columnExprDef name="ParentAccountId_EIN_AccountName"/>
+						<columnExprDef name="ParentAccountId_email"/>
+						<columnExprDef name="ParentAccountId_email_AccountName"/>
+						<columnExprDef name="ParentAccountId_email_domain"/>
+						<columnExprDef name="ParentAccountId_email_domain_AccountName"/>
+						<columnExprDef name="ParentAccountId_phone"/>
+						<columnExprDef name="ParentAccountId_phone_AccountName"/>
+						<columnExprDef name="ParentAccountId_Fax"/>
+						<columnExprDef name="ParentAccountId_Fax_AccountName"/>
+						<columnExprDef name="ParentAccountId_Split_Payment"/>
+						<columnExprDef name="ParentAccountId_Split_Payment_AccountName"/>
+						<columnExprDef name="dup_agent_can_id"/>
+						<columnExprDef name="dup_agent_rule_used"/>
+						<columnExprDef name="Record_Source"/>
+					</columns>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="216,720,48,48" layout="vertical"/>
 	</step>
 
 
@@ -652,7 +741,7 @@
 				<columnDefinition expression="in_right.ParentAccountId_Split_Payment_AccountName" name="ParentAccountId_Split_Payment_AccountName"/>
 			</columnDefinitions>
 		</properties>
-		<visual-constraints bounds="288,168,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="288,240,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Join 2" endpoint="out"/>
@@ -734,9 +823,13 @@
 				<columnDefinition expression="in_right.ParentAccountId_phone_AccountName" name="ParentAccountId_phone_AccountName"/>
 				<columnDefinition expression="in_right.ParentAccountId_Fax_AccountName" name="ParentAccountId_Fax_AccountName"/>
 				<columnDefinition expression="in_right.ParentAccountId_Split_Payment_AccountName" name="ParentAccountId_Split_Payment_AccountName"/>
+				<columnDefinition expression="in_left.std_email" name="std_email"/>
+				<columnDefinition expression="in_left.std_EIN" name="std_EIN"/>
+				<columnDefinition expression="in_left.std_Phone" name="std_Phone"/>
+				<columnDefinition expression="in_left.std_Fax" name="std_Fax"/>
 			</columnDefinitions>
 		</properties>
-		<visual-constraints bounds="192,384,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,456,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Join 3" endpoint="out"/>
@@ -753,7 +846,7 @@
 			<condition>BP_Broker_BoB&lt;&gt;0 or AMS_Broker_BoB &lt;&gt;0 or IBAS_Broker_BoB == &quot;Yes&quot;
 or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won == &quot;Yes&quot;</condition>
 		</properties>
-		<visual-constraints bounds="288,240,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="288,312,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Main_Filter_Bob_Quotes_Sales" endpoint="out"/>
@@ -770,7 +863,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 			<condition>BP_Broker_BoB&lt;&gt;0 or AMS_Broker_BoB &lt;&gt;0 or IBAS_Broker_BoB == &quot;Yes&quot;
 or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won == &quot;Yes&quot;</condition>
 		</properties>
-		<visual-constraints bounds="120,312,-1,-1" layout="horizontal"/>
+		<visual-constraints bounds="120,384,-1,-1" layout="horizontal"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Main_Filter_Bob_Quotes_Sales 2" endpoint="out"/>
@@ -857,7 +950,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<shadowColumnDef name="VIOLATION_SCORE_" type="INTEGER"/>
 			</shadowColumns>
 		</properties>
-		<visual-constraints bounds="456,360,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="456,432,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Missing_Agency_to_include" endpoint="out"/>
@@ -924,6 +1017,10 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<columnMapping in_b="std_First_Name__c" dest="std_First_Name__c" in_a="std_First_Name__c"/>
 				<columnMapping in_b="std_Middle_Name__c" dest="std_Middle_Name__c" in_a="std_Middle_Name__c"/>
 				<columnMapping in_b="std_Last_Name__c" dest="std_Last_Name__c" in_a="std_Last_Name__c"/>
+				<columnMapping dest="std_email" in_a="std_email"/>
+				<columnMapping dest="std_EIN" in_a="std_EIN"/>
+				<columnMapping dest="std_Phone" in_a="std_Phone"/>
+				<columnMapping dest="std_Fax" in_a="std_Fax"/>
 				<columnMapping in_b="ParentAccountId_EIN" dest="ParentAccountId_EIN" in_a="ParentAccountId_EIN"/>
 				<columnMapping in_b="ParentAccountId_EIN_AccountName" dest="ParentAccountId_EIN_AccountName" in_a="ParentAccountId_EIN_AccountName"/>
 				<columnMapping in_b="ParentAccountId_email" dest="ParentAccountId_email" in_a="ParentAccountId_email"/>
@@ -941,11 +1038,11 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 				<columnMapping in_b="Record_Source" dest="Record_Source" in_a="Record_Source"/>
 			</columnMappings>
 		</properties>
-		<visual-constraints bounds="192,480,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="192,552,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Union" endpoint="out"/>
-		<target step="Excel File Writer" endpoint="in"/>
+		<target step="Excel File Writer 2" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -1094,7 +1191,7 @@ or CRQS_Quotes &gt; 0 or Health_Connect_Quotes == &quot;Yes&quot; or Closed_Won 
 			</errorHandlingStrategy>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="48,216,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="48,288,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="common-data-problems" endpoint="out"/>

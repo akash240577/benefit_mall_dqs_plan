@@ -137,7 +137,7 @@
 				<columnDefinition expression="in_left.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
 				<columnDefinition expression="in_left.ParentAccountId_EIN_AccountName" name="ParentAccountId_EIN_AccountName"/>
 				<columnDefinition expression="in_left.Record_Source" name="Record_Source"/>
-				<columnDefinition expression="iif(in_right.Work_Email_Address is not null,&quot;Yes&quot;,&quot;No&quot;)" name="ACTIVE_BSE"/>
+				<columnDefinition expression="iif(in_right.Work_Email_Address is not null,&quot;Yes&quot;,&quot;No&quot;)" name="ACTIVE_BSR"/>
 				<columnDefinition expression="&#39;&#39;" name="Approval"/>
 				<columnDefinition expression="&#39;&#39;" name="Comments"/>
 				<columnDefinition expression="in_left.ParentAccountId_Split_Payment" name="ParentAccountId_Split_Payment"/>
@@ -244,7 +244,7 @@
 <!-- (Sort 2) --><step id="Sort 2" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
 		<properties>
 			<sort>
-				<orderBy expression="ACTIVE_BSE" orderDescending="true" nullsFirst="false"/>
+				<orderBy expression="ACTIVE_BSR" orderDescending="true" nullsFirst="false"/>
 				<orderBy orderDescending="true" nullsFirst="false">
 					<expression>toFloat(BP_Broker_BoB)
 </expression>
