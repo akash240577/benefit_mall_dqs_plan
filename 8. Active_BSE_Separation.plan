@@ -152,7 +152,7 @@
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Join" endpoint="out"/>
-		<target step="Sort by Status__c, Active BSR, Bob etc." endpoint="in"/>
+		<target step="Sort by Status__c, Bob etc." endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -327,11 +327,10 @@
 
 
 
-<!-- (Sort by Status__c, Active BSR, Bob etc.) --><step id="Sort by Status__c, Active BSR, Bob etc." className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
+<!-- (Sort by Status__c, Bob etc.) --><step id="Sort by Status__c, Bob etc." className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
 		<properties>
 			<sort>
 				<orderBy expression="Status__c" orderDescending="false" nullsFirst="false"/>
-				<orderBy expression="ACTIVE_BSE" orderDescending="true" nullsFirst="false"/>
 				<orderBy orderDescending="true" nullsFirst="false">
 					<expression>toFloat(BP_Broker_BoB)
 </expression>
@@ -345,7 +344,7 @@
 		<visual-constraints bounds="168,312,48,48" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Sort by Status__c, Active BSR, Bob etc." endpoint="out"/>
+		<source step="Sort by Status__c, Bob etc." endpoint="out"/>
 		<target step="Agency_Agent_Ordered_By_Active_BSE" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
