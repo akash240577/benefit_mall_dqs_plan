@@ -55,8 +55,8 @@
 
 
 <!-- (BSE) --><step id="BSE" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
-		<properties condition="containsWord(Job_Title,&quot;Executive&quot;)"/>
-		<visual-constraints bounds="264,144,-1,-1" layout="vertical"/>
+		<properties condition="indexOf(upper(Job_Title),upper(&quot;Executive&quot;)) is not null"/>
+		<visual-constraints bounds="264,120,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="BSE" endpoint="out"/>
@@ -69,7 +69,7 @@
 
 
 <!-- (Join) --><step id="Join" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" mode="NORMAL">
-		<properties leftKey="lower(BSE_Email)" matchStrategy="MERGE" rightKey="lower(Work_Email_Address)" joinType="LEFT">
+		<properties leftKey="lower(trim(BSE_Email))" matchStrategy="MERGE" rightKey="lower(trim(Work_Email_Address))" joinType="LEFT">
 			<columnDefinitions>
 				<columnDefinition expression="in_left.SalesforceId" name="SalesforceId"/>
 				<columnDefinition expression="in_left.EIN" name="EIN"/>
@@ -315,7 +315,7 @@
 			</columns>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="72,72,32,32" layout="vertical"/>
+		<visual-constraints bounds="96,72,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Merged 2" endpoint="out"/>

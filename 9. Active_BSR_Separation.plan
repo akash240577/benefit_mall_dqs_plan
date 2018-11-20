@@ -55,7 +55,7 @@
 
 
 <!-- (BSR) --><step id="BSR" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
-		<properties condition="containsWord(Job_Title,&quot;Representative&quot;)"/>
+		<properties condition="indexOf(upper(Job_Title),upper(&quot;Representative&quot;)) is not null"/>
 		<visual-constraints bounds="264,168,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
