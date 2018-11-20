@@ -57,6 +57,95 @@
 
 
 
+<!-- (Agency_Agent_Ordered_By_Active_BSE) --><step id="Agency_Agent_Ordered_By_Active_BSE" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/out/Agency_Agent_Ordered_By_Active_BSE.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
+			<columns>
+				<columnDef name="SalesforceId" type="STRING"/>
+				<columnDef name="EIN" type="STRING"/>
+				<columnDef name="AccountName" type="STRING"/>
+				<columnDef name="NPN__c" type="STRING"/>
+				<columnDef name="First_Name__c" type="STRING"/>
+				<columnDef name="Middle_Name__c" type="STRING"/>
+				<columnDef name="Email__c" type="STRING"/>
+				<columnDef name="Phone" type="STRING"/>
+				<columnDef name="Last_Name__c" type="STRING"/>
+				<columnDef name="AccountRecordType" type="STRING"/>
+				<columnDef name="Mobile__c" type="STRING"/>
+				<columnDef name="Fax" type="STRING"/>
+				<columnDef name="BP_ID__c" type="STRING"/>
+				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
+				<columnDef name="AMS_ID__c" type="STRING"/>
+				<columnDef name="AMS_Broker_BoB" type="STRING"/>
+				<columnDef name="IBAS_ID__c" type="STRING"/>
+				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
+				<columnDef name="Closed_Won" type="STRING"/>
+				<columnDef name="Weighted_Lives" type="INTEGER"/>
+				<columnDef name="CRQS_Quotes" type="INTEGER"/>
+				<columnDef name="Health_Connect_Quotes" type="STRING"/>
+				<columnDef name="HealthConnect_Quote_Count" type="INTEGER"/>
+				<columnDef name="PlatformIntegrationID__c" type="STRING"/>
+				<columnDef name="Source_System__c" type="STRING"/>
+				<columnDef name="Status__c" type="STRING"/>
+				<columnDef name="BillingStreet" type="STRING"/>
+				<columnDef name="BillingCity" type="STRING"/>
+				<columnDef name="BillingState" type="STRING"/>
+				<columnDef name="BillingPostalCode" type="STRING"/>
+				<columnDef name="BillingCountry" type="STRING"/>
+				<columnDef name="Home_phone__c" type="STRING"/>
+				<columnDef name="AccountOwnerName" type="STRING"/>
+				<columnDef name="ParentAccountId" type="STRING"/>
+				<columnDef name="ParentAccountName" type="STRING"/>
+				<columnDef name="ParentAccountType" type="STRING"/>
+				<columnDef name="Region_Benefit__c" type="STRING"/>
+				<columnDef name="Market_Benefit__c" type="STRING"/>
+				<columnDef name="Office_Benefit__c" type="STRING"/>
+				<columnDef name="BSE" type="STRING"/>
+				<columnDef name="BSE_Email" type="STRING"/>
+				<columnDef name="BSR" type="STRING"/>
+				<columnDef name="BSR_Email" type="STRING"/>
+				<columnDef name="MarketDirector" type="STRING"/>
+				<columnDef name="Market_Director_Email" type="STRING"/>
+				<columnDef name="Broker_Class__c" type="STRING"/>
+				<columnDef name="VIOLATION" type="STRING"/>
+				<columnDef name="VIOLATION_SCORE" type="INTEGER"/>
+				<columnDef name="std_AccountName" type="STRING"/>
+				<columnDef name="std_First_Name__c" type="STRING"/>
+				<columnDef name="std_Middle_Name__c" type="STRING"/>
+				<columnDef name="std_Last_Name__c" type="STRING"/>
+				<columnDef name="dup_agent_rule_used" type="STRING"/>
+				<columnDef name="dup_agent_can_id" type="STRING"/>
+				<columnDef name="Work_Email_Address" type="STRING"/>
+				<columnDef name="ParentAccountId_Fax" type="STRING"/>
+				<columnDef name="ParentAccountId_Fax_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_email" type="STRING"/>
+				<columnDef name="ParentAccountId_email_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_phone" type="STRING"/>
+				<columnDef name="ParentAccountId_phone_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_email_domain" type="STRING"/>
+				<columnDef name="ParentAccountId_email_domain_AccountName" type="STRING"/>
+				<columnDef name="Record_Source" type="STRING"/>
+				<columnDef name="ParentAccountId_EIN" type="STRING"/>
+				<columnDef name="ParentAccountId_EIN_AccountName" type="STRING"/>
+				<columnDef name="ACTIVE_BSE" type="STRING"/>
+				<columnDef name="Approval" type="STRING"/>
+				<columnDef name="Comments" type="STRING"/>
+				<columnDef name="ParentAccountId_Split_Payment" type="STRING"/>
+				<columnDef name="ParentAccountId_Split_Payment_AccountName" type="STRING"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints bounds="120,0,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Agency_Agent_Ordered_By_Active_BSE" endpoint="out"/>
+		<target step="Condition - Colorado" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
 <!-- (Central Texas) --><step id="Central Texas" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
 		<properties fileName="../data/out/market/Central_Texas_Agency_Agent_Profiled.xls" excel2007="false">
 			<inputs>
@@ -442,85 +531,6 @@
 		</properties>
 		<visual-constraints bounds="288,1632,-1,-1" layout="vertical"/>
 	</step>
-
-
-
-<!-- (Merged) --><step id="Merged" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
-		<properties useModelApi="false" fileName="../data/out/Merged.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
-			<columns>
-				<columnDef name="SalesforceId" type="STRING"/>
-				<columnDef name="EIN" type="STRING"/>
-				<columnDef name="AccountName" type="STRING"/>
-				<columnDef name="NPN__c" type="STRING"/>
-				<columnDef name="First_Name__c" type="STRING"/>
-				<columnDef name="Middle_Name__c" type="STRING"/>
-				<columnDef name="Email__c" type="STRING"/>
-				<columnDef name="Phone" type="STRING"/>
-				<columnDef name="Last_Name__c" type="STRING"/>
-				<columnDef name="AccountRecordType" type="STRING"/>
-				<columnDef name="Mobile__c" type="STRING"/>
-				<columnDef name="Fax" type="STRING"/>
-				<columnDef name="BP_ID__c" type="STRING"/>
-				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
-				<columnDef name="AMS_ID__c" type="STRING"/>
-				<columnDef name="AMS_Broker_BoB" type="STRING"/>
-				<columnDef name="IBAS_ID__c" type="STRING"/>
-				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
-				<columnDef name="Closed_Won" type="STRING"/>
-				<columnDef name="Weighted_Lives" type="INTEGER"/>
-				<columnDef name="CRQS_Quotes" type="INTEGER"/>
-				<columnDef name="Health_Connect_Quotes" type="STRING"/>
-				<columnDef name="HealthConnect_Quote_Count" type="INTEGER"/>
-				<columnDef name="PlatformIntegrationID__c" type="STRING"/>
-				<columnDef name="Source_System__c" type="STRING"/>
-				<columnDef name="Status__c" type="STRING"/>
-				<columnDef name="BillingStreet" type="STRING"/>
-				<columnDef name="BillingCity" type="STRING"/>
-				<columnDef name="BillingState" type="STRING"/>
-				<columnDef name="BillingPostalCode" type="STRING"/>
-				<columnDef name="BillingCountry" type="STRING"/>
-				<columnDef name="Home_phone__c" type="STRING"/>
-				<columnDef name="AccountOwnerName" type="STRING"/>
-				<columnDef name="ParentAccountId" type="STRING"/>
-				<columnDef name="ParentAccountName" type="STRING"/>
-				<columnDef name="ParentAccountType" type="STRING"/>
-				<columnDef name="Region_Benefit__c" type="STRING"/>
-				<columnDef name="Market_Benefit__c" type="STRING"/>
-				<columnDef name="Office_Benefit__c" type="STRING"/>
-				<columnDef name="BSE" type="STRING"/>
-				<columnDef name="BSE_Email" type="STRING"/>
-				<columnDef name="BSR" type="STRING"/>
-				<columnDef name="BSR_Email" type="STRING"/>
-				<columnDef name="MarketDirector" type="STRING"/>
-				<columnDef name="Market_Director_Email" type="STRING"/>
-				<columnDef name="Broker_Class__c" type="STRING"/>
-				<columnDef name="VIOLATION" type="STRING"/>
-				<columnDef name="VIOLATION_SCORE" type="STRING"/>
-				<columnDef name="std_AccountName" type="STRING"/>
-				<columnDef name="std_First_Name__c" type="STRING"/>
-				<columnDef name="std_Middle_Name__c" type="STRING"/>
-				<columnDef name="std_Last_Name__c" type="STRING"/>
-				<columnDef name="ParentAccountId_EIN" type="STRING"/>
-				<columnDef name="ParentAccountId_email" type="STRING"/>
-				<columnDef name="ParentAccountId_email_domain" type="STRING"/>
-				<columnDef name="ParentAccountId_phone" type="STRING"/>
-				<columnDef name="ParentAccountId_Fax" type="STRING"/>
-				<columnDef name="ParentAccountId_Split_Payment" type="STRING"/>
-				<columnDef name="dup_agent_can_id" type="STRING"/>
-				<columnDef name="dup_agent_rule_used" type="STRING"/>
-				<columnDef name="Record_Source" type="STRING"/>
-			</columns>
-			<shadowColumns/>
-		</properties>
-		<visual-constraints bounds="120,0,-1,-1" layout="vertical"/>
-	</step>
-	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Merged" endpoint="out"/>
-		<target step="Condition - Colorado" endpoint="in"/>
-		<visual-constraints>
-			<bendpoints/>
-		</visual-constraints>
-	</connection>
 
 
 

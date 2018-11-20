@@ -527,7 +527,7 @@
 <!-- (Excel File Writer 2) --><step id="Excel File Writer 2" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
 		<properties fileName="../data/out/Merged.xls" excel2007="false">
 			<inputs>
-				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="false" writeAllColumns="false" inputName="in">
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="false" inputName="in">
 					<columns>
 						<columnExprDef name="SalesforceId"/>
 						<columnExprDef name="EIN"/>

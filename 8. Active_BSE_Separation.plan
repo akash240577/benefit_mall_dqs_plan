@@ -41,6 +41,19 @@
 
 
 
+<!-- (Agency_Agent_Ordered_By_Active_BSE) --><step id="Agency_Agent_Ordered_By_Active_BSE" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/Agency_Agent_Ordered_By_Active_BSE.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="168,408,-1,-1" layout="vertical"/>
+	</step>
+
+
+
 <!-- (BSE) --><step id="BSE" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" mode="NORMAL">
 		<properties condition="containsWord(Job_Title,&quot;Executive&quot;)"/>
 		<visual-constraints bounds="264,144,-1,-1" layout="vertical"/>
@@ -52,19 +65,6 @@
 			<bendpoints/>
 		</visual-constraints>
 	</connection>
-
-
-
-<!-- (Excel File Writer) --><step id="Excel File Writer" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
-		<properties fileName="../data/out/Agency_Agent_Ordered_By_Active_BSE.xls" excel2007="false">
-			<inputs>
-				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
-					<columns/>
-				</excelSheetInput>
-			</inputs>
-		</properties>
-		<visual-constraints bounds="168,408,-1,-1" layout="vertical"/>
-	</step>
 
 
 
@@ -148,7 +148,7 @@
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
 		<source step="Join" endpoint="out"/>
-		<target step="Sort" endpoint="in"/>
+		<target step="Sort by Status__c, Active BSR, Bob etc." endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -241,9 +241,10 @@
 
 
 
-<!-- (Sort) --><step id="Sort" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
+<!-- (Sort by Status__c, Active BSR, Bob etc.) --><step id="Sort by Status__c, Active BSR, Bob etc." className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" mode="NORMAL">
 		<properties>
 			<sort>
+				<orderBy expression="Status__c" orderDescending="false" nullsFirst="false"/>
 				<orderBy expression="ACTIVE_BSE" orderDescending="true" nullsFirst="false"/>
 				<orderBy orderDescending="true" nullsFirst="false">
 					<expression>toFloat(BP_Broker_BoB)
@@ -258,8 +259,8 @@
 		<visual-constraints bounds="168,312,48,48" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Sort" endpoint="out"/>
-		<target step="Excel File Writer" endpoint="in"/>
+		<source step="Sort by Status__c, Active BSR, Bob etc." endpoint="out"/>
+		<target step="Agency_Agent_Ordered_By_Active_BSE" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>

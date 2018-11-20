@@ -235,20 +235,41 @@
 
 
 
-<!-- (Condition - National) --><step id="Condition - National" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
-		<properties condition="Market_Benefit__c=&quot;National&quot;"/>
-		<visual-constraints bounds="120,1464,-1,-1" layout="vertical"/>
+<!-- (Condition - Maryland) --><step id="Condition - Maryland" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
+		<properties condition="Market_Benefit__c=&quot;Mid-Atlantic&quot;"/>
+		<visual-constraints bounds="120,1584,-1,-1" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Condition - National" endpoint="out_true"/>
-		<target step="National" endpoint="in"/>
+		<source step="Condition - Maryland" endpoint="out_true"/>
+		<target step="Maryland" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
 	</connection>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Condition - National" endpoint="out_false"/>
+		<source step="Condition - Maryland" endpoint="out_false"/>
 		<target step="Test" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Condition - National) --><step id="Condition - National" className="com.ataccama.dqc.tasks.conditions.Condition" disabled="false" mode="NORMAL">
+		<properties condition="Market_Benefit__c=&quot;National&quot;"/>
+		<visual-constraints bounds="120,1464,-1,-1" layout="vertical"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - National" endpoint="out_false"/>
+		<target step="Condition - Maryland" endpoint="in"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source step="Condition - National" endpoint="out_true"/>
+		<target step="National" endpoint="in"/>
 		<visual-constraints>
 			<bendpoints/>
 		</visual-constraints>
@@ -500,6 +521,19 @@
 
 
 
+<!-- (Maryland) --><step id="Maryland" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
+		<properties fileName="../data/out/market/bsr/Maryland_Agency_Agent_Profiled.xls" excel2007="false">
+			<inputs>
+				<excelSheetInput clearSheet="false" startCell="A1" writeHeader="true" writeAllColumns="true" inputName="in">
+					<columns/>
+				</excelSheetInput>
+			</inputs>
+		</properties>
+		<visual-constraints bounds="264,1632,-1,-1" layout="vertical"/>
+	</step>
+
+
+
 <!-- (National) --><step id="National" className="com.ataccama.dqc.tasks.msoffice.excel.write.ExcelFileWriter" disabled="false" mode="NORMAL">
 		<properties fileName="../data/out/market/bsr/National_Agency_Agent_Profiled.xls" excel2007="false">
 			<inputs>
@@ -599,7 +633,7 @@
 				</excelSheetInput>
 			</inputs>
 		</properties>
-		<visual-constraints bounds="96,1584,-1,-1" layout="vertical"/>
+		<visual-constraints bounds="120,1680,-1,-1" layout="vertical"/>
 	</step>
 
 
