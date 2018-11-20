@@ -123,25 +123,29 @@
 				<columnDefinition expression="in_left.std_First_Name__c" name="std_First_Name__c"/>
 				<columnDefinition expression="in_left.std_Middle_Name__c" name="std_Middle_Name__c"/>
 				<columnDefinition expression="in_left.std_Last_Name__c" name="std_Last_Name__c"/>
-				<columnDefinition expression="in_left.dup_agent_rule_used" name="dup_agent_rule_used"/>
-				<columnDefinition expression="in_left.dup_agent_can_id" name="dup_agent_can_id"/>
+				<columnDefinition expression="in_left.std_email" name="std_email"/>
+				<columnDefinition expression="in_left.std_EIN" name="std_EIN"/>
+				<columnDefinition expression="in_left.std_Phone" name="std_Phone"/>
+				<columnDefinition expression="in_left.std_Fax" name="std_Fax"/>
 				<columnDefinition expression="in_right.Work_Email_Address" name="Work_Email_Address"/>
-				<columnDefinition expression="in_left.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
-				<columnDefinition expression="in_left.ParentAccountId_Fax_AccountName" name="ParentAccountId_Fax_AccountName"/>
 				<columnDefinition expression="in_left.ParentAccountId_email" name="ParentAccountId_email"/>
 				<columnDefinition expression="in_left.ParentAccountId_email_AccountName" name="ParentAccountId_email_AccountName"/>
 				<columnDefinition expression="in_left.ParentAccountId_phone" name="ParentAccountId_phone"/>
 				<columnDefinition expression="in_left.ParentAccountId_phone_AccountName" name="ParentAccountId_phone_AccountName"/>
+				<columnDefinition expression="in_left.ParentAccountId_Fax" name="ParentAccountId_Fax"/>
+				<columnDefinition expression="in_left.ParentAccountId_Fax_AccountName" name="ParentAccountId_Fax_AccountName"/>
 				<columnDefinition expression="in_left.ParentAccountId_email_domain" name="ParentAccountId_email_domain"/>
 				<columnDefinition expression="in_left.ParentAccountId_email_domain_AccountName" name="ParentAccountId_email_domain_AccountName"/>
-				<columnDefinition expression="in_left.Record_Source" name="Record_Source"/>
 				<columnDefinition expression="in_left.ParentAccountId_EIN" name="ParentAccountId_EIN"/>
 				<columnDefinition expression="in_left.ParentAccountId_EIN_AccountName" name="ParentAccountId_EIN_AccountName"/>
+				<columnDefinition expression="in_left.ParentAccountId_Split_Payment" name="ParentAccountId_Split_Payment"/>
+				<columnDefinition expression="in_left.ParentAccountId_Split_Payment_AccountName" name="ParentAccountId_Split_Payment_AccountName"/>
+				<columnDefinition expression="in_left.dup_agent_rule_used" name="dup_agent_rule_used"/>
+				<columnDefinition expression="in_left.dup_agent_can_id" name="dup_agent_can_id"/>
+				<columnDefinition expression="in_left.Record_Source" name="Record_Source"/>
 				<columnDefinition expression="iif(in_right.Work_Email_Address is not null,&quot;Yes&quot;,&quot;No&quot;)" name="ACTIVE_BSE"/>
 				<columnDefinition expression="&#39;&#39;" name="Approval"/>
 				<columnDefinition expression="&#39;&#39;" name="Comments"/>
-				<columnDefinition expression="in_left.ParentAccountId_Split_Payment" name="ParentAccountId_Split_Payment"/>
-				<columnDefinition expression="in_left.ParentAccountId_Split_Payment_AccountName" name="ParentAccountId_Split_Payment_AccountName"/>
 			</columnDefinitions>
 		</properties>
 		<visual-constraints bounds="168,240,-1,-1" layout="vertical"/>
@@ -156,7 +160,7 @@
 
 
 
-<!-- (Merged) --><step id="Merged" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+<!-- (Merged) --><step id="Merged" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="true" mode="NORMAL">
 		<properties useModelApi="false" fileName="../data/out/Merged.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
 			<columns>
 				<columnDef name="SalesforceId" type="STRING"/>
@@ -229,10 +233,92 @@
 			</columns>
 			<shadowColumns/>
 		</properties>
-		<visual-constraints bounds="96,120,32,32" layout="vertical"/>
+		<visual-constraints bounds="792,96,-1,-1" layout="vertical"/>
+	</step>
+
+
+
+<!-- (Merged 2) --><step id="Merged 2" className="com.ataccama.dqc.tasks.msoffice.excel.read.ExcelFileReader" disabled="false" mode="NORMAL">
+		<properties useModelApi="false" fileName="../data/out/Merged.xls" startCell="A2" skipEmptyRows="false" sheetName="Sheet0">
+			<columns>
+				<columnDef name="SalesforceId" type="STRING"/>
+				<columnDef name="EIN" type="STRING"/>
+				<columnDef name="AccountName" type="STRING"/>
+				<columnDef name="NPN__c" type="STRING"/>
+				<columnDef name="First_Name__c" type="STRING"/>
+				<columnDef name="Middle_Name__c" type="STRING"/>
+				<columnDef name="Email__c" type="STRING"/>
+				<columnDef name="Phone" type="STRING"/>
+				<columnDef name="Last_Name__c" type="STRING"/>
+				<columnDef name="AccountRecordType" type="STRING"/>
+				<columnDef name="Mobile__c" type="STRING"/>
+				<columnDef name="Fax" type="STRING"/>
+				<columnDef name="BP_ID__c" type="STRING"/>
+				<columnDef name="BP_Broker_BoB" type="INTEGER"/>
+				<columnDef name="AMS_ID__c" type="STRING"/>
+				<columnDef name="AMS_Broker_BoB" type="STRING"/>
+				<columnDef name="IBAS_ID__c" type="STRING"/>
+				<columnDef name="IBAS_Broker_BoB" type="STRING"/>
+				<columnDef name="Closed_Won" type="STRING"/>
+				<columnDef name="Weighted_Lives" type="INTEGER"/>
+				<columnDef name="CRQS_Quotes" type="INTEGER"/>
+				<columnDef name="Health_Connect_Quotes" type="STRING"/>
+				<columnDef name="HealthConnect_Quote_Count" type="INTEGER"/>
+				<columnDef name="PlatformIntegrationID__c" type="STRING"/>
+				<columnDef name="Source_System__c" type="STRING"/>
+				<columnDef name="Status__c" type="STRING"/>
+				<columnDef name="BillingStreet" type="STRING"/>
+				<columnDef name="BillingCity" type="STRING"/>
+				<columnDef name="BillingState" type="STRING"/>
+				<columnDef name="BillingPostalCode" type="STRING"/>
+				<columnDef name="BillingCountry" type="STRING"/>
+				<columnDef name="Home_phone__c" type="STRING"/>
+				<columnDef name="AccountOwnerName" type="STRING"/>
+				<columnDef name="ParentAccountId" type="STRING"/>
+				<columnDef name="ParentAccountName" type="STRING"/>
+				<columnDef name="ParentAccountType" type="STRING"/>
+				<columnDef name="Region_Benefit__c" type="STRING"/>
+				<columnDef name="Market_Benefit__c" type="STRING"/>
+				<columnDef name="Office_Benefit__c" type="STRING"/>
+				<columnDef name="BSE" type="STRING"/>
+				<columnDef name="BSE_Email" type="STRING"/>
+				<columnDef name="BSR" type="STRING"/>
+				<columnDef name="BSR_Email" type="STRING"/>
+				<columnDef name="MarketDirector" type="STRING"/>
+				<columnDef name="Market_Director_Email" type="STRING"/>
+				<columnDef name="Broker_Class__c" type="STRING"/>
+				<columnDef name="VIOLATION" type="STRING"/>
+				<columnDef name="VIOLATION_SCORE" type="INTEGER"/>
+				<columnDef name="std_AccountName" type="STRING"/>
+				<columnDef name="std_First_Name__c" type="STRING"/>
+				<columnDef name="std_Middle_Name__c" type="STRING"/>
+				<columnDef name="std_Last_Name__c" type="STRING"/>
+				<columnDef name="std_email" type="STRING"/>
+				<columnDef name="std_EIN" type="STRING"/>
+				<columnDef name="std_Phone" type="STRING"/>
+				<columnDef name="std_Fax" type="STRING"/>
+				<columnDef name="ParentAccountId_EIN" type="STRING"/>
+				<columnDef name="ParentAccountId_EIN_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_email" type="STRING"/>
+				<columnDef name="ParentAccountId_email_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_email_domain" type="STRING"/>
+				<columnDef name="ParentAccountId_email_domain_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_phone" type="STRING"/>
+				<columnDef name="ParentAccountId_phone_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_Fax" type="STRING"/>
+				<columnDef name="ParentAccountId_Fax_AccountName" type="STRING"/>
+				<columnDef name="ParentAccountId_Split_Payment" type="STRING"/>
+				<columnDef name="ParentAccountId_Split_Payment_AccountName" type="STRING"/>
+				<columnDef name="dup_agent_can_id" type="STRING"/>
+				<columnDef name="dup_agent_rule_used" type="STRING"/>
+				<columnDef name="Record_Source" type="STRING"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints bounds="72,72,32,32" layout="vertical"/>
 	</step>
 	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
-		<source step="Merged" endpoint="out"/>
+		<source step="Merged 2" endpoint="out"/>
 		<target step="Join" endpoint="in_left"/>
 		<visual-constraints>
 			<bendpoints/>
